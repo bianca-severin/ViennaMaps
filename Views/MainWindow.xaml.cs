@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Esri.ArcGISRuntime.Mapping;
+
 
 namespace ViennaMaps
 {
@@ -23,6 +25,11 @@ namespace ViennaMaps
         public MainWindow()
         {
             InitializeComponent();
+            Map myMap = new Map(Basemap.CreateDarkGrayCanvasVector());
+
+            ArcGISMapImageLayer layer = new ArcGISMapImageLayer(new Uri("https://services.arcgis.com/LG9Yn2oFqZi5PnO5/arcgis/rest/services/xgqZm/FeatureServer"));
+            myMap.OperationalLayers.Add(layer);
+            MyMapView.Map = myMap;
         }
     }
 }

@@ -5,9 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ViennaMaps" xmlns:viewmodels="clr-namespace:ViennaMaps.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920">
+        Title="MainWindow" Height="1080" Width="1920" Background="#FF2B3545">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="35*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
 
-        <Button x:Name="button" Content="Open Map" HorizontalAlignment="Left" Margin="50,833,0,0" VerticalAlignment="Top" Height="38" Width="233" Command="{Binding ViewMapCmd}"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="#FF142030"/>
+
+        <Button x:Name="OpenMapButton" Content="Open Map" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ViewMapCmd}" Width="490" Height="50" Background="#3FFFFFFF" BorderBrush="{x:Null}" Foreground="White" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold"/>
+        <Image x:Name="Logo" HorizontalAlignment="Center" Height="174" Margin="0,34,0,0" VerticalAlignment="Top" Width="174" Source="/Views/ViennaLogo.png" Stretch="UniformToFill"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,216,0,0" TextWrapping="WrapWithOverflow" Text="Urban Analysis Tool" VerticalAlignment="Top" Foreground="#FF007EF9" TextAlignment="Center" FontFamily="Nirmala UI" FontSize="22" FontWeight="Bold" Width="510"/>
+        <TextBlock HorizontalAlignment="Center" Margin="15,282,15,0" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At" VerticalAlignment="Top" Foreground="#FF007EF9" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" LineStackingStrategy="BlockLineHeight"/>
+
     </Grid>
 </Window>

@@ -13,5 +13,11 @@ namespace ViennaMaps
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            // API Key Bianca
+            Esri.ArcGISRuntime.ArcGISRuntimeEnvironment.ApiKey = "AAPK45946aac033744e7829cc44189d86fedZF6POt8sn3u9iO_fWel9o9FEUXH2upCLXgnOOGASVnVYHEy4DyuJjH3m4aljQmv_";
+        }
     }
 }

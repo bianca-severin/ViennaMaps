@@ -7,7 +7,11 @@
         xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
         mc:Ignorable="d"
         Title="MapWindow" Height="450" Width="800">
+    <UserControl>
     <Grid>
-        <esri:MapView x:Name="MyMapView" Grid.RowSpan="2" />
+        <esri:SceneView x:Name="MySceneView"
+                        GeoViewTapped="SceneViewTapped" />
+
     </Grid>
+     </UserControl>
 </Window>

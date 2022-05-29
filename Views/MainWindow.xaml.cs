@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Esri.ArcGISRuntime.Mapping;
+using ViennaMaps.ViewModels;
+using ViennaMaps.Views;
+
 
 
 namespace ViennaMaps
@@ -22,14 +24,23 @@ namespace ViennaMaps
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel _viewModel;
         public MainWindow()
         {
             InitializeComponent();
-            Map myMap = new Map(Basemap.CreateDarkGrayCanvasVector());
+            _viewModel = new MainViewModel();
+            this.DataContext = _viewModel;
+            _viewModel.OnRequestOpenMap += (sender, args) => this.StartMapWindow();
 
-            ArcGISMapImageLayer layer = new ArcGISMapImageLayer(new Uri("https://services.arcgis.com/LG9Yn2oFqZi5PnO5/arcgis/rest/services/xgqZm/FeatureServer"));
-            myMap.OperationalLayers.Add(layer);
-            MyMapView.Map = myMap;
+        }
+
+        private void StartMapWindow()
+        {
+            // anlegen eines Adress window
+            MapWindow mapwin = new MapWindow();
+            // Anzeigen eines modalen windows
+            mapwin.ShowDialog();
+
         }
     }
 }

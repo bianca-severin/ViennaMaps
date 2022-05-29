@@ -37,7 +37,7 @@ namespace ViennaMaps.Views
 
         private void Initialize()
         {
-           
+
             // Create a new Scene with a topographic basemap.
             Scene scene = new Scene(BasemapStyle.ArcGISTopographic);
 
@@ -48,7 +48,7 @@ namespace ViennaMaps.Views
             scene.BaseSurface = elevationSurface;
 
             // Add a scene layer.
-            Uri buildingsService = new Uri("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0");
+            Uri buildingsService = new Uri("https://tiles.arcgis.com/tiles/YfxQKFk1MjjurGb5/arcgis/rest/services/Prozessiertes_Baukörpermodell_Wien/SceneServer/layers/0");
             ArcGISSceneLayer buildingsLayer = new ArcGISSceneLayer(buildingsService);
             scene.OperationalLayers.Add(buildingsLayer);
 
@@ -58,7 +58,14 @@ namespace ViennaMaps.Views
             try
             {
                 // Create a camera with an interesting view.
-                Camera viewCamera = new Camera(48.378, -4.494, 200, 345, 65, 0);
+                Camera viewCamera = new Camera(
+                    latitude: 48.210033,
+                    longitude: 16.363449,
+                    altitude: 400,
+                    heading: 50,
+                    pitch: 30,
+                    roll: 0
+                    );
 
                 // Set the viewpoint with the camera.
                 MySceneView.SetViewpointCamera(viewCamera);

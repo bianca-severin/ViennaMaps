@@ -9,12 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\building.png" />
+    <None Remove="Views\cityscape.png" />
+    <None Remove="Views\ViennaLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Esri.ArcGISRuntime" Version="100.14.0" />
     <PackageReference Include="Esri.ArcGISRuntime.WPF" Version="100.14.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\building.png" />
+    <Resource Include="Views\cityscape.png" />
+    <Resource Include="Views\ViennaLogo.png" />
   </ItemGroup>
 
 </Project>

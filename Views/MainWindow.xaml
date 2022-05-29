@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ViennaMaps" xmlns:viewmodels="clr-namespace:ViennaMaps.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="1080" Width="1920">
     <Grid>
 
-        <Button x:Name="button" Content="Open Map" HorizontalAlignment="Left" Margin="71,303,0,0" VerticalAlignment="Top" Height="38" Width="233" Command="{Binding ViewMapCmd}"/>
+        <Button x:Name="button" Content="Open Map" HorizontalAlignment="Left" Margin="50,833,0,0" VerticalAlignment="Top" Height="38" Width="233" Command="{Binding ViewMapCmd}"/>
     </Grid>
 </Window>

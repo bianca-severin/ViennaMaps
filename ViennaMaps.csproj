@@ -25,9 +25,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Views\building.png" />
-    <Resource Include="Views\cityscape.png" />
     <Resource Include="Views\ViennaLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Map2DWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Map2DWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

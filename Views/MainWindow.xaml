@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ViennaMaps" xmlns:viewmodels="clr-namespace:ViennaMaps.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920" Background="#FF2B3545">
+        Title="MainWindow" Height="1080" Width="1920" Background="#FF0B2027">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="13*"/>
@@ -16,10 +16,12 @@
         </Grid.RowDefinitions>
         <Rectangle Fill="#FF142030"/>
 
-        <Button x:Name="OpenMapButton" Content="Open Map" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ViewMapCmd}" Width="490" Height="50" Background="#3FFFFFFF" BorderBrush="{x:Null}" Foreground="White" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold"/>
+        <Button x:Name="OpenMapButton" Content="Open 3D View" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ViewMapCmd}" Width="520" Height="71" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,826,0,0"/>
         <Image x:Name="Logo" HorizontalAlignment="Center" Height="174" Margin="0,34,0,0" VerticalAlignment="Top" Width="174" Source="/Views/ViennaLogo.png" Stretch="UniformToFill"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,216,0,0" TextWrapping="WrapWithOverflow" Text="Urban Analysis Tool" VerticalAlignment="Top" Foreground="#FF007EF9" TextAlignment="Center" FontFamily="Nirmala UI" FontSize="22" FontWeight="Bold" Width="510"/>
-        <TextBlock HorizontalAlignment="Center" Margin="15,282,15,0" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At" VerticalAlignment="Top" Foreground="#FF007EF9" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" LineStackingStrategy="BlockLineHeight"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,216,0,0" TextWrapping="WrapWithOverflow" Text="Urban Analysis Tool" VerticalAlignment="Top" Foreground="#FFC5D1EB" TextAlignment="Center" FontFamily="Nirmala UI" FontSize="22" FontWeight="Bold" Width="510"/>
+        <TextBlock HorizontalAlignment="Center" Margin="15,282,15,0" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At" VerticalAlignment="Top" Foreground="#FFC5D1EB" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" LineStackingStrategy="BlockLineHeight"/>
+        <TextBlock HorizontalAlignment="Left" Margin="34,34,0,0" TextWrapping="WrapWithOverflow" Text="Analysis" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="36" FontWeight="Bold" Width="510" Grid.Column="1"/>
+        <Button x:Name="Open2DMapButton" Content="Open 2D Map" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding View2DMapCmd}" Width="520" Height="71" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,755,0,0"/>
 
     </Grid>
 </Window>

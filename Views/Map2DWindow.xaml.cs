@@ -23,9 +23,9 @@ namespace ViennaMaps.Views
     /// 
   
 
-    public partial class MapWindow: Window
+    public partial class Map2DWindow: Window
     {
-        public MapWindow()
+        public Map2DWindow()
         {
             InitializeComponent();
             Initialize();

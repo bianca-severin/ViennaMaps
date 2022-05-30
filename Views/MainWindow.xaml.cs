@@ -31,6 +31,7 @@ namespace ViennaMaps
             _viewModel = new MainViewModel();
             this.DataContext = _viewModel;
             _viewModel.OnRequestOpenMap += (sender, args) => this.StartMapWindow();
+            _viewModel.OnRequestOpen2DMap += (sender, args) => this.Start2DMapWindow();
 
         }
 
@@ -38,6 +39,15 @@ namespace ViennaMaps
         {
             // anlegen eines Adress window
             MapWindow mapwin = new MapWindow();
+            // Anzeigen eines modalen windows
+            mapwin.ShowDialog();
+
+        }
+
+        private void Start2DMapWindow()
+        {
+            // anlegen eines Adress window
+            Map2DWindow mapwin = new Map2DWindow();
             // Anzeigen eines modalen windows
             mapwin.ShowDialog();
 

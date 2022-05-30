@@ -29,88 +29,48 @@ namespace ViennaMaps.Views
         {
             InitializeComponent();
             Initialize();
-            /*Map myMap = new Map(Basemap.CreateDarkGrayCanvasVector());
-
-            ArcGISMapImageLayer layer = new ArcGISMapImageLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/arcgis/rest/services/B%C3%BCchereien/FeatureServer"));
-            myMap.OperationalLayers.Add(layer);
-            MyMapView.Map = myMap;*/
+    
         }
 
-        private void Initialize()
+        private async void Initialize()
         {
 
-            // Create a new Scene with a topographic basemap.
-            Scene scene = new Scene(BasemapStyle.ArcGISDarkGray);
+            // Create the layers.
+            //Büchereien
+            FeatureLayer devOne = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/B%c3%bcchereien/FeatureServer/0"));
+            //Gemeindebauten heute
+            FeatureLayer devTwo = new FeatureLayer(new Uri("https://services.arcgis.com/E3H3dLmHwo799BQr/ArcGIS/rest/services/Gemeindebauten_Wien_Vollst%c3%a4ndig_WFL1/FeatureServer/0"));
+            //
+            FeatureLayer devThree = new FeatureLayer(new Uri("https://services.arcgis.com/Sf0q24s0oDKgX14j/ArcGIS/rest/services/Fu%c3%9fg%c3%a4ngerzonen_Wien_WFL1/FeatureServer/0"));
+            FeatureLayer nonDevOne = new FeatureLayer(new Uri("https://services.arcgis.com/E3H3dLmHwo799BQr/ArcGIS/rest/services/Gemeindebauten_Wien_Vollst%c3%a4ndig_WFL1/FeatureServer/5"));
+            FeatureLayer nonDevTwo = new FeatureLayer(new Uri("https://services.arcgis.com/E3H3dLmHwo799BQr/ArcGIS/rest/services/Wien_Nacht_Stra%c3%9fe/FeatureServer/12"));
 
-            // Add a base surface with elevation data.
-            Surface elevationSurface = new Surface();
-            Uri elevationService = new Uri("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer");
-            elevationSurface.ElevationSources.Add(new ArcGISTiledElevationSource(elevationService));
-            scene.BaseSurface = elevationSurface;
+           
 
-            // Add a scene layer.
-            Uri buildingsService = new Uri("https://tiles.arcgis.com/tiles/YfxQKFk1MjjurGb5/arcgis/rest/services/Prozessiertes_Baukörpermodell_Wien/SceneServer/layers/0");
-            ArcGISSceneLayer buildingsLayer = new ArcGISSceneLayer(buildingsService);
-            scene.OperationalLayers.Add(buildingsLayer);
+            // Create the group layer and add sublayers.
+            GroupLayer gLayer = new GroupLayer();
+            gLayer.Name = "Group: Dev A";
+            gLayer.Layers.Add(devOne);
+            gLayer.Layers.Add(devTwo);
+            gLayer.Layers.Add(devThree);
 
-            // Assign the Scene to the SceneView.
-            MySceneView.Scene = scene;
+            // Create the scene with a basemap.
+            MyMap2DView.Scene = new Scene(BasemapStyle.ArcGISLightGrayBase);
 
-            try
-            {
-                // Create a camera with an interesting view.
-                Camera viewCamera = new Camera(
-                    latitude: 48.210033,
-                    longitude: 16.363449,
-                    altitude: 400,
-                    heading: 50,
-                    pitch: 30,
-                    roll: 0
-                    );
+            // Add the top-level layers to the scene.
+             MyMap2DView.Scene.OperationalLayers.Add(gLayer);
+             MyMap2DView.Scene.OperationalLayers.Add(nonDevOne);
+             MyMap2DView.Scene.OperationalLayers.Add(nonDevTwo);
 
-                // Set the viewpoint with the camera.
-                MySceneView.SetViewpointCamera(viewCamera);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString(), "Error");
-            }
+            
+
+            // Wait for all of the layers in the group layer to load.
+            await Task.WhenAll(gLayer.Layers.ToList().Select(m => m.LoadAsync()).ToList());
+
+            // Zoom to the extent of the group layer.
+            MyMap2DView.SetViewpoint(new Viewpoint(devOne.FullExtent));
 
         }
-        private async void SceneViewTapped(object sender, Esri.ArcGISRuntime.UI.Controls.GeoViewInputEventArgs e)
-        {
-            // Get the scene layer from the scene (first and only operational layer).
-            ArcGISSceneLayer sceneLayer = (ArcGISSceneLayer)MySceneView.Scene.OperationalLayers.First();
-
-            // Clear any existing selection.
-            sceneLayer.ClearSelection();
-
-            try
-            {
-                // Identify the layer at the tap point.
-                // Use a 10-pixel tolerance around the point and return a maximum of one feature.
-                IdentifyLayerResult result = await MySceneView.IdentifyLayerAsync(sceneLayer, e.Position, 10, false, 1);
-
-                // Get the GeoElements that were identified (will be 0 or 1 element).
-                IReadOnlyList<GeoElement> geoElements = result.GeoElements;
-
-                // If a GeoElement was identified, select it in the scene.
-                if (geoElements.Any())
-                {
-                    GeoElement geoElement = geoElements.FirstOrDefault();
-                    if (geoElement != null)
-                    {
-                        // Select the feature to highlight it in the scene view.
-                        sceneLayer.SelectFeature((Feature)geoElement);
-                        
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
-            }
-        }
-
+       
     }
 }

@@ -10,32 +10,37 @@
     mc:Ignorable="d"
         Title="MapWindow" Height="1080" Width="1920">
     <UserControl>
-    <Grid>
-        <esri:SceneView x:Name="MyMap2DView" />
-            
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Select layers for display."
-                           Grid.Row="0" Margin="5"
-                           Foreground="Black" FontWeight="Bold" TextAlignment="Center" />
-                    <TreeView Grid.Row="1"
-                          ItemsSource="{Binding ElementName=MyMap2DView,Path=Scene.OperationalLayers,Mode=OneWay}" Margin="1561,10,0,509">
-                        <TreeView.ItemTemplate>
-                            <HierarchicalDataTemplate DataType="{x:Type mapping:ILayerContent}"
+        <Grid>
+            <esri:SceneView x:Name="MyMap2DView" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="155*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Select layers for display."
+                           Grid.Row="0" Margin="5,5,5,5"
+                           Foreground="Black" FontWeight="Bold" TextAlignment="Center" Grid.ColumnSpan="3" />
+                <TreeView Grid.Row="1"
+                          ItemsSource="{Binding ElementName=MyMap2DView,Path=Scene.OperationalLayers,Mode=OneWay}" Margin="1561,10,0,509" Background="#FF0B2027" BorderBrush="{x:Null}" Foreground="#FFB9C3CC" FontSize="18" Grid.ColumnSpan="3" FontFamily="Nirmala UI">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type mapping:ILayerContent}"
                                                   ItemsSource="{Binding SublayerContents}">
-                                <!-- These are explicitly one-way bindings - because layers are loaded by MapView, these values do change. -->
-                                <CheckBox IsChecked="{Binding IsVisible, Mode=TwoWay}"
+                            <!-- These are explicitly one-way bindings - because layers are loaded by MapView, these values do change. -->
+                            <CheckBox IsChecked="{Binding IsVisible, Mode=TwoWay}"
                                       IsEnabled="{Binding CanChangeVisibility,Mode=OneWay}"
                                       Content="{Binding Path=Name,Mode=OneWay}" />
-                            </HierarchicalDataTemplate>
-                        </TreeView.ItemTemplate>
-                    </TreeView>
-                </Grid>
-          
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Grid>
+
 
         </Grid>
-     </UserControl>
+    </UserControl>
 </Window>

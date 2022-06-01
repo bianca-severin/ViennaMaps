@@ -23,22 +23,26 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+                <Rectangle Margin="1564,0,0,20" Fill="#FF0B2027" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+                <TextBlock HorizontalAlignment="Left" Margin="1588,0,0,0" TextWrapping="WrapWithOverflow" Text="Layers" VerticalAlignment="Center" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="36" FontWeight="Bold" Width="332" Grid.ColumnSpan="3"/>
                 <TextBlock Text="Select layers for display."
-                           Grid.Row="0" Margin="5,5,5,5"
-                           Foreground="Black" FontWeight="Bold" TextAlignment="Center" Grid.ColumnSpan="3" />
+                           Grid.Row="0" Margin="39,33,0,0" FontFamily="Nirmala UI"  FontSize="24                           " 
+                           Foreground="#FF0B2027" FontWeight="Bold" TextAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 <TreeView Grid.Row="1"
-                          ItemsSource="{Binding ElementName=MyMap2DView,Path=Scene.OperationalLayers,Mode=OneWay}" Margin="1561,10,0,509" Background="#FF0B2027" BorderBrush="{x:Null}" Foreground="#FFB9C3CC" FontSize="18" Grid.ColumnSpan="3" FontFamily="Nirmala UI">
+                          ItemsSource="{Binding ElementName=MyMap2DView,Path=Scene.OperationalLayers,Mode=OneWay}" Margin="1564,10,0,509" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFB9C3CC" FontSize="15" Grid.ColumnSpan="3" FontFamily="Nirmala UI" FontWeight="Bold">
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type mapping:ILayerContent}"
                                                   ItemsSource="{Binding SublayerContents}">
                             <!-- These are explicitly one-way bindings - because layers are loaded by MapView, these values do change. -->
                             <CheckBox IsChecked="{Binding IsVisible, Mode=TwoWay}"
                                       IsEnabled="{Binding CanChangeVisibility,Mode=OneWay}"
-                                      Content="{Binding Path=Name,Mode=OneWay}" />
+                                      Content="{Binding Path=Name,Mode=OneWay}" 
+                                      Foreground="#FFB9C3CC"/>
                         </HierarchicalDataTemplate>
                     </TreeView.ItemTemplate>
                 </TreeView>
             </Grid>
+
 
 
         </Grid>

@@ -6,6 +6,48 @@
         xmlns:local="clr-namespace:ViennaMaps" xmlns:viewmodels="clr-namespace:ViennaMaps.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920" Background="#FF0B2027">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border>
+                            <Grid>
+                                <Grid>
+                                    <Border x:Name="border" 
+                                            CornerRadius="3,3,0,0"
+                                            Background="#FF142030"
+                                           />
+
+                                </Grid>
+                                <ContentPresenter ContentSource="Header"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#FF2B3545"
+                                        />
+
+                            </Trigger>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#FF2B3545"  />
+
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="13*"/>
@@ -20,8 +62,21 @@
         <Image x:Name="Logo" HorizontalAlignment="Center" Height="174" Margin="0,34,0,0" VerticalAlignment="Top" Width="174" Source="/Views/ViennaLogo.png" Stretch="UniformToFill"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,216,0,0" TextWrapping="WrapWithOverflow" Text="Urban Analysis Tool" VerticalAlignment="Top" Foreground="#FFC5D1EB" TextAlignment="Center" FontFamily="Nirmala UI" FontSize="22" FontWeight="Bold" Width="510"/>
         <TextBlock HorizontalAlignment="Center" Margin="15,282,15,0" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At" VerticalAlignment="Top" Foreground="#FFC5D1EB" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" LineStackingStrategy="BlockLineHeight"/>
-        <TextBlock HorizontalAlignment="Left" Margin="34,34,0,0" TextWrapping="WrapWithOverflow" Text="Analysis" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="36" FontWeight="Bold" Width="510" Grid.Column="1"/>
+
         <Button x:Name="Open2DMapButton" Content="Open 2D Map" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding View2DMapCmd}" Width="520" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,755,0,0"/>
+        <TabControl x:Name="analysisTabs" Grid.Column="1" Background="#FF2B3545" BorderBrush="{x:Null}" >
+            <TabItem Header="Country Analysis" Background="#FF0B2027" Foreground="#FFF7F7F7" Width="200" Height="45" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" >
+                <Grid Background="#FF2B3545" Margin="-2,0,2,0">
+                    <TextBlock HorizontalAlignment="Left" Margin="34,34,0,0" TextWrapping="WrapWithOverflow" Text="Country Analysis" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="36" FontWeight="Bold" Width="510" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="City Analysis" Background="#FF0B2027" Foreground="#FFF7F7F7" Width="200" Height="45" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold"  >
+                <Grid Background="#FF2B3545" />
+            </TabItem>
+            <TabItem Header="District Analysis" HorizontalAlignment="Right" Width="200" Background="#FF0B2027" Foreground="#FFF7F7F7" Height="45" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold">
+                <Grid Background="#FF2B3545" />
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>

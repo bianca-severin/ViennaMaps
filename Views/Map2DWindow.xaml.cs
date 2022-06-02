@@ -54,8 +54,18 @@ namespace ViennaMaps.Views
             FeatureLayer foreingersPercentage = new FeatureLayer(new Uri("https://services.arcgis.com/Ok7pjj1jT9rEneC7/ArcGIS/rest/services/AuslaenderanteilWien2001/FeatureServer/0"));
             //POIs Points
             FeatureLayer poisPoints = new FeatureLayer(new Uri("https://services.arcgis.com/E3H3dLmHwo799BQr/ArcGIS/rest/services/pois_wien_v6_bereinigt/FeatureServer/0"));
-            //POIs Points
+            //Doctors
             FeatureLayer doctors = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/%c3%84rzte/FeatureServer/0"));
+            //Wcs
+            FeatureLayer wc = new FeatureLayer(new Uri("https://services.arcgis.com/E3H3dLmHwo799BQr/ArcGIS/rest/services/WC_Wien_WFL1/FeatureServer/0"));
+            //universities
+            FeatureLayer universities = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/Universit%c3%a4ten_und_Fachhochschulen_Standorte_Wien/FeatureServer/0"));
+            //schools
+            FeatureLayer school = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/Schulen/FeatureServer/0"));
+            //Farmacy
+            FeatureLayer farmacy = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/APOTHEKEOGD/FeatureServer/0"));
+            //Farmacy
+            FeatureLayer metro = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/U_BahnNetz/FeatureServer/0"));
 
 
             hikingTrails.Name = "Hiking trails";
@@ -66,6 +76,12 @@ namespace ViennaMaps.Views
             foreingersPercentage.Name = "Foreingers Percentage";
             poisPoints.Name = "Points of interest";
             transportRoads.Name = "Streets, Roads & Paths";
+            universities.Name = "University";
+            doctors.Name = "Doctors";
+            wc.Name = "Wc";
+            farmacy.Name = "Farmacy";
+            school.Name = "Schule";
+            metro.Name = "Metro";
 
             // Create one layer and add sublayers.
             GroupLayer cityMorphologyLayer = new GroupLayer();
@@ -86,21 +102,26 @@ namespace ViennaMaps.Views
 
             GroupLayer educationLayer= new GroupLayer();
             educationLayer.Name = "Education";
+            educationLayer.Layers.Add(universities);
+            educationLayer.Layers.Add(school);
 
             GroupLayer healthLayer = new GroupLayer();
             healthLayer.Name = "Health";
             healthLayer.Layers.Add(doctors);
+            healthLayer.Layers.Add(farmacy);
 
             GroupLayer cultureLayer = new GroupLayer();
             cultureLayer.Name = "Culture";
 
             GroupLayer publicFacilitiesLayer = new GroupLayer();
             publicFacilitiesLayer.Name = "Public Facilities";
+            publicFacilitiesLayer.Layers.Add(wc);
 
 
             GroupLayer transportLayer = new GroupLayer();
             transportLayer.Name = "Transport";
             transportLayer.Layers.Add(transportRoads);
+            transportLayer.Layers.Add(metro);
 
 
             // Create the scene with a basemap.
@@ -118,10 +139,10 @@ namespace ViennaMaps.Views
             
 
            // Wait for all of the layers in the group layer to load.
-           await Task.WhenAll(servicesLayer.Layers.ToList().Select(m => m.LoadAsync()).ToList());
+            await Task.WhenAll(servicesLayer.Layers.ToList().Select(m => m.LoadAsync()).ToList());
 
             // Zoom to the extent of the group layer.
-            MyMap2DView.SetViewpointAsync(new Viewpoint(48.21, 16.36, 8000.0));
+            await MyMap2DView.SetViewpointAsync(new Viewpoint(48.21, 16.36, 8000.0));
 
         }
        

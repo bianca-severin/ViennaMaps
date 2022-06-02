@@ -23,7 +23,7 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Rectangle Margin="1564,0,0,20" Fill="#FF0B2027" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+                <Rectangle Margin="1564,0,0,0" Fill="#FF0B2027" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
                 <TextBlock HorizontalAlignment="Left" Margin="1588,0,0,0" TextWrapping="WrapWithOverflow" Text="Layers" VerticalAlignment="Center" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="36" FontWeight="Bold" Width="332" Grid.ColumnSpan="3"/>
                 <TextBlock Text="Select layers for display."
                            Grid.Row="0" Margin="39,33,0,0" FontFamily="Nirmala UI"  FontSize="24                           " 

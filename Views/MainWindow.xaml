@@ -55,16 +55,21 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
 
+
+            <RowDefinition Height="151*"/>
+            <RowDefinition Height="115*"/>
+
+
         </Grid.RowDefinitions>
-        <Rectangle Fill="#FF142030"/>
+        <Rectangle Fill="#FF142030" Grid.RowSpan="2"/>
 
-        <Button x:Name="OpenMapButton" Content="Open 3D View" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ViewMapCmd}" Width="520" Height="71" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,868,0,0"/>
+        <Button x:Name="OpenMapButton" Content="Open 3D View" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ViewMapCmd}" Width="460" Height="71" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,344,0,0" Grid.Row="1"/>
         <Image x:Name="Logo" HorizontalAlignment="Center" Height="174" Margin="0,34,0,0" VerticalAlignment="Top" Width="174" Source="/Views/ViennaLogo.png" Stretch="UniformToFill"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,216,0,0" TextWrapping="WrapWithOverflow" Text="Urban Analysis Tool" VerticalAlignment="Top" Foreground="#FFC5D1EB" TextAlignment="Center" FontFamily="Nirmala UI" FontSize="22" FontWeight="Bold" Width="510"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFC5D1EB" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" LineStackingStrategy="BlockLineHeight" Height="360" Width="480"><Run Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Stet clita kasd gubergren, no sea takimata sanctus est"/><Run Language="de-at" Text="."/><LineBreak/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="10,216,0,0" TextWrapping="WrapWithOverflow" Text="Urban Analysis Tool" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Center" FontFamily="Nirmala UI" FontSize="28" FontWeight="Bold" Width="510"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,272,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFC5D1EB" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" LineStackingStrategy="BlockLineHeight" Height="220" Width="460"><Run Text="As a basis for urban planning and architectural design work, an understanding of the existing surrounding urban structure is essential. "/><Run Text="This "/><Run Text="tool "/><Run Text="was "/><Run Text="to be created for architects or urban planners"/><Run Text=","/><Run Text=" support"/><Run Text="ing"/><Run Text=" the process of urban analysis"/><Run Text=" in Vienna. "/><Run Language="de-at" Text="Select the project type and location and visualize relevant ArcGIS layers, a 3D model and statistics about the country of Austria, the city of Vienna or the selected district."/></TextBlock>
 
-        <Button x:Name="Open2DMapButton" Content="Open 2D Map" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding View2DMapCmd}" Width="520" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18"  Margin="0,773,0,0"/>
-        <TabControl x:Name="analysisTabs" Grid.Column="1" Background="#FF2B3545" BorderBrush="{x:Null}" >
+        <Button x:Name="Open2DMapButton" Content="Open 2D Map" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding View2DMapCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,260,0,0" Grid.Row="1"/>
+        <TabControl x:Name="analysisTabs" Grid.Column="1" Background="#FF2B3545" BorderBrush="{x:Null}" Grid.RowSpan="2" >
             <TabItem Header="Country Analysis" Background="#FF0B2027" Foreground="#FFB9C3CC" Width="270" Height="50" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" Margin="-1,0,1,0" >
                 <Grid Background="#FF2B3545" Margin="-2,0,2,0">
                     <Grid.ColumnDefinitions>
@@ -90,13 +95,55 @@
                 </Grid>
             </TabItem>
             <TabItem Header="City Analysis" Background="#FF0B2027" Foreground="#FFB9C3CC" Width="270" Height="50" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold"  >
-                <TextBlock HorizontalAlignment="Left" Margin="34,0,0,0" TextWrapping="WrapWithOverflow" Text="..." VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="36" FontWeight="Bold" Width="510"/>
+                <Grid Background="#FF2B3545" Margin="-2,0,2,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="424*"/>
+                        <ColumnDefinition Width="245*"/>
+                        <ColumnDefinition Width="725*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="29,34,0,0" VerticalAlignment="Top" Width="495" Fill="#FF0B2027" Grid.ColumnSpan="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="125,34,0,0" VerticalAlignment="Top" Width="500" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="404,34,0,0" VerticalAlignment="Top" Width="291" Fill="#FF0B2027" Grid.Column="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="665" Margin="29,304,0,0" VerticalAlignment="Top" Width="495" Fill="#FF0B2027" Grid.ColumnSpan="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="475" Margin="125,304,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <Rectangle HorizontalAlignment="Left" Height="155" Margin="125,809,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="54,69,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Text="Title"/><Run Language="de-at" Text=" Analysis 01"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="150,69,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="2"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="54,339,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="3"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="425,69,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="2"><Run Language="de-at" Text="Notes"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="150,839,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Language="de-at" Text="Explanation"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="150,884,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="775" Height="50" Grid.Column="1" Grid.ColumnSpan="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text=" "/><Run Foreground="#FFC5D1EB" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><LineBreak/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="425,109,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="245" Height="148" Grid.Column="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text=" "/><Run Foreground="#FFC5D1EB" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><LineBreak/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="153,339,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="4"/></TextBlock>
+                </Grid>
             </TabItem>
             <TabItem Header="District Analysis" HorizontalAlignment="Right" Width="270" Background="#FF0B2027" Foreground="#FFB9C3CC" Height="50" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold">
-                <TextBlock HorizontalAlignment="Left" Margin="34,0,0,0" TextWrapping="WrapWithOverflow" Text="..." VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="36" FontWeight="Bold" Width="510"/>
+                <Grid Background="#FF2B3545" Margin="-2,0,2,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="424*"/>
+                        <ColumnDefinition Width="245*"/>
+                        <ColumnDefinition Width="725*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="29,34,0,0" VerticalAlignment="Top" Width="495" Fill="#FF0B2027" Grid.ColumnSpan="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="125,34,0,0" VerticalAlignment="Top" Width="500" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="404,34,0,0" VerticalAlignment="Top" Width="291" Fill="#FF0B2027" Grid.Column="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="665" Margin="29,304,0,0" VerticalAlignment="Top" Width="495" Fill="#FF0B2027" Grid.ColumnSpan="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="475" Margin="125,304,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <Rectangle HorizontalAlignment="Left" Height="155" Margin="125,809,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="54,69,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Text="Title"/><Run Language="de-at" Text=" Analysis 01"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="150,69,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="2"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="54,339,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="3"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="425,69,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="2"><Run Language="de-at" Text="Notes"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="150,839,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Language="de-at" Text="Explanation"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="150,884,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="775" Height="50" Grid.Column="1" Grid.ColumnSpan="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text=" "/><Run Foreground="#FFC5D1EB" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><LineBreak/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="425,109,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="245" Height="148" Grid.Column="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text=" "/><Run Foreground="#FFC5D1EB" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><LineBreak/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="153,339,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="4"/></TextBlock>
+                </Grid>
             </TabItem>
         </TabControl>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="200,529,0,0" VerticalAlignment="Top" Width="300" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35">
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="460" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35" Margin="0,132,0,0" Grid.Row="1">
             <ComboBoxItem>1010</ComboBoxItem>
             <ComboBoxItem>1020</ComboBoxItem>
             <ComboBoxItem>1030</ComboBoxItem>
@@ -121,7 +168,35 @@
             <ComboBoxItem>1220</ComboBoxItem>
             <ComboBoxItem>1230</ComboBoxItem>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="20,529,0,0" TextWrapping="Wrap" Text="Choose district:" VerticalAlignment="Top" Foreground="#FFC5D1EB" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="22" FontWeight="Bold" LineStackingStrategy="BlockLineHeight"/>
+        <TextBlock HorizontalAlignment="Left" Margin="31,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Text="2. "/><Run Language="de-at" Text="Select"/><Run Text=" "/><Run Text="project "/><Run Text="district:"/></TextBlock>
+        <Button x:Name="Open2DMapButton_Copy" Content="Create new profile" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding View2DMapCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,581,0,0" Grid.RowSpan="2"/>
+        <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Center" Margin="0,530,0,0" VerticalAlignment="Top" Width="460" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35">
+            <ComboBoxItem Content="1010"/>
+            <ComboBoxItem Content="1020"/>
+            <ComboBoxItem Content="1030"/>
+            <ComboBoxItem Content="1040"/>
+            <ComboBoxItem Content="1050"/>
+            <ComboBoxItem Content="1060"/>
+            <ComboBoxItem Content="1070"/>
+            <ComboBoxItem Content="1080"/>
+            <ComboBoxItem Content="1090"/>
+            <ComboBoxItem Content="1010"/>
+            <ComboBoxItem Content="1110"/>
+            <ComboBoxItem Content="1120"/>
+            <ComboBoxItem Content="1130"/>
+            <ComboBoxItem Content="1140"/>
+            <ComboBoxItem Content="1150"/>
+            <ComboBoxItem Content="1160"/>
+            <ComboBoxItem Content="1170"/>
+            <ComboBoxItem Content="1180"/>
+            <ComboBoxItem Content="1190"/>
+            <ComboBoxItem Content="1200"/>
+            <ComboBoxItem Content="1210"/>
+            <ComboBoxItem Content="1220"/>
+            <ComboBoxItem Content="1230"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="32,494,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight"><Run Text="1. "/><Run Language="de-at" Text="Select"/><Run Text=" "/><Run Text="or create"/><Run Language="de-at" Text=" a new"/><Run Text=" "/><Run Text="profile:"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="32,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Language="de-at" Text="3. "/><Run Text="Visualize maps:"/></TextBlock>
 
 
     </Grid>

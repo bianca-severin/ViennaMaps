@@ -3,8 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ViennaMaps" xmlns:viewmodels="clr-namespace:ViennaMaps.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
-        mc:Ignorable="d"
+     
+        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
+        xmlns:local="clr-namespace:ViennaMaps" xmlns:viewmodels="clr-namespace:ViennaMaps.ViewModels" xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        mc:Ignorable="d"        
         Title="MainWindow" Height="1080" Width="1920" Background="#FF0B2027">
 
     <Window.Resources>
@@ -92,6 +94,7 @@
                     <TextBlock HorizontalAlignment="Left" Margin="150,884,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="775" Height="50" Grid.Column="1" Grid.ColumnSpan="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text=" "/><Run Foreground="#FFC5D1EB" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><LineBreak/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="425,109,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="245" Height="148" Grid.Column="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text=" "/><Run Foreground="#FFC5D1EB" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><LineBreak/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="153,339,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="4"/></TextBlock>
+                   
                 </Grid>
             </TabItem>
             <TabItem Header="City Analysis" Background="#FF0B2027" Foreground="#FFB9C3CC" Width="270" Height="50" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold"  >

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotNetProjects.WpfToolkit.DataVisualization" Version="6.1.94" />
     <PackageReference Include="Esri.ArcGISRuntime" Version="100.14.0" />
     <PackageReference Include="Esri.ArcGISRuntime.WPF" Version="100.14.0" />
   </ItemGroup>

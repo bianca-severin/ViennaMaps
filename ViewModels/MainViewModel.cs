@@ -14,15 +14,19 @@ namespace ViennaMaps.ViewModels
     {
         public event EventHandler OnRequestOpenMap;
         public event EventHandler OnRequestOpen2DMap;
+        public event EventHandler OnRequestOpenNewProfile;
 
         public ICommand ViewMapCmd { get; set; }
         public ICommand View2DMapCmd { get; set; }
+
+        public ICommand ViewNewProfileCmd { get; set; }
 
         public MainViewModel()
         {
 
             ViewMapCmd = new RelayCommand(ViewMap);
             View2DMapCmd = new RelayCommand(View2DMap);
+            ViewNewProfileCmd = new RelayCommand(ViewNewProfile);
         }
 
         private void ViewMap()
@@ -35,6 +39,12 @@ namespace ViennaMaps.ViewModels
         {
             if (OnRequestOpen2DMap != null)
                 OnRequestOpen2DMap(this, new EventArgs());
+        }
+
+        private void ViewNewProfile()
+        {
+            if (OnRequestOpenNewProfile != null)
+                OnRequestOpenNewProfile(this, new EventArgs());
         }
     }
 }

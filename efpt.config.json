@@ -1,0 +1,87 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "UrbanAnalysisContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": null,
+   "OutputContextPath": "Models",
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "ViennaMaps",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[Analysis]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AnalysisLocation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AnalysisType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AnalysisValue]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[City]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Country]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[District]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Layer]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LayerGroup]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Project]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProjectAnalysis]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProjectLayer]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProjectScale]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "desktop-jqd9j6v\\sqlexpress.UrbanAnalysis.dbo",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

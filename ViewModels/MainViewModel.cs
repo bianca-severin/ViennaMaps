@@ -12,11 +12,11 @@ namespace ViennaMaps.ViewModels
 {
     internal class MainViewModel: BaseViewModel
     {
-        public event EventHandler OnRequestOpenMap;
+        public event EventHandler OnRequestOpen3DMap;
         public event EventHandler OnRequestOpen2DMap;
         public event EventHandler OnRequestOpenNewProfile;
 
-        public ICommand ViewMapCmd { get; set; }
+        public ICommand View3DMapCmd { get; set; }
         public ICommand View2DMapCmd { get; set; }
 
         public ICommand ViewNewProfileCmd { get; set; }
@@ -24,15 +24,15 @@ namespace ViennaMaps.ViewModels
         public MainViewModel()
         {
 
-            ViewMapCmd = new RelayCommand(ViewMap);
+            View3DMapCmd = new RelayCommand(View3DMap);
             View2DMapCmd = new RelayCommand(View2DMap);
             ViewNewProfileCmd = new RelayCommand(ViewNewProfile);
         }
 
-        private void ViewMap()
+        private void View3DMap()
         {
-            if (OnRequestOpenMap != null)
-                OnRequestOpenMap(this, new EventArgs());
+            if (OnRequestOpen3DMap != null)
+                OnRequestOpen3DMap(this, new EventArgs());
         }
 
         private void View2DMap()

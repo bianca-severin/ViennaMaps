@@ -30,16 +30,16 @@ namespace ViennaMaps
             InitializeComponent();
             _viewModel = new MainViewModel();
             this.DataContext = _viewModel;
-            _viewModel.OnRequestOpenMap += (sender, args) => this.StartMapWindow();
+            _viewModel.OnRequestOpen3DMap += (sender, args) => this.Start3DMapWindow();
             _viewModel.OnRequestOpen2DMap += (sender, args) => this.Start2DMapWindow();
             _viewModel.OnRequestOpenNewProfile += (sender, args) => this.StartNewProfile();
 
         }
 
-        private void StartMapWindow()
+        private void Start3DMapWindow()
         {
             // anlegen eines Adress window
-            MapWindow mapwin = new MapWindow();
+            Map3DWindow mapwin = new Map3DWindow();
             // Anzeigen eines modalen windows
             mapwin.ShowDialog();
 

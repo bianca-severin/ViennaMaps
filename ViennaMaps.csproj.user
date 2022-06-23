@@ -7,7 +7,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\MapWindow.xaml.cs">
+    <Compile Update="Views\Map3DWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -21,7 +21,7 @@
     <Page Update="Views\Map2DWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\MapWindow.xaml">
+    <Page Update="Views\Map3DWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

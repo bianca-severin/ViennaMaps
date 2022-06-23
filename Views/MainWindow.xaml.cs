@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ViennaMaps.ViewModels;
 using ViennaMaps.Views;
+using System.Collections.ObjectModel;
+using ViennaMaps.Models;
+
 
 
 
@@ -25,6 +28,7 @@ namespace ViennaMaps
     public partial class MainWindow : Window
     {
         private MainViewModel _viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,7 +37,6 @@ namespace ViennaMaps
             _viewModel.OnRequestOpen3DMap += (sender, args) => this.Start3DMapWindow();
             _viewModel.OnRequestOpen2DMap += (sender, args) => this.Start2DMapWindow();
             _viewModel.OnRequestOpenNewProfile += (sender, args) => this.StartNewProfile();
-
         }
 
         private void Start3DMapWindow()

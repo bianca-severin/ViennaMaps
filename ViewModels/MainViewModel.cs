@@ -7,26 +7,41 @@ using ViennaMaps.Commands;
 using System.Windows.Input;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
+using ViennaMaps.Models;
+using System.Data.Entity;
 
 namespace ViennaMaps.ViewModels
 {
-    internal class MainViewModel: BaseViewModel
+    internal class MainViewModel : BaseViewModel
     {
         public event EventHandler OnRequestOpen3DMap;
         public event EventHandler OnRequestOpen2DMap;
         public event EventHandler OnRequestOpenNewProfile;
 
+        //Commands
         public ICommand View3DMapCmd { get; set; }
         public ICommand View2DMapCmd { get; set; }
 
         public ICommand ViewNewProfileCmd { get; set; }
 
+        // Properties
+        public ObservableCollection<Location> LocationList { get; set; }
+       
+        public List<string> DistrictName {get; set; }
+
+        public List<string> ProjectName { get; set; }
+
         public MainViewModel()
         {
-
+            LocationList = new ObservableCollection<Location>();
+            DistrictName = new List<string>();
+            ProjectName = new List<string>();
             View3DMapCmd = new RelayCommand(View3DMap);
             View2DMapCmd = new RelayCommand(View2DMap);
             ViewNewProfileCmd = new RelayCommand(ViewNewProfile);
+
+            FillLocationList();
+            FillProfileList();
         }
 
         private void View3DMap()
@@ -46,5 +61,52 @@ namespace ViennaMaps.ViewModels
             if (OnRequestOpenNewProfile != null)
                 OnRequestOpenNewProfile(this, new EventArgs());
         }
+
+        public void FillLocationList()
+        {
+
+            LocationList.Clear();
+            
+
+            using (UrbanAnalysisContext context = new UrbanAnalysisContext())
+            {
+                // Join zwischen Adressen und Plz
+                var locations = context.Location.OrderBy(l => l.DistrictNumber);
+                // in Schleife Adresseliste füllen
+                foreach (Location loc in locations)
+                {
+                    //LocationList.Add(loc);
+                    DistrictName.Add(loc.DistrictName);
+                }
+
+                
+            }
+        }
+
+        public void FillProfileList()
+        {
+
+            ProjectName.Clear();
+
+
+            using (UrbanAnalysisContext context = new UrbanAnalysisContext())
+            {
+
+                var project = context.Project.OrderBy(l => l.ProjectName);
+
+                foreach (Project p in project)
+                {
+                    ProjectName.Add(p.ProjectName);
+                }
+
+
+            }
+        }
+
+        public void FillAnalysis()
+        {
+
+        }
+
     }
 }

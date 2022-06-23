@@ -146,57 +146,13 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="460" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35" Margin="0,132,0,0" Grid.Row="1">
-            <ComboBoxItem>1010</ComboBoxItem>
-            <ComboBoxItem>1020</ComboBoxItem>
-            <ComboBoxItem>1030</ComboBoxItem>
-            <ComboBoxItem>1040</ComboBoxItem>
-            <ComboBoxItem>1050</ComboBoxItem>
-            <ComboBoxItem>1060</ComboBoxItem>
-            <ComboBoxItem>1070</ComboBoxItem>
-            <ComboBoxItem>1080</ComboBoxItem>
-            <ComboBoxItem>1090</ComboBoxItem>
-            <ComboBoxItem>1010</ComboBoxItem>
-            <ComboBoxItem>1110</ComboBoxItem>
-            <ComboBoxItem>1120</ComboBoxItem>
-            <ComboBoxItem>1130</ComboBoxItem>
-            <ComboBoxItem>1140</ComboBoxItem>
-            <ComboBoxItem>1150</ComboBoxItem>
-            <ComboBoxItem>1160</ComboBoxItem>
-            <ComboBoxItem>1170</ComboBoxItem>
-            <ComboBoxItem>1180</ComboBoxItem>
-            <ComboBoxItem>1190</ComboBoxItem>
-            <ComboBoxItem>1200</ComboBoxItem>
-            <ComboBoxItem>1210</ComboBoxItem>
-            <ComboBoxItem>1220</ComboBoxItem>
-            <ComboBoxItem>1230</ComboBoxItem>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="460" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35" Margin="0,132,0,0" Grid.Row="1" ItemsSource="{Binding DistrictName}">
+           
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Margin="31,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Text="2. "/><Run Language="de-at" Text="Select"/><Run Text=" "/><Run Text="project "/><Run Text="district:"/></TextBlock>
         <Button x:Name="CreateNewProfile" Content="Create new profile" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ViewNewProfileCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,581,0,0" Grid.RowSpan="2"/>
-        <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Center" Margin="0,530,0,0" VerticalAlignment="Top" Width="460" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35">
-            <ComboBoxItem Content="1010"/>
-            <ComboBoxItem Content="1020"/>
-            <ComboBoxItem Content="1030"/>
-            <ComboBoxItem Content="1040"/>
-            <ComboBoxItem Content="1050"/>
-            <ComboBoxItem Content="1060"/>
-            <ComboBoxItem Content="1070"/>
-            <ComboBoxItem Content="1080"/>
-            <ComboBoxItem Content="1090"/>
-            <ComboBoxItem Content="1010"/>
-            <ComboBoxItem Content="1110"/>
-            <ComboBoxItem Content="1120"/>
-            <ComboBoxItem Content="1130"/>
-            <ComboBoxItem Content="1140"/>
-            <ComboBoxItem Content="1150"/>
-            <ComboBoxItem Content="1160"/>
-            <ComboBoxItem Content="1170"/>
-            <ComboBoxItem Content="1180"/>
-            <ComboBoxItem Content="1190"/>
-            <ComboBoxItem Content="1200"/>
-            <ComboBoxItem Content="1210"/>
-            <ComboBoxItem Content="1220"/>
-            <ComboBoxItem Content="1230"/>
+        <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Center" Margin="0,530,0,0" VerticalAlignment="Top" Width="460" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35" ItemsSource="{Binding ProjectName}">
+           
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Margin="32,494,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight"><Run Text="1. "/><Run Language="de-at" Text="Select"/><Run Text=" "/><Run Text="or create"/><Run Language="de-at" Text=" a new"/><Run Text=" "/><Run Text="profile:"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="32,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Language="de-at" Text="3. "/><Run Text="Visualize maps:"/></TextBlock>

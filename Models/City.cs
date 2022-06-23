@@ -9,7 +9,7 @@ namespace ViennaMaps.Models
     {
         public City()
         {
-            District = new HashSet<District>();
+            Location = new HashSet<Location>();
         }
 
         public int CityId { get; set; }
@@ -17,6 +17,6 @@ namespace ViennaMaps.Models
         public int CountryId { get; set; }
 
         public virtual Country Country { get; set; }
-        public virtual ICollection<District> District { get; set; }
+        public virtual ICollection<Location> Location { get; set; }
     }
 }

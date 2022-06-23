@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System.Linq;
 
 namespace ViennaMaps.Models
 {
@@ -20,14 +19,13 @@ namespace ViennaMaps.Models
         }
 
         public virtual DbSet<Analysis> Analysis { get; set; }
-        public virtual DbSet<AnalysisLocation> AnalysisLocation { get; set; }
         public virtual DbSet<AnalysisType> AnalysisType { get; set; }
         public virtual DbSet<AnalysisValue> AnalysisValue { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Country> Country { get; set; }
-        public virtual DbSet<District> District { get; set; }
         public virtual DbSet<Layer> Layer { get; set; }
         public virtual DbSet<LayerGroup> LayerGroup { get; set; }
+        public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<ProjectScale> ProjectScale { get; set; }
 
@@ -36,12 +34,14 @@ namespace ViennaMaps.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                object value = optionsBuilder.UseSqlServer("Data Source=DESKTOP-JQD9J6V\\SQLEXPRESS;Initial Catalog=UrbanAnalysis;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=BOA06-PC-NWU\\SQLEXPRESS;Initial Catalog=UrbanAnalysis;Integrated Security=True");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
             modelBuilder.Entity<Analysis>(entity =>
             {
                 entity.HasKey(e => e.AnalyisId)
@@ -72,22 +72,6 @@ namespace ViennaMaps.Models
                     .HasConstraintName("analysis_analysistypeid_foreign");
             });
 
-            modelBuilder.Entity<AnalysisLocation>(entity =>
-            {
-                entity.HasKey(e => new { e.AnalysisLocationId, e.DistrictId })
-                    .HasName("PK__Analysis__DDA209B205526987");
-
-                entity.Property(e => e.AnalysisLocationId).HasColumnName("AnalysisLocationID");
-
-                entity.Property(e => e.DistrictId).HasColumnName("DistrictID");
-
-                entity.HasOne(d => d.District)
-                    .WithMany(p => p.AnalysisLocation)
-                    .HasForeignKey(d => d.DistrictId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("analysislocation_districtid_foreign");
-            });
-
             modelBuilder.Entity<AnalysisType>(entity =>
             {
                 entity.Property(e => e.AnalysisTypeId).HasColumnName("AnalysisTypeID");
@@ -105,8 +89,6 @@ namespace ViennaMaps.Models
 
                 entity.Property(e => e.AnalysisId).HasColumnName("AnalysisID");
 
-                entity.Property(e => e.AnalysisLocationId).HasColumnName("AnalysisLocationID");
-
                 entity.Property(e => e.Value)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -116,6 +98,23 @@ namespace ViennaMaps.Models
                     .HasForeignKey(d => d.AnalysisId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("analysisvalue_analysisid_foreign");
+
+                entity.HasMany(d => d.District)
+                    .WithMany(p => p.AnalysisValue)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "AnalysisLocation",
+                        l => l.HasOne<Location>().WithMany().HasForeignKey("DistrictId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("analysislocation_districtid_foreign"),
+                        r => r.HasOne<AnalysisValue>().WithMany().HasForeignKey("AnalysisValueId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AnalysisLocation_AnalysisValue"),
+                        j =>
+                        {
+                            j.HasKey("AnalysisValueId", "DistrictId").HasName("PK__Analysis__DDA209B205526987");
+
+                            j.ToTable("AnalysisLocation");
+
+                            j.IndexerProperty<int>("AnalysisValueId").HasColumnName("AnalysisValueID");
+
+                            j.IndexerProperty<int>("DistrictId").HasColumnName("DistrictID");
+                        });
             });
 
             modelBuilder.Entity<City>(entity =>
@@ -148,31 +147,6 @@ namespace ViennaMaps.Models
                     .HasMaxLength(50);
             });
 
-            modelBuilder.Entity<District>(entity =>
-            {
-                entity.Property(e => e.DistrictId).ValueGeneratedNever();
-
-                entity.Property(e => e.CityId).HasColumnName("CityID");
-
-                entity.Property(e => e.DistrictName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Latitude)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Longitude)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.City)
-                    .WithMany(p => p.District)
-                    .HasForeignKey(d => d.CityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("district_cityid_foreign");
-            });
-
             modelBuilder.Entity<Layer>(entity =>
             {
                 entity.Property(e => e.LayerId)
@@ -181,7 +155,7 @@ namespace ViennaMaps.Models
 
                 entity.Property(e => e.ArcGisuri)
                     .IsRequired()
-                    .HasMaxLength(50)
+                    .HasMaxLength(150)
                     .HasColumnName("ArcGISUri");
 
                 entity.Property(e => e.LayerDataSource)
@@ -189,6 +163,10 @@ namespace ViennaMaps.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.LayerGroupId).HasColumnName("LayerGroupID");
+
+                entity.Property(e => e.LayerLabel)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.LayerName)
                     .IsRequired()
@@ -207,9 +185,41 @@ namespace ViennaMaps.Models
                     .ValueGeneratedNever()
                     .HasColumnName("LayerGroupID");
 
+                entity.Property(e => e.GroupLabel)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.GroupName)
                     .IsRequired()
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Location>(entity =>
+            {
+                entity.HasKey(e => e.DistrictId)
+                    .HasName("PK__District__85FDA4C68C909572");
+
+                entity.Property(e => e.DistrictId).ValueGeneratedNever();
+
+                entity.Property(e => e.CityId).HasColumnName("CityID");
+
+                entity.Property(e => e.DistrictName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Latitude)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Longitude)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.City)
+                    .WithMany(p => p.Location)
+                    .HasForeignKey(d => d.CityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("district_cityid_foreign");
             });
 
             modelBuilder.Entity<Project>(entity =>

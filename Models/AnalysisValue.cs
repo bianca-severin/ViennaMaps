@@ -7,11 +7,17 @@ namespace ViennaMaps.Models
 {
     public partial class AnalysisValue
     {
+        public AnalysisValue()
+        {
+            District = new HashSet<Location>();
+        }
+
         public int AnalysisValueId { get; set; }
         public int AnalysisId { get; set; }
-        public int AnalysisLocationId { get; set; }
         public string Value { get; set; }
 
         public virtual Analysis Analysis { get; set; }
+
+        public virtual ICollection<Location> District { get; set; }
     }
 }

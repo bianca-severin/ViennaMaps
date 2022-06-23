@@ -15,6 +15,7 @@ namespace ViennaMaps.Models
         public int LayerId { get; set; }
         public int LayerGroupId { get; set; }
         public string LayerName { get; set; }
+        public string LayerLabel { get; set; }
         public string ArcGisuri { get; set; }
         public string LayerDataSource { get; set; }
 

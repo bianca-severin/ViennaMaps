@@ -14,6 +14,7 @@ namespace ViennaMaps.Models
 
         public int LayerGroupId { get; set; }
         public string GroupName { get; set; }
+        public string GroupLabel { get; set; }
 
         public virtual ICollection<Layer> Layer { get; set; }
     }

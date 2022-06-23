@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace ViennaMaps.Models
 {
-    public partial class District
+    public partial class Location
     {
-        public District()
+        public Location()
         {
-            AnalysisLocation = new HashSet<AnalysisLocation>();
+            AnalysisValue = new HashSet<AnalysisValue>();
         }
 
         public int DistrictId { get; set; }
@@ -20,6 +20,7 @@ namespace ViennaMaps.Models
         public string Longitude { get; set; }
 
         public virtual City City { get; set; }
-        public virtual ICollection<AnalysisLocation> AnalysisLocation { get; set; }
+
+        public virtual ICollection<AnalysisValue> AnalysisValue { get; set; }
     }
 }

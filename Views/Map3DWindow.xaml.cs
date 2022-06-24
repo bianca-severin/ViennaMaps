@@ -102,7 +102,7 @@ namespace ViennaMaps.Views
                     {
                         // Select the feature to highlight it in the scene view.
                         sceneLayer.SelectFeature((Feature)geoElement);
-                        //MessageBox.Show("Clicked on building " + geoElement.Attributes, "Success!");
+                        MessageBox.Show("Clicked on building " + geoElement.Attributes, "Success!");
 
                     }
                 }

@@ -66,7 +66,7 @@ namespace ViennaMaps.Views
             FeatureLayer farmacy = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/APOTHEKEOGD/FeatureServer/0"));
             //Farmacy
             FeatureLayer metro = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/U_BahnNetz/FeatureServer/0"));
-
+            
 
             hikingTrails.Name = "Hiking trails";
             libraries.Name = "Libraries";

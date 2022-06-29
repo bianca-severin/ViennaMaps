@@ -8,7 +8,7 @@
         
         mc:Ignorable="d"        
         Title="MainWindow" Height="1080" Width="1920" Background="#FF0B2027">
-   
+
 
     <Window.Resources>
         <Style TargetType="{x:Type TabItem}">
@@ -64,7 +64,7 @@
 
             <RowDefinition Height="151*"/>
             <RowDefinition Height="115*"/>
-            
+
 
 
         </Grid.RowDefinitions>
@@ -90,11 +90,11 @@
                     <Rectangle HorizontalAlignment="Left" Height="245" Margin="404,34,0,0" VerticalAlignment="Top" Width="291" Fill="#FF0B2027" Grid.Column="2"/>
                     <Rectangle HorizontalAlignment="Left" Height="665" Margin="29,304,0,0" VerticalAlignment="Top" Width="495" Fill="#FF0B2027" Grid.ColumnSpan="2"/>
                     <lvc:CartesianChart
-                            Series="{Binding CountryAnalysis01}" Grid.ColumnSpan="2" Margin="34,109,150,732" ZoomMode="Y">
+                            Series="{Binding CountryAnalysis01}" Grid.ColumnSpan="2" Margin="34,89,150,707" ZoomMode="Y"  XAxes="{Binding CountryAnalysis01XAxes }">
                     </lvc:CartesianChart>
                     <Rectangle HorizontalAlignment="Left" Height="475" Margin="125,304,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
                     <Rectangle HorizontalAlignment="Left" Height="155" Margin="125,809,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="54,69,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Text="Title"/><Run Language="de-at" Text=" Analysis 01"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="54,49,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Language="de-at" Text="Population growth"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="150,69,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="2"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="54,339,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="3"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="425,69,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="2"><Run Language="de-at" Text="Notes"/></TextBlock>
@@ -102,7 +102,7 @@
                     <TextBlock HorizontalAlignment="Left" Margin="150,884,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="775" Height="50" Grid.Column="1" Grid.ColumnSpan="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text=" "/><Run Foreground="#FFC5D1EB" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><LineBreak/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="425,109,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="245" Height="148" Grid.Column="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text=" "/><Run Foreground="#FFC5D1EB" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor"/><LineBreak/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="153,339,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="4"/></TextBlock>
-                   
+
                 </Grid>
             </TabItem>
             <TabItem Header="City Analysis" Background="#FF0B2027" Foreground="#FFB9C3CC" Width="270" Height="50" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold"  >
@@ -155,12 +155,12 @@
             </TabItem>
         </TabControl>
         <ComboBox x:Name="comboBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="460" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35" Margin="0,132,0,0" Grid.Row="1" ItemsSource="{Binding DistrictName}">
-           
+
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Margin="31,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Text="2. "/><Run Language="de-at" Text="Select"/><Run Text=" "/><Run Text="project "/><Run Text="district:"/></TextBlock>
         <Button x:Name="CreateNewProfile" Content="Create new profile" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ViewNewProfileCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,581,0,0" Grid.RowSpan="2"/>
         <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Center" Margin="0,530,0,0" VerticalAlignment="Top" Width="460" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35" ItemsSource="{Binding ProjectName}">
-           
+
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Margin="32,494,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight"><Run Text="1. "/><Run Language="de-at" Text="Select"/><Run Text=" "/><Run Text="or create"/><Run Language="de-at" Text=" a new"/><Run Text=" "/><Run Text="profile:"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="32,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Language="de-at" Text="3. "/><Run Text="Visualize maps:"/></TextBlock>

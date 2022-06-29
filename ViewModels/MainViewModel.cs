@@ -10,6 +10,9 @@ using System.Collections.ObjectModel;
 using ViennaMaps.Models;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using SkiaSharp;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.Painting.Effects;
 
 namespace ViennaMaps.ViewModels
 {
@@ -109,6 +112,7 @@ namespace ViennaMaps.ViewModels
 
         }
 
+        //documentation: https://lvcharts.com/docs/wpf/2.0.0-beta.300/CartesianChart.Cartesian%20chart%20control#axes.labels-and-axes.labelers
         public ISeries[] CountryAnalysis01 { get; set; }
         = new ISeries[]
         {
@@ -116,8 +120,21 @@ namespace ViennaMaps.ViewModels
                 {
                     //get values from database, depending on the chosen analysis
                     Values = new double[] { 7644818, 7943489, 8002186, 8201359, 8351643, 8584926, 8858775 },
-                    Fill = null
+                    Fill = null,
+                    TooltipLabelFormatter = (chartPoint) => $"Population: {chartPoint.PrimaryValue}"
                 }
         };
+
+        public Axis[] CountryAnalysis01XAxes { get; set; }
+              = new Axis[]
+              {
+                new Axis
+                {
+                    Name = "X Axis",
+                    Labels = new string[] { "1990", "1995", "2000", "2005", "2010", "2015", "2020" }
+
+                }
+              };
+
     }
 }

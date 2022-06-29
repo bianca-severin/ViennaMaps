@@ -8,7 +8,8 @@ using System.Windows.Input;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using ViennaMaps.Models;
-using System.Data.Entity;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 
 namespace ViennaMaps.ViewModels
 {
@@ -108,5 +109,14 @@ namespace ViennaMaps.ViewModels
 
         }
 
+        public ISeries[] Series { get; set; }
+        = new ISeries[]
+        {
+                new LineSeries<double>
+                {
+                    Values = new double[] { 2, 1, 3, 5, 3, 4, 6 },
+                    Fill = null
+                }
+        };
     }
 }

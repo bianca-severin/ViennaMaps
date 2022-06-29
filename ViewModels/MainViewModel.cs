@@ -109,12 +109,13 @@ namespace ViennaMaps.ViewModels
 
         }
 
-        public ISeries[] Series { get; set; }
+        public ISeries[] CountryAnalysis01 { get; set; }
         = new ISeries[]
         {
                 new LineSeries<double>
                 {
-                    Values = new double[] { 2, 1, 3, 5, 3, 4, 6 },
+                    //get values from database, depending on the chosen analysis
+                    Values = new double[] { 7644818, 7943489, 8002186, 8201359, 8351643, 8584926, 8858775 },
                     Fill = null
                 }
         };

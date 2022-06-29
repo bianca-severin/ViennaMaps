@@ -90,7 +90,7 @@
                     <Rectangle HorizontalAlignment="Left" Height="245" Margin="404,34,0,0" VerticalAlignment="Top" Width="291" Fill="#FF0B2027" Grid.Column="2"/>
                     <Rectangle HorizontalAlignment="Left" Height="665" Margin="29,304,0,0" VerticalAlignment="Top" Width="495" Fill="#FF0B2027" Grid.ColumnSpan="2"/>
                     <lvc:CartesianChart
-                            Series="{Binding Series}" Grid.ColumnSpan="2" Margin="34,109,150,732">
+                            Series="{Binding CountryAnalysis01}" Grid.ColumnSpan="2" Margin="34,109,150,732" ZoomMode="Y">
                     </lvc:CartesianChart>
                     <Rectangle HorizontalAlignment="Left" Height="475" Margin="125,304,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
                     <Rectangle HorizontalAlignment="Left" Height="155" Margin="125,809,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>

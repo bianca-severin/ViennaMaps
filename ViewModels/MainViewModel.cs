@@ -13,6 +13,7 @@ using LiveChartsCore.SkiaSharpView;
 using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ViennaMaps.ViewModels
 {
@@ -121,7 +122,7 @@ namespace ViennaMaps.ViewModels
                     //get values from database, depending on the chosen analysis
                     Values = new double[] { 7644818, 7943489, 8002186, 8201359, 8351643, 8584926, 8858775 },
                     Fill = null,
-                    TooltipLabelFormatter = (chartPoint) => $"Population: {chartPoint.PrimaryValue}"
+                    TooltipLabelFormatter = (chartPoint) => $"Population: {chartPoint.PrimaryValue} inhabitants"
                 }
         };
 
@@ -135,5 +136,26 @@ namespace ViennaMaps.ViewModels
                 }
               };
 
+        public ISeries[] CountryAnalysis04 { get; set; } =
+{
+        new ColumnSeries<double>
+        {
+            Values = new double[] { 4657, 154.4, 125.6, 88.6, 78.6, 76.4, 75.1, 60.4, 59.2 },
+            Stroke = null,
+            Fill = new SolidColorPaint(SKColors.CornflowerBlue),
+            IgnoresBarPosition = true,
+            TooltipLabelFormatter = (chartPoint) => $"Population Density: {chartPoint.PrimaryValue} inhabitants per square kilometer"
+        },
+
+    };
+        
+        public Axis[] CountryAnalysis04XAxes { get; set; } =
+        {
+        new Axis
+        {
+            Labels = new string[] { "Vienna", "Voralberg", "Upper Austria" , "Lower Austria", "Salzburg", "Styria", "Burgenland", "Tyrol", "Carinthia" },
+            LabelsRotation = 15
+        }
+    };
     }
 }

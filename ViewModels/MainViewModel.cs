@@ -130,7 +130,6 @@ namespace ViennaMaps.ViewModels
               {
                 new Axis
                 {
-                    Name = "X Axis",
                     Labels = new string[] { "1990", "1995", "2000", "2005", "2010", "2015", "2020" }
 
                 }

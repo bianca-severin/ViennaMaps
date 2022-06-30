@@ -82,9 +82,7 @@ namespace ViennaMaps.ViewModels
                 {
                     //LocationList.Add(loc);
                     DistrictName.Add(loc.DistrictName);
-                }
-
-                
+                }                
             }
         }
 
@@ -103,8 +101,6 @@ namespace ViennaMaps.ViewModels
                 {
                     ProjectName.Add(p.ProjectName);
                 }
-
-
             }
         }
 
@@ -136,6 +132,39 @@ namespace ViennaMaps.ViewModels
                 }
               };
 
+    
+
+        public ISeries[] CountryAnalysis02{ get; set; }
+              = new ISeries[]
+              {
+                new PieSeries<double> { Values = new List<double> { 2 }, InnerRadius = 50 },
+        new PieSeries<double> { Values = new List<double> { 4 }, InnerRadius = 50 },
+        new PieSeries<double> { Values = new List<double> { 1 }, InnerRadius = 50 },
+        new PieSeries<double> { Values = new List<double> { 4 }, InnerRadius = 50 },
+        new PieSeries<double> { Values = new List<double> { 3 }, InnerRadius = 50 }
+              };
+
+        public ISeries[] CountryAnalysis03 { get; set; }
+= new ISeries[]
+{
+                new LineSeries<double>
+                {
+                    //get values from database, depending on the chosen analysis
+                    Values = new double[] { 7644818, 7943489, 8002186, 8201359, 8351643, 8584926, 8858775 },
+                    Fill = null,
+                    TooltipLabelFormatter = (chartPoint) => $"Population: {chartPoint.PrimaryValue} inhabitants"
+                }
+};
+
+        public Axis[] CountryAnalysis03XAxes { get; set; }
+              = new Axis[]
+              {
+                new Axis
+                {
+                    Labels = new string[] { "1990", "1995", "2000", "2005", "2010", "2015", "2020" }
+
+                }
+              };
         public ISeries[] CountryAnalysis04 { get; set; } =
 {
         new ColumnSeries<double>

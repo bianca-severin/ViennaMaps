@@ -14,6 +14,7 @@ using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using CommunityToolkit.Mvvm.ComponentModel;
+using LiveChartsCore.Measure;
 
 namespace ViennaMaps.ViewModels
 {
@@ -128,7 +129,6 @@ namespace ViennaMaps.ViewModels
                 new Axis
                 {
                     Labels = new string[] { "1990", "1995", "2000", "2005", "2010", "2015", "2020" }
-
                 }
               };
 
@@ -137,32 +137,35 @@ namespace ViennaMaps.ViewModels
         public ISeries[] CountryAnalysis02{ get; set; }
               = new ISeries[]
               {
-                new PieSeries<double> { Values = new List<double> { 2 }, InnerRadius = 50 },
-        new PieSeries<double> { Values = new List<double> { 4 }, InnerRadius = 50 },
-        new PieSeries<double> { Values = new List<double> { 1 }, InnerRadius = 50 },
-        new PieSeries<double> { Values = new List<double> { 4 }, InnerRadius = 50 },
-        new PieSeries<double> { Values = new List<double> { 3 }, InnerRadius = 50 }
+                new PieSeries<double> { Values = new List<double> { 42.7 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are renting" },
+                new PieSeries<double> { Values = new List<double> { 48.8 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are owning"},
+                new PieSeries<double> { Values = new List<double> { 8.5 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are rent-free or in unpaid housing" },
+                
               };
-
+        
         public ISeries[] CountryAnalysis03 { get; set; }
-= new ISeries[]
-{
-                new LineSeries<double>
-                {
-                    //get values from database, depending on the chosen analysis
-                    Values = new double[] { 7644818, 7943489, 8002186, 8201359, 8351643, 8584926, 8858775 },
-                    Fill = null,
-                    TooltipLabelFormatter = (chartPoint) => $"Population: {chartPoint.PrimaryValue} inhabitants"
-                }
-};
+            = new ISeries[]
+            {
+
+            new StackedColumnSeries<double>
+            {
+                Values = new List<double> { 24, 15.9 , 9.2, 7.8, 5.6, -1.1, -2.4, -3.9, -26.3 },
+                Stroke = null,
+                DataLabelsPaint = new SolidColorPaint(new SKColor(45, 45, 45)),
+                Fill = new SolidColorPaint(SKColors.Teal),
+                DataLabelsSize = 14,
+                DataLabelsPosition = DataLabelsPosition.Middle,
+                TooltipLabelFormatter = (chartPoint) => $"Living space per person: {chartPoint.PrimaryValue} m² to average"
+            }};
 
         public Axis[] CountryAnalysis03XAxes { get; set; }
               = new Axis[]
               {
                 new Axis
                 {
-                    Labels = new string[] { "1990", "1995", "2000", "2005", "2010", "2015", "2020" }
-
+                    Labels = new string[] { "Burgenland", "Lower Austria", "Upper Austria", "Carinthia", "Styria", "Voralberg", "Tyrol", "Salzburg", "Vienna" },
+                    LabelsRotation = 90,
+                     UnitWidth =1
                 }
               };
         public ISeries[] CountryAnalysis04 { get; set; } =
@@ -183,7 +186,7 @@ namespace ViennaMaps.ViewModels
         new Axis
         {
             Labels = new string[] { "Vienna", "Voralberg", "Upper Austria" , "Lower Austria", "Salzburg", "Styria", "Burgenland", "Tyrol", "Carinthia" },
-            LabelsRotation = 15
+            LabelsRotation = 30
         }
     };
     }

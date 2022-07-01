@@ -85,30 +85,30 @@
                         <ColumnDefinition Width="725*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="29,34,0,0" VerticalAlignment="Top" Width="495" Fill="#FF0B2027" Grid.ColumnSpan="2"/>
-                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="125,34,0,0" VerticalAlignment="Top" Width="500" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="29,34,0,0" VerticalAlignment="Top" Width="570" Fill="#FF0B2027" Grid.ColumnSpan="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="195,34,0,0" VerticalAlignment="Top" Width="430" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
                     <Rectangle HorizontalAlignment="Left" Height="245" Margin="404,34,0,0" VerticalAlignment="Top" Width="291" Fill="#FF0B2027" Grid.Column="2"/>
-                    <Rectangle HorizontalAlignment="Left" Height="665" Margin="29,304,0,0" VerticalAlignment="Top" Width="495" Fill="#FF0B2027" Grid.ColumnSpan="2"/>
-                    <Rectangle HorizontalAlignment="Left" Height="475" Margin="125,304,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
-                    <Rectangle HorizontalAlignment="Left" Height="155" Margin="125,809,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <Rectangle HorizontalAlignment="Left" Height="665" Margin="29,304,0,0" VerticalAlignment="Top" Width="570" Fill="#FF0B2027" Grid.ColumnSpan="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="475" Margin="195,304,0,0" VerticalAlignment="Top" Width="745" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <Rectangle HorizontalAlignment="Left" Height="155" Margin="195,809,0,0" VerticalAlignment="Top" Width="745" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="1"/>
                     <lvc:CartesianChart
-                            Series="{Binding CountryAnalysis01}" Grid.ColumnSpan="2" Margin="34,62,150,714" ZoomMode="Y"  XAxes="{Binding CountryAnalysis01XAxes }">
+                            Series="{Binding CountryAnalysis01}" Grid.ColumnSpan="2" Margin="34,62,75,727" ZoomMode="Y"  XAxes="{Binding CountryAnalysis01XAxes }">
                     </lvc:CartesianChart>
                     <lvc:PieChart 
-                            Series="{Binding CountryAnalysis02}" Grid.ColumnSpan="2" Margin="125,94,340,727" Grid.Column="1" >
+                            Series="{Binding CountryAnalysis02}" Grid.ColumnSpan="2" Margin="205,94,370,727" Grid.Column="1" LegendPosition="Right" LegendBackground="#FF0B2027">
                     </lvc:PieChart>
                     <lvc:CartesianChart
-                            Series="{Binding CountryAnalysis03}" Grid.ColumnSpan="2" Margin="34,384,150,47" ZoomMode="Y"  XAxes="{Binding CountryAnalysis03XAxes }">
+                            Series="{Binding CountryAnalysis03}" Grid.ColumnSpan="2" Margin="34,384,75,47" ZoomMode="Y"  XAxes="{Binding CountryAnalysis03XAxes }">
                     </lvc:CartesianChart>
-                    <lvc:CartesianChart Series="{Binding CountryAnalysis04}" Grid.ColumnSpan="2" Margin="130,379,0,207" Grid.Column="1"  XAxes="{Binding CountryAnalysis04XAxes}"/>
+                    <lvc:CartesianChart Series="{Binding CountryAnalysis04}" Grid.ColumnSpan="2" Margin="195,379,0,207" Grid.Column="1"  XAxes="{Binding CountryAnalysis04XAxes}"/>
                     <TextBlock HorizontalAlignment="Left" Margin="54,47,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Language="de-at" Text="Population growth"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="150,51,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Title"/><Run Text=" Analysis 0"/><Run Language="de-at" Text="2"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="54,317,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Text="Po"/><Run Language="de-at" Text="pulation density"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="215,43,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2" Text="Rental and ownership rate"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="54,317,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Language="de-at" Text="Living space "/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="425,48,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="2"><Run Language="de-at" Text="Notes"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="150,839,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Language="de-at" Text="Explanation"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="150,884,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="775" Height="50" Grid.Column="1" Grid.ColumnSpan="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text="The analysis shows four chosen topics relevant for the project profile. To change these topics you can choose another profile or create a new one."/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="210,839,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Language="de-at" Text="Explanation"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="215,884,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="710" Height="50" Grid.Column="1" Grid.ColumnSpan="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text="The analysis shows four chosen topics relevant for the project profile. To change these topics you can choose another profile or create a new one."/></TextBlock>
                     <TextBlock Margin="425,99,55,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="245" Height="168" Grid.Column="2" Opacity="0.6"><Run Text="Austria has 3.99 million main residences and 1.67 main rental residences, the proportion of single-person households in main residences is 37.5%"/><Run Language="de-at" Text="."/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="153,321,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Language="de-at" Text="Population density"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="220,321,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="1" Grid.ColumnSpan="2"><Run Language="de-at" Text="Population density"/></TextBlock>
 
                 </Grid>
             </TabItem>

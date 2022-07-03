@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 
 namespace ViennaMaps.ViewModels
 {
-    internal class Map2DViewModel: BaseViewModel
+    internal class Map2DViewModel : BaseViewModel
     {
 
         //Event
@@ -21,6 +21,9 @@ namespace ViennaMaps.ViewModels
         //Attribute
         private Layer _layer;
 
+        public string Location {get; set;}
+        public string Project { get; set;}
+
         //Commands
         public ICommand ExitCmd { get; set; }
 
@@ -28,9 +31,11 @@ namespace ViennaMaps.ViewModels
         public ObservableCollection<Layer> LayerList { get; set; }
         private int _layerid;
 
-        public Map2DViewModel()
+        public Map2DViewModel( string project, string location)
         {
             ExitCmd = new RelayCommand(Exit);
+            Location = location;
+            Project = project;
         }
 
         private void Exit()

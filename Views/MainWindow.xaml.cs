@@ -50,8 +50,8 @@ namespace ViennaMaps
 
         private void Start2DMapWindow()
         {
-            // anlegen eines Adress window
-            Map2DWindow mapwin = new Map2DWindow();
+            // anlegen eines 2D window
+            Map2DWindow mapwin = new Map2DWindow(_viewModel.SelectedProject, _viewModel.SelectedLocation);
             // Anzeigen eines modalen windows
             mapwin.ShowDialog();
 

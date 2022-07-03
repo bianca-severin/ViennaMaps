@@ -20,26 +20,32 @@ namespace ViennaMaps.ViewModels
 {
     internal class MainViewModel : BaseViewModel
     {
+
+        //Events - open additional windows
         public event EventHandler OnRequestOpen3DMap;
         public event EventHandler OnRequestOpen2DMap;
         public event EventHandler OnRequestOpenNewProfile;
 
-        //Commands
+
+        //Commands - view windows
         public ICommand View3DMapCmd { get; set; }
         public ICommand View2DMapCmd { get; set; }
-
         public ICommand ViewNewProfileCmd { get; set; }
 
         // Properties
-        public ObservableCollection<Location> LocationList { get; set; }
+        //public ObservableCollection<Location> LocationList { get; set; }
        
         public List<string> DistrictName {get; set; }
 
         public List<string> ProjectName { get; set; }
 
+        public string SelectedLocation { get; set; }
+        public string SelectedProject { get; set; }
+
         public MainViewModel()
         {
-            LocationList = new ObservableCollection<Location>();
+            //check this - LocationList vs District name
+            //LocationList = new ObservableCollection<Location>();
             DistrictName = new List<string>();
             ProjectName = new List<string>();
             View3DMapCmd = new RelayCommand(View3DMap);
@@ -70,18 +76,17 @@ namespace ViennaMaps.ViewModels
 
         public void FillLocationList()
         {
-
-            LocationList.Clear();
-            
+            //empty list
+            //LocationList.Clear();            
 
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
-                // Join zwischen Adressen und Plz
+                
+                //show location ordered by District Number
                 var locations = context.Location.OrderBy(l => l.DistrictNumber);
-                // in Schleife Adresseliste füllen
+                // fill location list
                 foreach (Location loc in locations)
                 {
-                    //LocationList.Add(loc);
                     DistrictName.Add(loc.DistrictName);
                 }                
             }
@@ -91,7 +96,6 @@ namespace ViennaMaps.ViewModels
         {
 
             ProjectName.Clear();
-
 
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
@@ -111,6 +115,8 @@ namespace ViennaMaps.ViewModels
         }
 
         //documentation: https://lvcharts.com/docs/wpf/2.0.0-beta.300/CartesianChart.Cartesian%20chart%20control#axes.labels-and-axes.labelers
+        //allgemeine methode - füllt alle properties
+        // vielleicht 1 absrakte basis klasse - ableitung für jede datenart
         public ISeries[] CountryAnalysis01 { get; set; }
         = new ISeries[]
         {
@@ -130,7 +136,7 @@ namespace ViennaMaps.ViewModels
                 {
                     Labels = new string[] { "1990", "1995", "2000", "2005", "2010", "2015", "2020" }
                 }
-              };
+         };
 
     
 
@@ -146,7 +152,6 @@ namespace ViennaMaps.ViewModels
         public ISeries[] CountryAnalysis03 { get; set; }
             = new ISeries[]
             {
-
             new StackedColumnSeries<double>
             {
                 Values = new List<double> { 24, 15.9 , 9.2, 7.8, 5.6, -1.1, -2.4, -3.9, -26.3 },
@@ -179,8 +184,7 @@ namespace ViennaMaps.ViewModels
             TooltipLabelFormatter = (chartPoint) => $"Population Density: {chartPoint.PrimaryValue} inhabitants per square kilometer"
         },
 
-    };
-        
+    };        
         public Axis[] CountryAnalysis04XAxes { get; set; } =
         {
         new Axis

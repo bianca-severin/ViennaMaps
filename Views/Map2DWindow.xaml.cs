@@ -15,22 +15,28 @@ using Esri.ArcGISRuntime.Mapping;
 using Esri.ArcGISRuntime.Data;
 using Esri.ArcGISRuntime.Geotriggers;
 using ViennaMaps.Models;
+using ViennaMaps.ViewModels;
 
 namespace ViennaMaps.Views
 {
     /// <summary>
     /// Interaktionslogik für MapWindow.xaml
     /// </summary>
-    /// 
-  
+    ///   
 
     public partial class Map2DWindow: Window
     {
-        public Map2DWindow()
+        private Map2DViewModel _viewModel;
+
+        
+        public Map2DWindow(string project, string location)
         {
             InitializeComponent();
+            _viewModel = new Map2DViewModel(project, location);
+            this.DataContext = _viewModel;
+            _viewModel.OnRequestClose += (sender, args) => this.Close();
             Initialize();
-    
+            
         }
 
         private async void Initialize()

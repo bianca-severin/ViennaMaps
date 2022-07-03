@@ -15,6 +15,7 @@ namespace ViennaMaps.Models
         public int AnalysisValueId { get; set; }
         public int AnalysisId { get; set; }
         public string Value { get; set; }
+        public string Label { get; set; }
 
         public virtual Analysis Analysis { get; set; }
 

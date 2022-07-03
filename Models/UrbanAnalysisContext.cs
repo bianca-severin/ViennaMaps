@@ -40,10 +40,8 @@ namespace ViennaMaps.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
             modelBuilder.Entity<Analysis>(entity =>
-            { 
+            {
                 entity.HasKey(e => e.AnalyisId)
                     .HasName("PK__Analysis__BBD431D6A7EAF0F2");
 
@@ -88,6 +86,8 @@ namespace ViennaMaps.Models
                     .HasColumnName("AnalysisValueID");
 
                 entity.Property(e => e.AnalysisId).HasColumnName("AnalysisID");
+
+                entity.Property(e => e.Label).HasMaxLength(50);
 
                 entity.Property(e => e.Value)
                     .IsRequired()

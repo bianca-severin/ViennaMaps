@@ -66,13 +66,13 @@ namespace ViennaMaps.ViewModels
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
 
-                var liste = context.View1.Include(p => p.LayerId).Include(i => i.ProjectId).Include(p => p.ProjectName);
+                var liste = context.View1.Include(p => p.LayerId).Include(i => i.ProjectId).Where(p => p.ProjectName == Project );
+
                 foreach (var item in liste)
-                    Trace.WriteLine($"{item.ProjectName}, {item.LayerName} ");
-                //var list= context.Project.OfType<Layer>().FirstOrDefault();
-                /*(ObservableCollection<Layer>)(
-                        from p in context.Project
-                        select p.Layer);*/
+                {
+                     Trace.WriteLine($"{item.ProjectName}, {item.LayerName} ");
+                }
+         
               
 
             }

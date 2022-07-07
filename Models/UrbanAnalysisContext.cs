@@ -291,7 +291,30 @@ namespace ViennaMaps.Models
 
                 entity.ToView("View_1");
 
+                entity.Property(e => e.ArcGisuri)
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .HasColumnName("ArcGISUri");
+
+                entity.Property(e => e.GroupLabel)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.GroupName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.LayerDataSource)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.LayerGroupId).HasColumnName("LayerGroupID");
+
                 entity.Property(e => e.LayerId).HasColumnName("LayerID");
+
+                entity.Property(e => e.LayerLabel)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.LayerName)
                     .IsRequired()

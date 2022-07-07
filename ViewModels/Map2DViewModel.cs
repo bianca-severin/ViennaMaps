@@ -27,32 +27,30 @@ namespace ViennaMaps.ViewModels
         //Event
         public event EventHandler OnRequestClose;
 
-       
-
-        //Attribute
-        private Layer _layer;
-
+        //Properties
         public string Location {get; set;}
         public string Project { get; set;}
+        public SceneView MyMap2DView { get; set; }
+
 
         //Commands
         public ICommand ExitCmd { get; set; }
 
-        //Properties
-        public ObservableCollection<Layer> LayerList { get; set; }
-        public SceneView MyMap2DView { get; set; }
 
         //Variables
-        private int _layerid;
         private List <FeatureLayer> _featureLayer = new List<FeatureLayer>();
+        private List <string> _groupLayerLabel = new List<string>();
         
+        private List <GroupLayer> _groupLayer = new List<GroupLayer>();
 
+
+        //Constructor
         public Map2DViewModel( string project, string location)
         {
             ExitCmd = new RelayCommand(Exit);
             Location = location;
-            Project = project;             
-
+            Project = project;
+            CreateLayers();
         }
 
         private void Exit()
@@ -66,130 +64,61 @@ namespace ViennaMaps.ViewModels
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
 
-                var liste = context.View1.Include(p => p.LayerId).Include(i => i.ProjectId).Where(p => p.ProjectName == Project );
+                var liste = context.View1.Include(p => p.LayerId).Include(i => i.ProjectId).Where(p => p.ProjectName == Project);
 
                 foreach (var item in liste)
                 {
-                     Trace.WriteLine($"{item.ProjectName}, {item.LayerName} ");
-                }
-         
-              
+                    _featureLayer.Add(new FeatureLayer(new Uri(item.ArcGisuri)));
+                    _featureLayer.Last().Name = item.LayerLabel;
+
+                    //TO DO: add both options
+                    if (!_groupLayerLabel.Contains(item.GroupLabel))
+                    {
+                        _groupLayer.Add(new GroupLayer());
+                        _groupLayer.Last().Name = item.GroupLabel;
+                        _groupLayer.Last().Layers.Add(_featureLayer.Last());
+                        _groupLayerLabel.Add(item.GroupLabel);
+
+                        //check if correct
+                        Trace.WriteLine($"GroupLabel {item.GroupLabel} added");
+                    }                 
+            
+                }                   
 
             }
         }
 
-        public async void Initialize()
+        private void CreateGroups( )
         {
-            //Map2D map = new Map2D();
 
-            // Create the layers.
-            //Büchereien
-            FeatureLayer libraries = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/B%c3%bcchereien/FeatureServer/0"));
-            //Gemeindebauten heute
-            FeatureLayer communityBuildings = new FeatureLayer(new Uri("https://services.arcgis.com/E3H3dLmHwo799BQr/ArcGIS/rest/services/Gemeindebauten_Wien_Vollst%c3%a4ndig_WFL1/FeatureServer/0"));
-            //Fußgängerzonen
-            FeatureLayer pedestrianAreas = new FeatureLayer(new Uri("https://services.arcgis.com/Sf0q24s0oDKgX14j/ArcGIS/rest/services/Fu%c3%9fg%c3%a4ngerzonen_Wien_WFL1/FeatureServer/0"));
-            //Bezirksgrenzen
-            FeatureLayer districtBoundary = new FeatureLayer(new Uri("https://services.arcgis.com/E3H3dLmHwo799BQr/ArcGIS/rest/services/Gemeindebauten_Wien_Vollst%c3%a4ndig_WFL1/FeatureServer/5"));
-            //Verkehr (loads super slow)
-            FeatureLayer transportRoads = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/arcgis/rest/services/GIP_Verkehrsnetz/FeatureServer/0"));
-            //Hiking Trails
-            FeatureLayer hikingTrails = new FeatureLayer(new Uri("https://services2.arcgis.com/Eij2WK0CHxEthqHo/ArcGIS/rest/services/Vienna_City_Trails%e6%b5%8b%e8%af%95/FeatureServer/0"));
-            //ForeingerPercentage
-            FeatureLayer foreingersPercentage = new FeatureLayer(new Uri("https://services.arcgis.com/Ok7pjj1jT9rEneC7/ArcGIS/rest/services/AuslaenderanteilWien2001/FeatureServer/0"));
-            //POIs Points
-            FeatureLayer poisPoints = new FeatureLayer(new Uri("https://services.arcgis.com/E3H3dLmHwo799BQr/ArcGIS/rest/services/pois_wien_v6_bereinigt/FeatureServer/0"));
-            //Doctors
-            FeatureLayer doctors = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/%c3%84rzte/FeatureServer/0"));
-            //Wcs
-            FeatureLayer wc = new FeatureLayer(new Uri("https://services.arcgis.com/E3H3dLmHwo799BQr/ArcGIS/rest/services/WC_Wien_WFL1/FeatureServer/0"));
-            //universities
-            FeatureLayer universities = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/Universit%c3%a4ten_und_Fachhochschulen_Standorte_Wien/FeatureServer/0"));
-            //schools
-            FeatureLayer school = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/Schulen/FeatureServer/0"));
-            //Farmacy
-            FeatureLayer farmacy = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/APOTHEKEOGD/FeatureServer/0"));
-            //Farmacy
-            FeatureLayer metro = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/U_BahnNetz/FeatureServer/0"));
+          
 
-            /*
-            hikingTrails.Name = "Hiking trails";
-            libraries.Name = "Libraries";
-            communityBuildings.Name = "Community buildings";
-            pedestrianAreas.Name = "Pedestrian areas";
-            districtBoundary.Name = "District Boundaries";
-            foreingersPercentage.Name = "Foreingers Percentage";
-            poisPoints.Name = "Points of interest";
-            transportRoads.Name = "Streets, Roads & Paths";
-            universities.Name = "University";
-            doctors.Name = "Doctors";
-            wc.Name = "Wc";
-            farmacy.Name = "Farmacy";
-            school.Name = "Schule";
-            metro.Name = "Metro";*/
+        }
 
-            // Create one layer and add sublayers.
-            GroupLayer cityMorphologyLayer = new GroupLayer();
-            cityMorphologyLayer.Name = "City morphology";
-            cityMorphologyLayer.Layers.Add(districtBoundary);
-            cityMorphologyLayer.Layers.Add(communityBuildings);
-
-            GroupLayer servicesLayer = new GroupLayer();
-            servicesLayer.Name = "Services, functions and uses";
-            servicesLayer.Layers.Add(libraries);
-
-
-            GroupLayer greenAndPublicSpaceLayer = new GroupLayer();
-            greenAndPublicSpaceLayer.Name = "Green and public spaces";
-            greenAndPublicSpaceLayer.Layers.Add(pedestrianAreas);
-            greenAndPublicSpaceLayer.Layers.Add(hikingTrails);
-            greenAndPublicSpaceLayer.Layers.Add(poisPoints);
-
-            GroupLayer educationLayer = new GroupLayer();
-            educationLayer.Name = "Education";
-            educationLayer.Layers.Add(universities);
-            educationLayer.Layers.Add(school);
-
-            GroupLayer healthLayer = new GroupLayer();
-            healthLayer.Name = "Health";
-            healthLayer.Layers.Add(doctors);
-            healthLayer.Layers.Add(farmacy);
-
-            GroupLayer cultureLayer = new GroupLayer();
-            cultureLayer.Name = "Culture";
-
-            GroupLayer publicFacilitiesLayer = new GroupLayer();
-            publicFacilitiesLayer.Name = "Public Facilities";
-            publicFacilitiesLayer.Layers.Add(wc);
-
-
-            GroupLayer transportLayer = new GroupLayer();
-            transportLayer.Name = "Transport";
-            transportLayer.Layers.Add(transportRoads);
-            transportLayer.Layers.Add(metro);
-
-            CreateLayers();
+        public async void Initialize()
+        {                        
 
             // Create the scene with a basemap.
             MyMap2DView.Scene = new Scene(BasemapStyle.ArcGISLightGrayBase);
 
-            // Add the top-level layers to the scene.
-            MyMap2DView.Scene.OperationalLayers.Add(cityMorphologyLayer);
-            MyMap2DView.Scene.OperationalLayers.Add(servicesLayer);
-            MyMap2DView.Scene.OperationalLayers.Add(greenAndPublicSpaceLayer);
-            MyMap2DView.Scene.OperationalLayers.Add(educationLayer);
-            MyMap2DView.Scene.OperationalLayers.Add(healthLayer);
-            MyMap2DView.Scene.OperationalLayers.Add(cultureLayer);
-            MyMap2DView.Scene.OperationalLayers.Add(publicFacilitiesLayer);
-            MyMap2DView.Scene.OperationalLayers.Add(transportLayer);
-
+   
+            foreach(var groups in _groupLayer)
+                MyMap2DView.Scene.OperationalLayers.Add(groups);
 
             // Wait for all of the layers in the group layer to load.
-            await Task.WhenAll(servicesLayer.Layers.ToList().Select(m => m.LoadAsync()).ToList());
+            await Task.WhenAll(_groupLayer.Last().Layers.ToList().Select(m => m.LoadAsync()).ToList());
 
             // Zoom to the extent of the group layer.
-            await MyMap2DView.SetViewpointAsync(new Viewpoint(48.21, 16.36, 8000.0));
-
+            using (UrbanAnalysisContext context = new UrbanAnalysisContext())
+            {
+                var loc = context.Location.Where(d => d.DistrictName == Location);
+                foreach (Models.Location l in loc)
+                {
+                    float la = float.Parse(l.Latitude);
+                    float lo = float.Parse(l.Longitude);
+                    await MyMap2DView.SetViewpointAsync(new Viewpoint(la,lo , 8000.0));
+                }
+            }
         }
     }
 }

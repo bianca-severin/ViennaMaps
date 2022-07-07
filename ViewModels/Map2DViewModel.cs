@@ -16,6 +16,8 @@ using Esri.ArcGISRuntime.Symbology;
 using Esri.ArcGISRuntime.UI;
 using Esri.ArcGISRuntime.UI.Controls;
 using Layer = ViennaMaps.Models.Layer;
+using System.Diagnostics;
+using System.Data.Entity;
 
 namespace ViennaMaps.ViewModels
 {
@@ -42,13 +44,14 @@ namespace ViennaMaps.ViewModels
 
         //Variables
         private int _layerid;
-   
+        private List <FeatureLayer> _featureLayer = new List<FeatureLayer>();
+        
 
         public Map2DViewModel( string project, string location)
         {
             ExitCmd = new RelayCommand(Exit);
             Location = location;
-            Project = project;              
+            Project = project;             
 
         }
 
@@ -60,10 +63,18 @@ namespace ViennaMaps.ViewModels
 
         private void CreateLayers()
         {
-            if(_layer == null)
+            using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
-                Layer layer = new Layer();
-                
+
+                var liste = context.View1.Include(p => p.LayerId).Include(i => i.ProjectId).Include(p => p.ProjectName);
+                foreach (var item in liste)
+                    Trace.WriteLine($"{item.ProjectName}, {item.LayerName} ");
+                //var list= context.Project.OfType<Layer>().FirstOrDefault();
+                /*(ObservableCollection<Layer>)(
+                        from p in context.Project
+                        select p.Layer);*/
+              
+
             }
         }
 
@@ -101,7 +112,7 @@ namespace ViennaMaps.ViewModels
             //Farmacy
             FeatureLayer metro = new FeatureLayer(new Uri("https://services1.arcgis.com/YfxQKFk1MjjurGb5/ArcGIS/rest/services/U_BahnNetz/FeatureServer/0"));
 
-
+            /*
             hikingTrails.Name = "Hiking trails";
             libraries.Name = "Libraries";
             communityBuildings.Name = "Community buildings";
@@ -115,7 +126,7 @@ namespace ViennaMaps.ViewModels
             wc.Name = "Wc";
             farmacy.Name = "Farmacy";
             school.Name = "Schule";
-            metro.Name = "Metro";
+            metro.Name = "Metro";*/
 
             // Create one layer and add sublayers.
             GroupLayer cityMorphologyLayer = new GroupLayer();
@@ -157,6 +168,7 @@ namespace ViennaMaps.ViewModels
             transportLayer.Layers.Add(transportRoads);
             transportLayer.Layers.Add(metro);
 
+            CreateLayers();
 
             // Create the scene with a basemap.
             MyMap2DView.Scene = new Scene(BasemapStyle.ArcGISLightGrayBase);

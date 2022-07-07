@@ -64,9 +64,13 @@
       {
          "Name": "[dbo].[ProjectScale]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[View_1]",
+         "ObjectType": 3
       }
    ],
-   "UiHint": "desktop-jqd9j6v\\sqlexpress.UrbanAnalysis.dbo",
+   "UiHint": "boa06-pc-nwu\\sqlexpress.UrbanAnalysis.dbo",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,

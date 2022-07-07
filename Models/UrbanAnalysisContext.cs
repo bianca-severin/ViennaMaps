@@ -28,18 +28,21 @@ namespace ViennaMaps.Models
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<ProjectScale> ProjectScale { get; set; }
+        public virtual DbSet<View1> View1 { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-JQD9J6V\\SQLEXPRESS;Initial Catalog=UrbanAnalysis;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=BOA06-PC-NWU\\SQLEXPRESS;Initial Catalog=UrbanAnalysis;Integrated Security=True");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
             modelBuilder.Entity<Analysis>(entity =>
             {
                 entity.HasKey(e => e.AnalyisId)
@@ -149,9 +152,7 @@ namespace ViennaMaps.Models
 
             modelBuilder.Entity<Layer>(entity =>
             {
-                entity.Property(e => e.LayerId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("LayerID");
+                entity.Property(e => e.LayerId).HasColumnName("LayerID");
 
                 entity.Property(e => e.ArcGisuri)
                     .IsRequired()
@@ -224,9 +225,7 @@ namespace ViennaMaps.Models
 
             modelBuilder.Entity<Project>(entity =>
             {
-                entity.Property(e => e.ProjectId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ProjectID");
+                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
 
                 entity.Property(e => e.ProjectName)
                     .IsRequired()
@@ -282,6 +281,25 @@ namespace ViennaMaps.Models
                     .HasColumnName("ProjectScaleID");
 
                 entity.Property(e => e.ScaleName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<View1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_1");
+
+                entity.Property(e => e.LayerId).HasColumnName("LayerID");
+
+                entity.Property(e => e.LayerName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
+
+                entity.Property(e => e.ProjectName)
                     .IsRequired()
                     .HasMaxLength(50);
             });

@@ -27,30 +27,32 @@ namespace ViennaMaps.ViewModels
         //Event
         public event EventHandler OnRequestClose;
 
-        //Properties
-        public string Location {get; set;}
-        public string Project { get; set;}
-        public SceneView MyMap2DView { get; set; }
-
-
         //Commands
         public ICommand ExitCmd { get; set; }
 
+        //Properties
+        public string Location { get; set; }
+        public string Project { get; set; }
+        public SceneView MyMap2DView { get; set; }
+
 
         //Variables
-        private List <FeatureLayer> _featureLayer = new List<FeatureLayer>();
-        private List <string> _groupLayerLabel = new List<string>();
-        
+        private List <string> _groupLayerLabel = new List<string>();        
         private List <GroupLayer> _groupLayer = new List<GroupLayer>();
 
 
         //Constructor
-        public Map2DViewModel( string project, string location)
+        public Map2DViewModel( string project, string location, SceneView myMap2DView)
         {
             ExitCmd = new RelayCommand(Exit);
             Location = location;
             Project = project;
+            MyMap2DView = myMap2DView;
+
+            // Create the scene with a basemap.
+            MyMap2DView.Scene = new Scene(BasemapStyle.ArcGISLightGrayBase);            
             CreateLayers();
+            Initialize();
         }
 
         private void Exit()
@@ -63,55 +65,58 @@ namespace ViennaMaps.ViewModels
         {
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
+                //check which layers should be created for the chosen project in the main window
+                var liste = context.ProjectLayersView.Include(p => p.LayerId).Where(p => p.ProjectName == Project);
 
-                var liste = context.View1.Include(p => p.LayerId).Include(i => i.ProjectId).Where(p => p.ProjectName == Project);
-
+                //for each project layer, a new feature layer will be created 
                 foreach (var item in liste)
                 {
-                    _featureLayer.Add(new FeatureLayer(new Uri(item.ArcGisuri)));
-                    _featureLayer.Last().Name = item.LayerLabel;
-
-                    //TO DO: add both options
-                    if (!_groupLayerLabel.Contains(item.GroupLabel))
-                    {
-                        _groupLayer.Add(new GroupLayer());
-                        _groupLayer.Last().Name = item.GroupLabel;
-                        _groupLayer.Last().Layers.Add(_featureLayer.Last());
-                        _groupLayerLabel.Add(item.GroupLabel);
-
-                        //check if correct
-                        Trace.WriteLine($"GroupLabel {item.GroupLabel} added");
-                    }                 
-            
+                    //new feature layer created
+                    FeatureLayer tempLayer = new FeatureLayer(new Uri(item.ArcGisuri)) { Name = item.LayerLabel};
+                    //create and/or add layer to correspinding group
+                    CreateGroups(tempLayer, item);               
+                   
                 }                   
 
             }
         }
 
-        private void CreateGroups( )
+        private void CreateGroups(FeatureLayer layer, ProjectLayersView item)
         {
+            //if layer for the group does not exist yet, create the group
+            if (!_groupLayerLabel.Contains(item.GroupLabel))
+            {
+                //create new Group Layer
+                GroupLayer tempGroupLayer = new GroupLayer() { Name = item.GroupLabel };
+                //add layer to new Group Layer
+                tempGroupLayer.Layers.Add(layer);
 
-          
+                //add group layer and label to local list
+                _groupLayer.Add(tempGroupLayer);
+                _groupLayerLabel.Add(item.GroupLabel);
+            }
+            else
+            {
+                _groupLayer[_groupLayerLabel.IndexOf(item.GroupLabel)].Layers.Add(layer);
+            }
 
         }
 
         public async void Initialize()
-        {                        
+        {                                  
 
-            // Create the scene with a basemap.
-            MyMap2DView.Scene = new Scene(BasemapStyle.ArcGISLightGrayBase);
-
-   
+            //Add created groups to the scene
             foreach(var groups in _groupLayer)
                 MyMap2DView.Scene.OperationalLayers.Add(groups);
 
             // Wait for all of the layers in the group layer to load.
-            await Task.WhenAll(_groupLayer.Last().Layers.ToList().Select(m => m.LoadAsync()).ToList());
+            await Task.WhenAll(_groupLayer.LastOrDefault().Layers.ToList().Select(m => m.LoadAsync()).ToList());
 
-            // Zoom to the extent of the group layer.
+            // Zoom on chosen location
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
                 var loc = context.Location.Where(d => d.DistrictName == Location);
+                //first or single 
                 foreach (Models.Location l in loc)
                 {
                     float la = float.Parse(l.Latitude);

@@ -32,11 +32,14 @@ namespace ViennaMaps.Views
         public Map2DWindow(string project, string location)
         {
             InitializeComponent();
-            _viewModel = new Map2DViewModel(project, location);
+            _viewModel = new Map2DViewModel(project, location, MyMap2DView);
+            //_viewModel.MyMap2DView = MyMap2DView;
             this.DataContext = _viewModel;
             _viewModel.OnRequestClose += (sender, args) => this.Close();
-            _viewModel.MyMap2DView = MyMap2DView;
-            _viewModel.Initialize();           
+
+            //neccessary because of the way the ArcGIS maps work 
+            
+                    
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ViennaMaps.Commands;
 using System.Windows.Input;
-using System.Windows.Forms;
-using System.Collections.ObjectModel;
 using ViennaMaps.Models;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
@@ -27,13 +23,13 @@ namespace ViennaMaps.ViewModels
         public event EventHandler OnRequestOpenNewProfile;
 
 
-        //Commands - view windows
+        //Commands - view additional windows
         public ICommand View3DMapCmd { get; set; }
         public ICommand View2DMapCmd { get; set; }
         public ICommand ViewNewProfileCmd { get; set; }
 
         // Properties
-        //public ObservableCollection<Location> LocationList { get; set; }
+        // public ObservableCollection<Location> LocationList { get; set; }
        
         public List<string> DistrictName {get; set; }
 

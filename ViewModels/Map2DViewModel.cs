@@ -1,30 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ViennaMaps.Commands;
-using System.Windows.Forms;
 using ViennaMaps.Models;
-using System.Collections.ObjectModel;
-using Esri.ArcGISRuntime;
-using Esri.ArcGISRuntime.Data;
-using Esri.ArcGISRuntime.Location;
 using Esri.ArcGISRuntime.Mapping;
-using Esri.ArcGISRuntime.Symbology;
-using Esri.ArcGISRuntime.UI;
 using Esri.ArcGISRuntime.UI.Controls;
-using Layer = ViennaMaps.Models.Layer;
-using System.Diagnostics;
 using System.Data.Entity;
+using Location = ViennaMaps.Models.Location;
 
 namespace ViennaMaps.ViewModels
 {
     internal class Map2DViewModel : BaseViewModel
     {
-
-        //Event
+        //Events
         public event EventHandler OnRequestClose;
 
         //Commands
@@ -49,8 +39,7 @@ namespace ViennaMaps.ViewModels
             Project = project;
             MyMap2DView = myMap2DView;
 
-
-            //create scene, create layers, add groups to the scene and zoom on selected district
+            //create scene, create layers, add groups to the scene and zoom in on selected district
             CreateScene();
             CreateLayers();
             AddGroupsToScene();
@@ -113,11 +102,11 @@ namespace ViennaMaps.ViewModels
         private async void AddGroupsToScene()
         {
 
-            //Add created groups to the scene
+            // add created groups to the scene
             foreach (var groups in _groupLayer)
                 MyMap2DView.Scene.OperationalLayers.Add(groups);
 
-            // Wait for all of the layers in the group layer to load.
+            // wait for all of the layers in the group layer to load.
             await Task.WhenAll(_groupLayer.LastOrDefault().Layers.ToList().Select(m => m.LoadAsync()).ToList());
 
         }
@@ -128,8 +117,8 @@ namespace ViennaMaps.ViewModels
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
                 //get location for chosen district in the Main Window
-                ViennaMaps.Models.Location loc = context.Location.Single(d => d.DistrictName == Location);
-                // create a new Viewport to zoom in on chosen location
+                Location loc = context.Location.Single(d => d.DistrictName == Location);
+                //create a new Viewport to zoom in on chosen location
                 await MyMap2DView.SetViewpointAsync(new Viewpoint(float.Parse(loc.Latitude), float.Parse(loc.Longitude), 8000.0));                
             }
         }

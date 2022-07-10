@@ -41,29 +41,26 @@ namespace ViennaMaps
 
         private void Start3DMapWindow()
         {
-            // anlegen eines Adress window
-            Map3DWindow mapwin = new Map3DWindow();
-            // Anzeigen eines modalen windows
-            mapwin.ShowDialog();
-
+            // create a new 2D Map window, using the selected location
+            Map3DWindow map3Dwin = new Map3DWindow(_viewModel.SelectedLocation);
+            // show the 3D Map window
+            map3Dwin.ShowDialog();
         }
 
         private void Start2DMapWindow()
         {
-            // anlegen eines 2D window
-            Map2DWindow mapwin = new Map2DWindow(_viewModel.SelectedProject, _viewModel.SelectedLocation);
-            // Anzeigen eines modalen windows
-            mapwin.ShowDialog();
-
+            // create a new 2D Map window, using the selected project and selected location by the user
+            Map2DWindow map2Dwin = new Map2DWindow(_viewModel.SelectedProject, _viewModel.SelectedLocation);
+            // show the window
+            map2Dwin.ShowDialog();
         }
 
         private void StartNewProfile()
         {
-            // anlegen eines Adress window
+            // create a new profile window
             NewProfileWindow profileWin = new NewProfileWindow();
-            // Anzeigen eines modalen windows
+            // show the window
             profileWin.ShowDialog();
-
         }
     }
 }

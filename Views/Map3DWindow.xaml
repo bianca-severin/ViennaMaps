@@ -9,8 +9,8 @@
         Title="MapWindow" Height="1080" Width="1920">
     <UserControl>
     <Grid>
-        <esri:SceneView x:Name="MySceneView"
-                        GeoViewTapped="SceneViewTapped" />
+        <esri:SceneView x:Name="My3DSceneView"
+                         />
 
     </Grid>
      </UserControl>

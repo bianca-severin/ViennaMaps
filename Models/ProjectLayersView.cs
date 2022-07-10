@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ViennaMaps.Models
 {
-    public partial class View1
+    public partial class ProjectLayersView
     {
         public string LayerName { get; set; }
         public int LayerId { get; set; }

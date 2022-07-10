@@ -37,28 +37,36 @@ namespace ViennaMaps.ViewModels
 
 
         //Variables
-        private List <string> _groupLayerLabel = new List<string>();        
-        private List <GroupLayer> _groupLayer = new List<GroupLayer>();
+        private List<string> _groupLayerLabel = new List<string>();
+        private List<GroupLayer> _groupLayer = new List<GroupLayer>();
 
 
         //Constructor
-        public Map2DViewModel( string project, string location, SceneView myMap2DView)
+        public Map2DViewModel(string project, string location, SceneView myMap2DView)
         {
             ExitCmd = new RelayCommand(Exit);
             Location = location;
             Project = project;
             MyMap2DView = myMap2DView;
 
-            // Create the scene with a basemap.
-            MyMap2DView.Scene = new Scene(BasemapStyle.ArcGISLightGrayBase);            
+
+            //create scene, create layers, add groups to the scene and zoom on selected district
+            CreateScene();
             CreateLayers();
-            Initialize();
+            AddGroupsToScene();
+            ZoomDistrict();
         }
 
         private void Exit()
         {
             if (OnRequestClose != null)
                 OnRequestClose(this, new EventArgs());
+        }
+
+        private void CreateScene()
+        {
+            // Create the scene with a basemap.
+            MyMap2DView.Scene = new Scene(BasemapStyle.ArcGISLightGrayBase);
         }
 
         private void CreateLayers()
@@ -72,12 +80,11 @@ namespace ViennaMaps.ViewModels
                 foreach (var item in liste)
                 {
                     //new feature layer created
-                    FeatureLayer tempLayer = new FeatureLayer(new Uri(item.ArcGisuri)) { Name = item.LayerLabel};
+                    FeatureLayer tempLayer = new FeatureLayer(new Uri(item.ArcGisuri)) { Name = item.LayerLabel };
                     //create and/or add layer to correspinding group
-                    CreateGroups(tempLayer, item);               
-                   
-                }                   
+                    CreateGroups(tempLayer, item);
 
+                }
             }
         }
 
@@ -91,38 +98,39 @@ namespace ViennaMaps.ViewModels
                 //add layer to new Group Layer
                 tempGroupLayer.Layers.Add(layer);
 
-                //add group layer and label to local list
+                //add group layer and label to the group layer list
                 _groupLayer.Add(tempGroupLayer);
                 _groupLayerLabel.Add(item.GroupLabel);
             }
             else
             {
+                //add layer to existing group layer
                 _groupLayer[_groupLayerLabel.IndexOf(item.GroupLabel)].Layers.Add(layer);
             }
 
         }
 
-        public async void Initialize()
-        {                                  
+        private async void AddGroupsToScene()
+        {
 
             //Add created groups to the scene
-            foreach(var groups in _groupLayer)
+            foreach (var groups in _groupLayer)
                 MyMap2DView.Scene.OperationalLayers.Add(groups);
 
             // Wait for all of the layers in the group layer to load.
             await Task.WhenAll(_groupLayer.LastOrDefault().Layers.ToList().Select(m => m.LoadAsync()).ToList());
 
-            // Zoom on chosen location
+        }
+
+        private async void ZoomDistrict()
+        {
+            //get latitude and longitude from the database and zoom in on selected location
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
-                var loc = context.Location.Where(d => d.DistrictName == Location);
-                //first or single 
-                foreach (Models.Location l in loc)
-                {
-                    float la = float.Parse(l.Latitude);
-                    float lo = float.Parse(l.Longitude);
-                    await MyMap2DView.SetViewpointAsync(new Viewpoint(la,lo , 8000.0));
-                }
+                //get location for chosen district in the Main Window
+                ViennaMaps.Models.Location loc = context.Location.Single(d => d.DistrictName == Location);
+                // create a new Viewport to zoom in on chosen location
+                await MyMap2DView.SetViewpointAsync(new Viewpoint(float.Parse(loc.Latitude), float.Parse(loc.Longitude), 8000.0));                
             }
         }
     }

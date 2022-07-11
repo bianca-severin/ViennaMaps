@@ -11,14 +11,65 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LiveChartsCore.Measure;
+using System.Collections.ObjectModel;
+using LiveChartsCore.Defaults;
 
 namespace ViennaMaps.ViewModels
 {
+    abstract class AnalysisDiagrams
+    {
+        ISeries[] Analysis01 { get; set; }
+        Axis[] Analysis01XAxes { get; set; }
+        ISeries[] Analysis02 { get; set; }
+        Axis[] Analysis02XAxes { get; set; }
+        ISeries[] Analysis03 { get; set; }
+        Axis[] Analysis03XAxes { get; set; }
+        ISeries[] Analysis04 { get; set; }
+        Axis[] Analysis04XAxes { get; set; }
+        public abstract string GetValues();
+
+    }
+
+   class AnalysisTypes : AnalysisDiagrams
+   {
+        public ISeries[] Analysis01 { get; set; } 
+        public Axis[] Analysis01XAxes { get; set; }
+        public ISeries[] Analysis02 { get; set; }
+        public  Axis[] Analysis02XAxes { get; set; }
+        public ISeries[] Analysis03 { get; set; }
+        public Axis[] Analysis03XAxes { get; set; }
+        public ISeries[] Analysis04 { get; set; }
+        public Axis[] Analysis04XAxes { get; set; }
+        public override string GetValues()
+        {
+          
+            return "";
+        }
+        public AnalysisTypes()
+        {
+           
+
+
+        }
+    }
+    
     internal class MainViewModel : BaseViewModel
     {
 
-        //Events - open additional windows
-        public event EventHandler OnRequestOpen3DMap;
+        ObservableCollection<ObservableValue> _observableValues;
+     
+
+        public ISeries[] CountryAnalysis01 { get; set; }
+        public AnalysisTypes countryAnalysis = new AnalysisTypes()
+        {
+            
+         };
+        
+       
+       
+
+    //Events - open additional windows
+    public event EventHandler OnRequestOpen3DMap;
         public event EventHandler OnRequestOpen2DMap;
         public event EventHandler OnRequestOpenNewProfile;
 
@@ -50,6 +101,35 @@ namespace ViennaMaps.ViewModels
 
             FillLocationList();
             FillProfileList();
+            FillAnalysis();
+
+            _observableValues = new ObservableCollection<ObservableValue>
+        {
+            // Use the ObservableValue or ObservablePoint types to let the chart listen for property changes // mark
+            // or use any INotifyPropertyChanged implementation // mark
+            //https://github.com/beto-rodriguez/LiveCharts2/blob/master/samples/ViewModelsSamples/Lines/AutoUpdate/ViewModel.cs
+           // new ObservableValue(2),
+            new (7644818),
+            new (7943489),
+            new (8002186),
+            new ( 8201359),
+            new (8351643),
+            new (8584926),
+            new (8858775)
+        };
+
+            countryAnalysis.Analysis01 = new ISeries[]
+            {
+                new LineSeries<ObservableValue>
+                {
+                    //get values from database, depending on the chosen analysis
+                    Values = _observableValues,
+                    Fill = null,
+                    TooltipLabelFormatter = (chartPoint) => $"Population: {chartPoint.PrimaryValue} inhabitants"
+                }
+            };
+            CountryAnalysis01 = countryAnalysis.Analysis01;
+
         }
 
         private void View3DMap()
@@ -107,15 +187,8 @@ namespace ViennaMaps.ViewModels
 
         public void FillAnalysis()
         {
-
-        }
-
-        //documentation: https://lvcharts.com/docs/wpf/2.0.0-beta.300/CartesianChart.Cartesian%20chart%20control#axes.labels-and-axes.labelers
-        //allgemeine methode - füllt alle properties
-        // vielleicht 1 absrakte basis klasse - ableitung für jede datenart
-        public ISeries[] CountryAnalysis01 { get; set; }
-        = new ISeries[]
-        {
+           /* CountryAnalysis01 = new ISeries[]
+            {
                 new LineSeries<double>
                 {
                     //get values from database, depending on the chosen analysis
@@ -123,17 +196,29 @@ namespace ViennaMaps.ViewModels
                     Fill = null,
                     TooltipLabelFormatter = (chartPoint) => $"Population: {chartPoint.PrimaryValue} inhabitants"
                 }
-        };
+            };*/
 
-        public Axis[] CountryAnalysis01XAxes { get; set; }
-              = new Axis[]
+            CountryAnalysis01XAxes = new Axis[]
               {
                 new Axis
                 {
                     Labels = new string[] { "1990", "1995", "2000", "2005", "2010", "2015", "2020" }
                 }
-         };
+            };
 
+
+        }
+
+        //documentation: https://lvcharts.com/docs/wpf/2.0.0-beta.300/CartesianChart.Cartesian%20chart%20control#axes.labels-and-axes.labelers
+        //allgemeine methode - füllt alle properties
+        // vielleicht 1 absrakte basis klasse - ableitung für jede datenart
+
+
+        
+            
+      
+        public Axis[] CountryAnalysis01XAxes { get; set; }
+              
     
 
         public ISeries[] CountryAnalysis02{ get; set; }
@@ -189,5 +274,6 @@ namespace ViennaMaps.ViewModels
             LabelsRotation = 30
         }
     };
+
     }
 }

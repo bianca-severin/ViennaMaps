@@ -13,10 +13,8 @@ namespace ViennaMaps.Views
         {
             InitializeComponent();
             _viewModel = new Map3DViewModel(location, My3DSceneView);
-            this.DataContext = _viewModel;
-
-        }
-   
+            this.DataContext = _viewModel;       
+        } 
 
     }
 }

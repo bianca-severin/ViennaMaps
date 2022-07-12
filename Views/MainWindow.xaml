@@ -68,12 +68,12 @@
         </Grid.RowDefinitions>
         <Rectangle Fill="#FF142030" Grid.RowSpan="2"/>
 
-        <Button x:Name="OpenMapButton" Content="Open 3D View" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding View3DMapCmd}" Width="460" Height="71" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,344,0,0" Grid.Row="1"/>
+        <Button x:Name="OpenMapButton" Content="Open 3D View" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding View3DMapCmd}" Width="460" Height="71" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,64,0,0" Grid.Row="1"/>
         <Image x:Name="Logo" HorizontalAlignment="Center" Height="174" Margin="0,34,0,0" VerticalAlignment="Top" Width="174" Source="/Views/ViennaLogo.png" Stretch="UniformToFill"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,216,0,0" TextWrapping="WrapWithOverflow" Text="Urban Analysis Tool" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Center" FontFamily="Nirmala UI" FontSize="28" FontWeight="Bold" Width="510"/>
         <TextBlock HorizontalAlignment="Center" Margin="0,272,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFC5D1EB" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" LineStackingStrategy="BlockLineHeight" Height="220" Width="460"><Run Text="As a basis for urban planning and architectural design work, an understanding of the existing surrounding urban structure is essential. "/><Run Text="This "/><Run Text="tool "/><Run Text="was "/><Run Text="to be created for architects or urban planners"/><Run Text=","/><Run Text=" support"/><Run Text="ing"/><Run Text=" the process of urban analysis"/><Run Text=" in Vienna. "/><Run Language="de-at" Text="Select the project type and location and visualize relevant ArcGIS layers, a 3D model and statistics about the country of Austria, the city of Vienna or the selected district."/></TextBlock>
 
-        <Button x:Name="Open2DMapButton" Content="Open 2D Map" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding View2DMapCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,260,0,0" Grid.Row="1"/>
+        <Button x:Name="Open2DMapButton" Content="Open 2D Map" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding View2DMapCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,566,0,0" Grid.RowSpan="2"/>
         <TabControl x:Name="analysisTabs" Grid.Column="1" Background="#FF2B3545" BorderBrush="{x:Null}" Grid.RowSpan="2" >
             <TabItem Header="Country Analysis" Background="#FF0B2027" Foreground="#FFB9C3CC" Width="270" Height="50" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" Margin="-1,0,1,0" >
                 <Grid Background="#FF2B3545" Margin="-2,0,2,0">
@@ -159,10 +159,14 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="ChangeProfileLocation" Content="Change profile or location" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ExitCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,138,0,0" Grid.Row="1"/>
+        <Button x:Name="ChangeProfileLocation" Content="Change profile or location" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ExitCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,342,0,0" Grid.Row="1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="32,522,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight"><Run Text="Visualize maps:"/></TextBlock>
 
-        <TextBlock HorizontalAlignment="Left" Margin="32,494,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight"><Run Text="1. "/><Run Text="Select"/><Run Language="de-at" Text="ed profile:"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="32,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Language="de-at" Text="3. "/><Run Text="Visualize maps:"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="35,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Foreground="#FFB9C3CC" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Text="Selected profile: "/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="33,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Foreground="#FFB9C3CC" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Text="Selected district: "/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="198,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Text="{Binding SelectedProject}"></Run></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="196,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Text="{Binding SelectedLocation}"/></TextBlock>
+
 
 
     </Grid>

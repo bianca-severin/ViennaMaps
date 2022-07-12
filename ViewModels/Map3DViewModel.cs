@@ -7,13 +7,17 @@ using Esri.ArcGISRuntime.UI.Controls;
 using Esri.ArcGISRuntime.Mapping;
 using ViennaMaps.Models;
 
+
 namespace ViennaMaps.ViewModels
 {
     internal class Map3DViewModel
     {
         //Properties
         public string Location { get; set; }
+
         public SceneView My3DSceneView { get; set; }
+
+
 
         //Constructor
         public Map3DViewModel(string location, SceneView my3DSceneView)
@@ -23,6 +27,7 @@ namespace ViennaMaps.ViewModels
             CreateTopographicScene();
             AddBuildingsLayer();
             SetCamera();
+
         }
 
         private void CreateTopographicScene()
@@ -30,6 +35,7 @@ namespace ViennaMaps.ViewModels
 
             // Create a new Scene with a base map
             My3DSceneView.Scene = new Scene(BasemapStyle.ArcGISDarkGray);
+            
 
             // Add a base surface with elevation data - topography
             Surface elevationSurface = new Surface();
@@ -37,10 +43,12 @@ namespace ViennaMaps.ViewModels
             elevationSurface.ElevationSources.Add(new ArcGISTiledElevationSource(elevationService));
 
             //add the topography to the scene
-            My3DSceneView.Scene.BaseSurface = elevationSurface;        
+            My3DSceneView.Scene.BaseSurface = elevationSurface;      
+
 
         }
 
+     
         private void AddBuildingsLayer()
         {
             // Uri buildings in LOD2 definition for Vienna

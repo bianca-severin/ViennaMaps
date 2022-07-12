@@ -22,22 +22,16 @@ using ViennaMaps.Models;
 
 namespace ViennaMaps
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+ 
     public partial class MainWindow : Window
     {
         private MainViewModel _viewModel;
-
-        //ChooseProfileWindow chooseProfilePopup = new ChooseProfileWindow();
-
 
         public MainWindow(string project, string location)
         {
             InitializeComponent();
             _viewModel = new MainViewModel(project,location);
             this.DataContext = _viewModel;
-           //viewModel.OnRequestClose += (sender, args) => this.Close();
             _viewModel.OnRequestOpen3DMap += (sender, args) => this.Start3DMapWindow();
             _viewModel.OnRequestOpen2DMap += (sender, args) => this.Start2DMapWindow();
             _viewModel.OnRequestClose += (sender, args) => this.Close();

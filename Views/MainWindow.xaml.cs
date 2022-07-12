@@ -29,9 +29,13 @@ namespace ViennaMaps
     {
         private MainViewModel _viewModel;
 
+        ChooseProfileWindow chooseProfilePopup = new ChooseProfileWindow();
+
+
         public MainWindow()
         {
             InitializeComponent();
+            chooseProfilePopup.ShowDialog();
             _viewModel = new MainViewModel();
             this.DataContext = _viewModel;
             _viewModel.OnRequestOpen3DMap += (sender, args) => this.Start3DMapWindow();

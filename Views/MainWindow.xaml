@@ -165,7 +165,7 @@
 
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Margin="31,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF3ADEE8" TextAlignment="Justify" FontFamily="Nirmala UI" FontSize="20" FontWeight="Bold" LineStackingStrategy="BlockLineHeight" Grid.Row="1"><Run Text="2. "/><Run Language="de-at" Text="Select"/><Run Text=" "/><Run Text="project "/><Run Text="district:"/></TextBlock>
-        <Button x:Name="CreateNewProfile" Content="Create new profile" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ViewNewProfileCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,581,0,0" Grid.RowSpan="2"/>
+        <Button x:Name="ChangeProfileLocation" Content="Change profile or location" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ViewNewProfileCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,581,0,0" Grid.RowSpan="2"/>
         <ComboBox x:Name="SelectProfileComboBox" HorizontalAlignment="Center" Margin="0,530,0,0" VerticalAlignment="Top" Width="460" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35" ItemsSource="{Binding ProjectName}"  SelectedItem="{Binding SelectedProject,UpdateSourceTrigger=PropertyChanged}">
 
         </ComboBox>

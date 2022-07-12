@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ViennaMaps.ViewModels;
 
 namespace ViennaMaps.Views
 {
@@ -19,6 +20,7 @@ namespace ViennaMaps.Views
     /// </summary>
     public partial class ChooseProfileWindow : Window
     {
+        private ChooseProfileViewModel _viewModel;
         public ChooseProfileWindow()
         {
             InitializeComponent();

@@ -66,17 +66,18 @@ namespace ViennaMaps.ViewModels
         //Events - open additional windows
         public event EventHandler OnRequestOpen3DMap;
         public event EventHandler OnRequestOpen2DMap;
-        public event EventHandler OnRequestOpenNewProfile;
+        public event EventHandler OnRequestClose;
 
 
         //Commands - view additional windows
         public ICommand View3DMapCmd { get; set; }
         public ICommand View2DMapCmd { get; set; }
-        public ICommand ViewNewProfileCmd { get; set; }
+        public ICommand ExitCmd { get; set; }
+
 
         // Properties
         // public ObservableCollection<Location> LocationList { get; set; }
-       
+
         public List<string> DistrictName {get; set; }
 
         public List<string> ProjectName { get; set; }
@@ -92,15 +93,9 @@ namespace ViennaMaps.ViewModels
             SelectedLocation = location;
             SelectedProject = project;
 
-            /*DistrictName = new List<string>();
-            ProjectName = new List<string>();*/
             View3DMapCmd = new RelayCommand(View3DMap);
             View2DMapCmd = new RelayCommand(View2DMap);
-            ViewNewProfileCmd = new RelayCommand(ViewNewProfile);
-
-            /*FillLocationList();
-            FillProfileList();*/
-            
+            ExitCmd = new RelayCommand(Exit);
 
             _observableValues = new ObservableCollection<ObservableValue>
             {
@@ -135,49 +130,14 @@ namespace ViennaMaps.ViewModels
                 OnRequestOpen2DMap(this, new EventArgs());
         }
 
-        private void ViewNewProfile()
+        private void Exit()
         {
-            if (OnRequestOpenNewProfile != null)
-                OnRequestOpenNewProfile(this, new EventArgs());
+            if (OnRequestClose != null)
+                OnRequestClose(this, new EventArgs());
         }
         #endregion
 
-        #region Fill Dropdowns
-        public void FillLocationList()
-        {
-            //empty list
-            //LocationList.Clear();            
 
-            using (UrbanAnalysisContext context = new UrbanAnalysisContext())
-            {
-                
-                //show location ordered by District Number
-                var locations = context.Location.OrderBy(l => l.DistrictNumber);
-                // fill location list
-                foreach (Location loc in locations)
-                {
-                    DistrictName.Add(loc.DistrictName);
-                }                
-            }
-        }
-
-        public void FillProfileList()
-        {
-
-            ProjectName.Clear();
-
-            using (UrbanAnalysisContext context = new UrbanAnalysisContext())
-            {
-
-                var project = context.Project.OrderBy(l => l.ProjectName);
-
-                foreach (Project p in project)
-                {
-                    ProjectName.Add(p.ProjectName);
-                }
-            }
-        }
-        #endregion
         public void FillAnalysis()
         {
 

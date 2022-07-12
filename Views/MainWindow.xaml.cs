@@ -40,7 +40,7 @@ namespace ViennaMaps
            //viewModel.OnRequestClose += (sender, args) => this.Close();
             _viewModel.OnRequestOpen3DMap += (sender, args) => this.Start3DMapWindow();
             _viewModel.OnRequestOpen2DMap += (sender, args) => this.Start2DMapWindow();
-            _viewModel.OnRequestOpenNewProfile += (sender, args) => this.StartNewProfile();
+            _viewModel.OnRequestClose += (sender, args) => this.Close();
         }
 
         private void Start3DMapWindow()
@@ -59,12 +59,5 @@ namespace ViennaMaps
             map2Dwin.ShowDialog();
         }
 
-        private void StartNewProfile()
-        {
-            // create a new profile window
-            NewProfileWindow profileWin = new NewProfileWindow();
-            // show the window
-            profileWin.ShowDialog();
-        }
     }
 }

@@ -29,15 +29,15 @@ namespace ViennaMaps
     {
         private MainViewModel _viewModel;
 
-        ChooseProfileWindow chooseProfilePopup = new ChooseProfileWindow();
+        //ChooseProfileWindow chooseProfilePopup = new ChooseProfileWindow();
 
 
-        public MainWindow()
+        public MainWindow(string project, string location)
         {
             InitializeComponent();
-            chooseProfilePopup.ShowDialog();
-            _viewModel = new MainViewModel();
+            _viewModel = new MainViewModel(project,location);
             this.DataContext = _viewModel;
+           //viewModel.OnRequestClose += (sender, args) => this.Close();
             _viewModel.OnRequestOpen3DMap += (sender, args) => this.Start3DMapWindow();
             _viewModel.OnRequestOpen2DMap += (sender, args) => this.Start2DMapWindow();
             _viewModel.OnRequestOpenNewProfile += (sender, args) => this.StartNewProfile();

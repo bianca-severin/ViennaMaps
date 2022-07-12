@@ -19,6 +19,6 @@
         <ComboBox x:Name="comboBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="460" FontFamily="Nirmala UI" FontSize="18" Foreground="#FF2B3545" Height="35" ItemsSource="{Binding DistrictName}" SelectedItem="{Binding SelectedLocation,UpdateSourceTrigger=PropertyChanged}" Margin="0,390,0,0"/>
 
         <Button x:Name="CreateNewProfile" Content="Create new profile" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ViewNewProfileCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,247,0,0"/>
-        <Button x:Name="OpenMainWindow" Content="Open Main Window" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding View2DMapCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,504,0,0"/>
+        <Button x:Name="OpenMainWindow" Content="Open Main Window" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding ViewMainWindowCmd}" Width="460" Height="72" Background="{x:Null}" BorderBrush="#FFC5D1EB" Foreground="#FFC5D1EB" FontFamily="Nirmala UI" FontSize="18" FontWeight="Bold" Margin="0,504,0,0"/>
     </Grid>
 </Window>

@@ -24,6 +24,27 @@ namespace ViennaMaps.Views
         public ChooseProfileWindow()
         {
             InitializeComponent();
+            _viewModel = new ChooseProfileViewModel();
+            this.DataContext = _viewModel;
+            _viewModel.OnRequestClose += (sender, args) => this.Close();
+
+            _viewModel.OnRequestOpenMainWindow += (sender, args) => this.StartMainWindow();
+            _viewModel.OnRequestOpenNewProfile += (sender, args) => this.StartNewProfile();
+        }
+
+        private void StartMainWindow()
+        {
+            // create a new profile window
+            MainWindow mainWin = new(_viewModel.SelectedProject, _viewModel.SelectedLocation);
+            // show the window
+            mainWin.ShowDialog();
+        }
+        private void StartNewProfile()
+        {
+            // create a new profile window
+            NewProfileWindow profileWin = new NewProfileWindow();
+            // show the window
+            profileWin.ShowDialog();
         }
     }
 }

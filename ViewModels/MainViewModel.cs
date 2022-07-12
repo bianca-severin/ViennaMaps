@@ -84,18 +84,22 @@ namespace ViennaMaps.ViewModels
         public string SelectedLocation { get; set; }
         public string SelectedProject { get; set; }
 
-        public MainViewModel()
+        public MainViewModel(string project, string location)
         {
             //TO DO: check this - LocationList vs District name
             //LocationList = new ObservableCollection<Location>();
-            DistrictName = new List<string>();
-            ProjectName = new List<string>();
+
+            SelectedLocation = location;
+            SelectedProject = project;
+
+            /*DistrictName = new List<string>();
+            ProjectName = new List<string>();*/
             View3DMapCmd = new RelayCommand(View3DMap);
             View2DMapCmd = new RelayCommand(View2DMap);
             ViewNewProfileCmd = new RelayCommand(ViewNewProfile);
 
-            FillLocationList();
-            FillProfileList();
+            /*FillLocationList();
+            FillProfileList();*/
             
 
             _observableValues = new ObservableCollection<ObservableValue>

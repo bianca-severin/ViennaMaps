@@ -13,6 +13,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using LiveChartsCore.Measure;
 using System.Collections.ObjectModel;
 using LiveChartsCore.Defaults;
+using ViennaMaps.Models;
+using System.Data.Entity;
 
 namespace ViennaMaps.ViewModels
 {
@@ -46,6 +48,7 @@ namespace ViennaMaps.ViewModels
     {
 
         ObservableCollection<ObservableValue> _observableValues;
+
         private AnalysisTypes _countryAnalysis = new AnalysisTypes();
         private AnalysisTypes _cityAnalysis = new AnalysisTypes();
         private AnalysisTypes _districtAnalysis = new AnalysisTypes();
@@ -97,7 +100,7 @@ namespace ViennaMaps.ViewModels
             View2DMapCmd = new RelayCommand(View2DMap);
             ExitCmd = new RelayCommand(Exit);
 
-            _observableValues = new ObservableCollection<ObservableValue>
+           /* _observableValues = new ObservableCollection<ObservableValue>
             {
             // Use the ObservableValue or ObservablePoint types to let the chart listen for property changes // mark
             // or use any INotifyPropertyChanged implementation // mark
@@ -106,18 +109,18 @@ namespace ViennaMaps.ViewModels
             new (7644818),
             new (7943489),
             new (8002186),
-            new ( 8201359),
+            new (8201359),
             new (8351643),
             new (8584926),
             new (8858775)
-            };
+            };*/
 
             FillAnalysis();
 
 
         }
 
-        #region Open Windows
+        #region Open/Close Windows
         private void View3DMap()
         {
             if (OnRequestOpen3DMap != null)
@@ -137,15 +140,26 @@ namespace ViennaMaps.ViewModels
         }
         #endregion
 
-
+        
         public void FillAnalysis()
         {
+            _observableValues = new ObservableCollection<ObservableValue>();
+            
+            using (UrbanAnalysisContext context = new UrbanAnalysisContext())
+            {
+                var liste = context.ProjectLocationAnalysisView.Include(p => p.AnalyisId).Where(p => p.DistrictName == SelectedLocation);
+                foreach (var item in liste)
+                {
+                    _observableValues.Add(new(double.Parse(item.Value)));
+                    
+                }
+
+            }
 
             _countryAnalysis.Analysis01 = new ISeries[]
              {
                 new LineSeries<ObservableValue>
                 {
-                    //get values from database, depending on the chosen analysis
                     Values = _observableValues,
                     Fill = null,
                     TooltipLabelFormatter = (chartPoint) => $"Population: {chartPoint.PrimaryValue} inhabitants"
@@ -153,11 +167,13 @@ namespace ViennaMaps.ViewModels
              };
             CountryAnalysis01 = _countryAnalysis.Analysis01;
 
-            _countryAnalysis.Analysis01XAxes= new Axis[]
+            _countryAnalysis.Analysis01XAxes = new Axis[]
               {
                 new Axis
                 {
-                    Labels = new string[] { "1990", "1995", "2000", "2005", "2010", "2015", "2020" }
+                    
+                     Labels = new string[] { }
+                   
                 }
             };
             CountryAnalysis01XAxes = _countryAnalysis.Analysis01XAxes;

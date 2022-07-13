@@ -68,6 +68,10 @@
       {
          "Name": "[dbo].[ProjectLayersView]",
          "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[ProjectLocationAnalysisView]",
+         "ObjectType": 3
       }
    ],
    "UiHint": "desktop-jqd9j6v\\sqlexpress.UrbanAnalysis.dbo",

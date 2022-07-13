@@ -28,6 +28,7 @@ namespace ViennaMaps.Models
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<ProjectLayersView> ProjectLayersView { get; set; }
+        public virtual DbSet<ProjectLocationAnalysisView> ProjectLocationAnalysisView { get; set; }
         public virtual DbSet<ProjectScale> ProjectScale { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -310,6 +311,35 @@ namespace ViennaMaps.Models
                 entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
 
                 entity.Property(e => e.ProjectName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<ProjectLocationAnalysisView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ProjectLocationAnalysisView");
+
+                entity.Property(e => e.AnalyisId).HasColumnName("AnalyisID");
+
+                entity.Property(e => e.AnalysisId).HasColumnName("AnalysisID");
+
+                entity.Property(e => e.AnalysisName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.AnalysisTypeId).HasColumnName("AnalysisTypeID");
+
+                entity.Property(e => e.AnalysisValueId).HasColumnName("AnalysisValueID");
+
+                entity.Property(e => e.DistrictName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Label).HasMaxLength(50);
+
+                entity.Property(e => e.Value)
                     .IsRequired()
                     .HasMaxLength(50);
             });

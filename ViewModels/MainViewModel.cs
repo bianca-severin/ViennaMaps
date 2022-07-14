@@ -15,9 +15,11 @@ using System.Collections.ObjectModel;
 using LiveChartsCore.Defaults;
 using ViennaMaps.Models;
 using System.Data.Entity;
+using System.Diagnostics;
 
 namespace ViennaMaps.ViewModels
 {
+    /*
     abstract class AnalysisDiagrams
     {
         ISeries[] Analysis01 { get; set; }
@@ -39,68 +41,66 @@ namespace ViennaMaps.ViewModels
    {
         public ISeries[] Analysis01 { get; set; } 
         public Axis[] Analysis01XAxes { get; set; }
+        public string Analysis01Label { get; set; }
         public ISeries[] Analysis02 { get; set; }
         public  Axis[] Analysis02XAxes { get; set; }
+        public string Analysis02Label { get; set; }
         public ISeries[] Analysis03 { get; set; }
         public Axis[] Analysis03XAxes { get; set; }
+        string Analysis03Label { get; set; }
         public ISeries[] Analysis04 { get; set; }
         public Axis[] Analysis04XAxes { get; set; }
-
-    }
+        string Analysis04Label { get; set; }
+    }*/
     
     internal class MainViewModel : BaseViewModel
     {
 
-        ObservableCollection<ObservableValue> _observableValues;
-
-        private AnalysisTypes _countryAnalysis = new AnalysisTypes();
-        private AnalysisTypes _cityAnalysis = new AnalysisTypes();
-        private AnalysisTypes _districtAnalysis = new AnalysisTypes();
-
-        public ISeries[] CountryAnalysis01 { get; set; }
-        public Axis[] CountryAnalysis01XAxes { get; set; }
-        /*public ISeries[] CountryAnalysis02 { get; set; }
-        public Axis[] CountryAnalysis02XAxes { get; set; }
-        public ISeries[] CountryAnalysis03 { get; set; }
-        public Axis[] CountryAnalysis03XAxes { get; set; }
-        public ISeries[] CountryAnalysis04 { get; set; }
-        public Axis[] CountryAnalysis04XAxes { get; set; }
-        */
-
-
-        //Events - open additional windows
+       //Events 
         public event EventHandler OnRequestOpen3DMap;
         public event EventHandler OnRequestOpen2DMap;
         public event EventHandler OnRequestClose;
 
 
-        //Commands - view additional windows
+        //Commands
         public ICommand View3DMapCmd { get; set; }
         public ICommand View2DMapCmd { get; set; }
         public ICommand ExitCmd { get; set; }
 
 
-        // Properties
-        // public ObservableCollection<Location> LocationList { get; set; }
-
-        public List<string> DistrictName {get; set; }
-
-        public List<string> ProjectName { get; set; }
-
+        // Properties     
         public string SelectedLocation { get; set; }
         public string SelectedProject { get; set; }
+        public List<ISeries[]> AnalysisDiagram { get; set; }
+        public List<Axis[]> AnalysisXAxes { get; set; }
+        public List<string> AnalysisLabel { get; set; }
+
+        //Variables
+        ObservableCollection<ObservableValue> _observableValues;
+        List<string> _axisLabels;
+        string _tooltip;
 
         public MainViewModel(string project, string location)
         {
             SelectedLocation = location;
             SelectedProject = project;
 
+            _observableValues = new ObservableCollection<ObservableValue>();
+            _axisLabels = new List<string>();
+
             View3DMapCmd = new RelayCommand(View3DMap);
             View2DMapCmd = new RelayCommand(View2DMap);
             ExitCmd = new RelayCommand(Exit);
 
-            FillAnalysis();
+            AnalysisDiagram = new List<ISeries[]>();
+            AnalysisXAxes = new List<Axis[]>();
+            AnalysisLabel = new List<string>();
 
+            //TO DO: Add 1-12
+            for (int i = 1; i < 2; i++)
+            {
+                FillAnalysis(1);
+            }
         }
 
         #region Open/Close Windows
@@ -123,51 +123,59 @@ namespace ViennaMaps.ViewModels
         }
         #endregion
 
-        
-        public void FillAnalysis()
+        public void FillAnalysis( int analysisUIlocation)
         {
-            _observableValues = new ObservableCollection<ObservableValue>();
-            
+            //clear any old values from the list
+            _observableValues.Clear();    
+            _axisLabels.Clear();                            
+
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
-                var liste = context.ProjectLocationAnalysisView.Include(p => p.AnalyisId).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject);
+                //TO DO: how to get views - get single (analysis name) and list (analysis values)
+                var liste = context.ProjectLocationAnalysisView.Include(p=>p.Label).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject).Where(p => p.Uilocation == analysisUIlocation);
+                
+                //Analysis Label is the title of the Analyis
+                AnalysisLabel.Add(liste.FirstOrDefault().AnalysisName);
+                
+                //tooltip will be shown when hovering over the analysis with the mouse 
+                _tooltip = liste.FirstOrDefault().MeasurmentUnit;
+
+                //add the data to the analysis diagram and to the axis labels
                 foreach (var item in liste)
-                {
+                {                   
                     _observableValues.Add(new(double.Parse(item.Value)));
-                    
+                    _axisLabels.Add(item.Label);
                 }
+            }            
 
-            }
-
-            _countryAnalysis.Analysis01 = new ISeries[]
+            //TO DO: switch statement for diagram type (line vs pie chart)
+            //create analysis diagram
+            ISeries[] analysis = new ISeries[]
              {
                 new LineSeries<ObservableValue>
                 {
                     Values = _observableValues,
                     Fill = null,
-                    TooltipLabelFormatter = (chartPoint) => $"Population: {chartPoint.PrimaryValue} inhabitants"
+                    TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip}"
                 }
              };
-            CountryAnalysis01 = _countryAnalysis.Analysis01;
 
-            _countryAnalysis.Analysis01XAxes = new Axis[]
-              {
-                new Axis
-                {
-                    
-                     Labels = new string[] { }
-                   
-                }
+            //TO DO: switch statement 
+            //create axis with labels for the diagram
+            Axis[] axis = new Axis[]
+            {
+                  new Axis
+                  {
+                    Labels = _axisLabels
+                  }
             };
-            CountryAnalysis01XAxes = _countryAnalysis.Analysis01XAxes;
 
+            //add the new diagram and axis to the list
+            AnalysisDiagram.Add(analysis);
+            AnalysisXAxes.Add(axis);                   
         }
 
-        //documentation: https://lvcharts.com/docs/wpf/2.0.0-beta.300/CartesianChart.Cartesian%20chart%20control#axes.labels-and-axes.labelers
-        //allgemeine methode - füllt alle properties
-        // vielleicht 1 absrakte basis klasse - ableitung für jede datenart
-        
-    
+        #region Old - To Input in the Database
 
         public ISeries[] CountryAnalysis02{ get; set; }
               = new ISeries[]
@@ -213,15 +221,17 @@ namespace ViennaMaps.ViewModels
             TooltipLabelFormatter = (chartPoint) => $"Population Density: {chartPoint.PrimaryValue} inhabitants per square kilometer"
         },
 
-    };        
-        public Axis[] CountryAnalysis04XAxes { get; set; } =
-        {
-        new Axis
-        {
-            Labels = new string[] { "Vienna", "Voralberg", "Upper Austria" , "Lower Austria", "Salzburg", "Styria", "Burgenland", "Tyrol", "Carinthia" },
-            LabelsRotation = 30
-        }
     };
 
+        public Axis[] CountryAnalysis04XAxes { get; set; } =
+            {
+            new Axis
+            {
+                 Labels = new string[] { "Vienna", "Voralberg", "Upper Austria" , "Lower Austria", "Salzburg", "Styria", "Burgenland", "Tyrol", "Carinthia" },
+                LabelsRotation = 30
+            }
+        };
+
+        #endregion
     }
 }

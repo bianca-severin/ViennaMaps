@@ -30,6 +30,7 @@ namespace ViennaMaps.Models
         public virtual DbSet<ProjectLayersView> ProjectLayersView { get; set; }
         public virtual DbSet<ProjectLocationAnalysisView> ProjectLocationAnalysisView { get; set; }
         public virtual DbSet<ProjectScale> ProjectScale { get; set; }
+        public virtual DbSet<Uilocation> Uilocation { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -72,6 +73,23 @@ namespace ViennaMaps.Models
                     .HasForeignKey(d => d.AnalysisTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("analysis_analysistypeid_foreign");
+
+                entity.HasMany(d => d.Uilocation)
+                    .WithMany(p => p.Analysis)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "AnalysisUilocation",
+                        l => l.HasOne<Uilocation>().WithMany().HasForeignKey("Uilocation").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AnalysisUILocation_Analysis"),
+                        r => r.HasOne<Analysis>().WithMany().HasForeignKey("AnalysisId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AnalysisUILocation_Analysis1"),
+                        j =>
+                        {
+                            j.HasKey("AnalysisId", "Uilocation");
+
+                            j.ToTable("AnalysisUILocation");
+
+                            j.IndexerProperty<int>("AnalysisId").HasColumnName("AnalysisID");
+
+                            j.IndexerProperty<int>("Uilocation").HasColumnName("UILocation");
+                        });
             });
 
             modelBuilder.Entity<AnalysisType>(entity =>
@@ -323,15 +341,11 @@ namespace ViennaMaps.Models
 
                 entity.ToView("ProjectLocationAnalysisView");
 
-                entity.Property(e => e.AnalyisId).HasColumnName("AnalyisID");
-
                 entity.Property(e => e.AnalysisId).HasColumnName("AnalysisID");
 
                 entity.Property(e => e.AnalysisName)
                     .IsRequired()
                     .HasMaxLength(50);
-
-                entity.Property(e => e.AnalysisTypeId).HasColumnName("AnalysisTypeID");
 
                 entity.Property(e => e.AnalysisValueId).HasColumnName("AnalysisValueID");
 
@@ -341,11 +355,15 @@ namespace ViennaMaps.Models
 
                 entity.Property(e => e.Label).HasMaxLength(50);
 
-                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
+                entity.Property(e => e.MeasurmentUnit)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.ProjectName)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Uilocation).HasColumnName("UILocation");
 
                 entity.Property(e => e.Value)
                     .IsRequired()
@@ -361,6 +379,15 @@ namespace ViennaMaps.Models
                 entity.Property(e => e.ScaleName)
                     .IsRequired()
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Uilocation>(entity =>
+            {
+                entity.ToTable("UILocation");
+
+                entity.Property(e => e.UilocationId).HasColumnName("UILocationID");
+
+                entity.Property(e => e.Uilocation1).HasColumnName("UILocation");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -26,6 +26,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[AnalysisUILocation]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[AnalysisValue]",
          "ObjectType": 0
       },
@@ -63,6 +67,10 @@
       },
       {
          "Name": "[dbo].[ProjectScale]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UILocation]",
          "ObjectType": 0
       },
       {

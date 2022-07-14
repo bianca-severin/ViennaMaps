@@ -11,6 +11,7 @@ namespace ViennaMaps.Models
         {
             AnalysisValue = new HashSet<AnalysisValue>();
             Project = new HashSet<Project>();
+            Uilocation = new HashSet<Uilocation>();
         }
 
         public int AnalyisId { get; set; }
@@ -23,5 +24,6 @@ namespace ViennaMaps.Models
         public virtual ICollection<AnalysisValue> AnalysisValue { get; set; }
 
         public virtual ICollection<Project> Project { get; set; }
+        public virtual ICollection<Uilocation> Uilocation { get; set; }
     }
 }

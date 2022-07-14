@@ -14,9 +14,7 @@ namespace ViennaMaps.ViewModels
     {
         //Properties
         public string Location { get; set; }
-
         public SceneView My3DSceneView { get; set; }
-
 
 
         //Constructor
@@ -24,18 +22,17 @@ namespace ViennaMaps.ViewModels
         {
             Location = location;          
             My3DSceneView = my3DSceneView;
+
+            //create topographic scene, add buildings layers, set camera on the selected district
             CreateTopographicScene();
             AddBuildingsLayer();
             SetCamera();
-
         }
 
         private void CreateTopographicScene()
         {
-
             // Create a new Scene with a base map
-            My3DSceneView.Scene = new Scene(BasemapStyle.ArcGISDarkGray);
-            
+            My3DSceneView.Scene = new Scene(BasemapStyle.ArcGISDarkGray);            
 
             // Add a base surface with elevation data - topography
             Surface elevationSurface = new Surface();
@@ -45,7 +42,6 @@ namespace ViennaMaps.ViewModels
             //add the topography to the scene
             My3DSceneView.Scene.BaseSurface = elevationSurface;      
 
-
         }
 
      
@@ -53,8 +49,10 @@ namespace ViennaMaps.ViewModels
         {
             // Uri buildings in LOD2 definition for Vienna
             Uri buildingsService = new Uri("https://tiles.arcgis.com/tiles/YfxQKFk1MjjurGb5/arcgis/rest/services/Prozessiertes_Baukörpermodell_Wien/SceneServer/layers/0");
+
             //create buildings layer
             ArcGISSceneLayer buildingsLayer = new ArcGISSceneLayer(buildingsService);
+
             //add buildings layer to the scene
             My3DSceneView.Scene.OperationalLayers.Add(buildingsLayer);
         }
@@ -81,7 +79,6 @@ namespace ViennaMaps.ViewModels
                 My3DSceneView.SetViewpointCamera(viewCamera);
             }
          
-        }
-      
+        }      
     }
 }

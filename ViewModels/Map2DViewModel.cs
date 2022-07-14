@@ -25,7 +25,6 @@ namespace ViennaMaps.ViewModels
         public string Project { get; set; }
         public SceneView MyMap2DView { get; set; }
 
-
         //Variables
         private List<string> _groupLayerLabel = new List<string>();
         private List<GroupLayer> _groupLayer = new List<GroupLayer>();
@@ -70,6 +69,7 @@ namespace ViennaMaps.ViewModels
                 {
                     //new feature layer created
                     FeatureLayer tempLayer = new FeatureLayer(new Uri(item.ArcGisuri)) { Name = item.LayerLabel };
+
                     //create and/or add layer to correspinding group
                     CreateGroups(tempLayer, item);
 
@@ -83,7 +83,8 @@ namespace ViennaMaps.ViewModels
             if (!_groupLayerLabel.Contains(item.GroupLabel))
             {
                 //create new Group Layer
-                GroupLayer tempGroupLayer = new GroupLayer() { Name = item.GroupLabel };
+                GroupLayer tempGroupLayer = new GroupLayer() { Name = item.GroupLabel};
+
                 //add layer to new Group Layer
                 tempGroupLayer.Layers.Add(layer);
 

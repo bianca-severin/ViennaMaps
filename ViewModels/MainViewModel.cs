@@ -22,12 +22,16 @@ namespace ViennaMaps.ViewModels
     {
         ISeries[] Analysis01 { get; set; }
         Axis[] Analysis01XAxes { get; set; }
-        ISeries[] Analysis02 { get; set; }
+        string Analysis01Label { get; set; }
+        ISeries[] Analysis02 { get; set; }   
         Axis[] Analysis02XAxes { get; set; }
+        string Analysis02Label { get; set; }
         ISeries[] Analysis03 { get; set; }
         Axis[] Analysis03XAxes { get; set; }
+        string Analysis03Label { get; set; }
         ISeries[] Analysis04 { get; set; }
         Axis[] Analysis04XAxes { get; set; }
+        string Analysis04Label { get; set; }
 
     }
 
@@ -64,8 +68,6 @@ namespace ViennaMaps.ViewModels
         */
 
 
-
-
         //Events - open additional windows
         public event EventHandler OnRequestOpen3DMap;
         public event EventHandler OnRequestOpen2DMap;
@@ -90,9 +92,6 @@ namespace ViennaMaps.ViewModels
 
         public MainViewModel(string project, string location)
         {
-            //TO DO: check this - LocationList vs District name
-            //LocationList = new ObservableCollection<Location>();
-
             SelectedLocation = location;
             SelectedProject = project;
 
@@ -100,23 +99,7 @@ namespace ViennaMaps.ViewModels
             View2DMapCmd = new RelayCommand(View2DMap);
             ExitCmd = new RelayCommand(Exit);
 
-           /* _observableValues = new ObservableCollection<ObservableValue>
-            {
-            // Use the ObservableValue or ObservablePoint types to let the chart listen for property changes // mark
-            // or use any INotifyPropertyChanged implementation // mark
-            //https://github.com/beto-rodriguez/LiveCharts2/blob/master/samples/ViewModelsSamples/Lines/AutoUpdate/ViewModel.cs
-           // new ObservableValue(2),
-            new (7644818),
-            new (7943489),
-            new (8002186),
-            new (8201359),
-            new (8351643),
-            new (8584926),
-            new (8858775)
-            };*/
-
             FillAnalysis();
-
 
         }
 
@@ -147,7 +130,7 @@ namespace ViennaMaps.ViewModels
             
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
-                var liste = context.ProjectLocationAnalysisView.Include(p => p.AnalyisId).Where(p => p.DistrictName == SelectedLocation);
+                var liste = context.ProjectLocationAnalysisView.Include(p => p.AnalyisId).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject);
                 foreach (var item in liste)
                 {
                     _observableValues.Add(new(double.Parse(item.Value)));

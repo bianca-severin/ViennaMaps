@@ -20,5 +20,7 @@ namespace ViennaMaps.Models
         public int Expr3 { get; set; }
         public int Expr4 { get; set; }
         public int AnalysisId { get; set; }
+        public int ProjectId { get; set; }
+        public string ProjectName { get; set; }
     }
 }

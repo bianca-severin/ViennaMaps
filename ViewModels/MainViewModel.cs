@@ -96,7 +96,8 @@ namespace ViennaMaps.ViewModels
             AnalysisXAxes = new List<Axis[]>();
             AnalysisLabel = new List<string>();
 
-            //TO DO: Add 1-12
+            //TO DO: Add i<12 when I inserted all data in the database
+            //creating the analysis diagram for all 12 analysis slots
             for (int i = 1; i < 2; i++)
             {
                 FillAnalysis(1);
@@ -131,7 +132,7 @@ namespace ViennaMaps.ViewModels
 
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
-                //TO DO: how to get views - get single (analysis name) and list (analysis values)
+                //where untereinader
                 var liste = context.ProjectLocationAnalysisView.Include(p=>p.Label).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject).Where(p => p.Uilocation == analysisUIlocation);
                 
                 //Analysis Label is the title of the Analyis

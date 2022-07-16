@@ -7,7 +7,7 @@ using Esri.ArcGISRuntime.UI.Controls;
 using Esri.ArcGISRuntime.Mapping;
 using ViennaMaps.Models;
 
-
+//Kommentar
 namespace ViennaMaps.ViewModels
 {
     internal class Map3DViewModel
@@ -57,6 +57,7 @@ namespace ViennaMaps.ViewModels
             My3DSceneView.Scene.OperationalLayers.Add(buildingsLayer);
         }
 
+        //vor der Methode ein Kommentar
         private void SetCamera()
         {
             // get latitude and longitude from the database to set camera on selected location

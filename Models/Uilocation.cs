@@ -13,7 +13,7 @@ namespace ViennaMaps.Models
         }
 
         public int UilocationId { get; set; }
-        public int Uilocation1 { get; set; }
+        public int UilocationName { get; set; }
 
         public virtual ICollection<Analysis> Analysis { get; set; }
     }

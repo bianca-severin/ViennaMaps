@@ -74,11 +74,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ProjectLayersView]",
+         "Name": "[dbo].[ProjectAnalysisView]",
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[ProjectLocationAnalysisView]",
+         "Name": "[dbo].[ProjectLayersView]",
          "ObjectType": 3
       }
    ],

@@ -27,8 +27,8 @@ namespace ViennaMaps.Models
         public virtual DbSet<LayerGroup> LayerGroup { get; set; }
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Project> Project { get; set; }
+        public virtual DbSet<ProjectAnalysisView> ProjectAnalysisView { get; set; }
         public virtual DbSet<ProjectLayersView> ProjectLayersView { get; set; }
-        public virtual DbSet<ProjectLocationAnalysisView> ProjectLocationAnalysisView { get; set; }
         public virtual DbSet<ProjectScale> ProjectScale { get; set; }
         public virtual DbSet<Uilocation> Uilocation { get; set; }
 
@@ -78,17 +78,17 @@ namespace ViennaMaps.Models
                     .WithMany(p => p.Analysis)
                     .UsingEntity<Dictionary<string, object>>(
                         "AnalysisUilocation",
-                        l => l.HasOne<Uilocation>().WithMany().HasForeignKey("Uilocation").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AnalysisUILocation_Analysis"),
+                        l => l.HasOne<Uilocation>().WithMany().HasForeignKey("UilocationId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AnalysisUILocation_Analysis"),
                         r => r.HasOne<Analysis>().WithMany().HasForeignKey("AnalysisId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AnalysisUILocation_Analysis1"),
                         j =>
                         {
-                            j.HasKey("AnalysisId", "Uilocation");
+                            j.HasKey("AnalysisId", "UilocationId");
 
                             j.ToTable("AnalysisUILocation");
 
                             j.IndexerProperty<int>("AnalysisId").HasColumnName("AnalysisID");
 
-                            j.IndexerProperty<int>("Uilocation").HasColumnName("UILocation");
+                            j.IndexerProperty<int>("UilocationId").HasColumnName("UILocationID");
                         });
             });
 
@@ -293,6 +293,41 @@ namespace ViennaMaps.Models
                         });
             });
 
+            modelBuilder.Entity<ProjectAnalysisView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ProjectAnalysisView");
+
+                entity.Property(e => e.AnalysisName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.DiagramType)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.DistrictName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Label).HasMaxLength(50);
+
+                entity.Property(e => e.MeasurmentUnit)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ProjectName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UilocationName).HasColumnName("UILocationName");
+
+                entity.Property(e => e.Value)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<ProjectLayersView>(entity =>
             {
                 entity.HasNoKey();
@@ -335,41 +370,6 @@ namespace ViennaMaps.Models
                     .HasMaxLength(50);
             });
 
-            modelBuilder.Entity<ProjectLocationAnalysisView>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("ProjectLocationAnalysisView");
-
-                entity.Property(e => e.AnalysisId).HasColumnName("AnalysisID");
-
-                entity.Property(e => e.AnalysisName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.AnalysisValueId).HasColumnName("AnalysisValueID");
-
-                entity.Property(e => e.DistrictName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Label).HasMaxLength(50);
-
-                entity.Property(e => e.MeasurmentUnit)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.ProjectName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Uilocation).HasColumnName("UILocation");
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<ProjectScale>(entity =>
             {
                 entity.Property(e => e.ProjectScaleId)
@@ -387,7 +387,7 @@ namespace ViennaMaps.Models
 
                 entity.Property(e => e.UilocationId).HasColumnName("UILocationID");
 
-                entity.Property(e => e.Uilocation1).HasColumnName("UILocation");
+                entity.Property(e => e.UilocationName).HasColumnName("UILocationName");
             });
 
             OnModelCreatingPartial(modelBuilder);

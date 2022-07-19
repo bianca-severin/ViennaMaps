@@ -9,6 +9,7 @@ using LiveChartsCore.SkiaSharpView;
 using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
+using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LiveChartsCore.Measure;
 using System.Collections.ObjectModel;
@@ -16,6 +17,7 @@ using LiveChartsCore.Defaults;
 using ViennaMaps.Models;
 using System.Data.Entity;
 using System.Diagnostics;
+using LiveChartsCore.Geo;
 
 
 namespace ViennaMaps.ViewModels
@@ -68,7 +70,7 @@ namespace ViennaMaps.ViewModels
             //TO DO: Add i<12 when I inserted all data in the database
             //creating the analysis diagram for all 12 analysis slots
 
-            for (int i = 0; i <= 1; i++)
+            for (int i = 0; i <= 2; i++)
             {
                 FillAnalysis(i);
             }
@@ -106,7 +108,7 @@ namespace ViennaMaps.ViewModels
             {
                 //where untereinader
                 var liste = context.ProjectAnalysisView.Include(p=>p.Label).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject).Where(p => p.UilocationName == (analysisUIlocation+1));
-                //Trace.WriteLine("objects in the list: " + liste.Count() + "analyis ui location: " + analysisUIlocation);    
+                Trace.WriteLine("objects in the list: " + liste.Count() + "analyis ui location: " + analysisUIlocation);    
                 //Analysis Label is the title of the Analyis
                  AnalysisLabel.Add(liste.FirstOrDefault().AnalysisName);
 
@@ -144,7 +146,7 @@ namespace ViennaMaps.ViewModels
                 ISeries[] analysis = new ISeries[]
                 {
                 new LineSeries<ObservableValue>
-                {
+                    {
                     Values = _observableValues[analysisUIlocation],
                     Fill = null,
                     TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}",
@@ -159,26 +161,69 @@ namespace ViennaMaps.ViewModels
                     { 
                         Color= SKColors.Crimson 
                     }
-                }
-                };
+                    } };
                 AnalysisDiagram.Add(analysis);
-
-
-            }            
-
-
-            //TO DO: switch statement 
-            //create axis with labels for the diagram
-            Axis[] axis = new Axis[]
+            }
+            else if (_diagramType == "StackedColumnSeries")
             {
-                  new Axis
-                  {
-                    Labels = _axisLabels[analysisUIlocation]
-                  }
-            };
+                ISeries[] analysis = new ISeries[]
+                {
+                new StackedColumnSeries<ObservableValue>
+                    {
+                    Values =  _observableValues[analysisUIlocation],
+                    Stroke = null,
+                    DataLabelsPaint = new SolidColorPaint(SKColors.White),
+                    Fill = new SolidColorPaint(SKColors.Teal),
+                    DataLabelsSize = 14,
+                    DataLabelsPosition = DataLabelsPosition.Middle,
+                    TooltipLabelFormatter = (chartPoint) => $"Living space per person: {chartPoint.PrimaryValue} m² to average"
+                    }};
+                AnalysisDiagram.Add(analysis);
+            }
+            else if(_diagramType == "ColumnSeries")
+            {
+                //TO DO: Add population density to database
+                ISeries[] analysis =
+{
+                    new ColumnSeries<double>
+                    {
+                        Values = new double[] { 4657, 154.4, 125.6, 88.6, 78.6, 76.4, 75.1, 60.4, 59.2 },
+                        Stroke = null,
+                        Fill = new SolidColorPaint(SKColors.CornflowerBlue),
+                        IgnoresBarPosition = true,
+                        TooltipLabelFormatter = (chartPoint) => $"Population Density: {chartPoint.PrimaryValue} inhabitants per square kilometer"
+                    } };
+                AnalysisDiagram.Add(analysis);
+            }
 
-            //add the new diagram and axis to the list
-          
+
+            // create axis with labels for the diagram
+            Axis[] axis;
+
+            if (_diagramType == "StackedColumnSeries")
+            {
+                axis = new Axis[]
+                {
+                    new Axis
+                    {
+                        Labels = _axisLabels[analysisUIlocation],
+                        LabelsRotation = 90,
+                        UnitWidth =1
+                    }
+                };
+            }
+            else {
+                axis = new Axis[]
+                {
+                    new Axis
+                    {
+                        Labels = _axisLabels[analysisUIlocation]
+                    }
+                };
+            }
+
+
+            // add the new diagram and axis to the list          
             AnalysisXAxes.Add(axis);                   
         }
 
@@ -238,6 +283,7 @@ namespace ViennaMaps.ViewModels
                 LabelsRotation = 30
             }
         };
+
 
         #endregion
     }

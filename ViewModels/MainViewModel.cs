@@ -19,40 +19,7 @@ using System.Diagnostics;
 
 namespace ViennaMaps.ViewModels
 {
-    /*
-    abstract class AnalysisDiagrams
-    {
-        ISeries[] Analysis01 { get; set; }
-        Axis[] Analysis01XAxes { get; set; }
-        string Analysis01Label { get; set; }
-        ISeries[] Analysis02 { get; set; }   
-        Axis[] Analysis02XAxes { get; set; }
-        string Analysis02Label { get; set; }
-        ISeries[] Analysis03 { get; set; }
-        Axis[] Analysis03XAxes { get; set; }
-        string Analysis03Label { get; set; }
-        ISeries[] Analysis04 { get; set; }
-        Axis[] Analysis04XAxes { get; set; }
-        string Analysis04Label { get; set; }
 
-    }
-
-   class AnalysisTypes : AnalysisDiagrams
-   {
-        public ISeries[] Analysis01 { get; set; } 
-        public Axis[] Analysis01XAxes { get; set; }
-        public string Analysis01Label { get; set; }
-        public ISeries[] Analysis02 { get; set; }
-        public  Axis[] Analysis02XAxes { get; set; }
-        public string Analysis02Label { get; set; }
-        public ISeries[] Analysis03 { get; set; }
-        public Axis[] Analysis03XAxes { get; set; }
-        string Analysis03Label { get; set; }
-        public ISeries[] Analysis04 { get; set; }
-        public Axis[] Analysis04XAxes { get; set; }
-        string Analysis04Label { get; set; }
-    }*/
-    
     internal class MainViewModel : BaseViewModel
     {
 
@@ -76,8 +43,8 @@ namespace ViennaMaps.ViewModels
         public List<string> AnalysisLabel { get; set; }
 
         //Variables
-        public List <double>[] _observableValues;
-        List<string> _axisLabels;
+        ObservableCollection <ObservableValue>[] _observableValues;
+        List<string>[] _axisLabels;
         string _tooltip;
 
         public MainViewModel(string project, string location)
@@ -85,8 +52,8 @@ namespace ViennaMaps.ViewModels
             SelectedLocation = location;
             SelectedProject = project;
 
-            _observableValues = new List<double>[12];
-            _axisLabels = new List<string>();
+            _observableValues = new ObservableCollection<ObservableValue>[12];
+            _axisLabels = new List<string>[12];
 
             View3DMapCmd = new RelayCommand(View3DMap);
             View2DMapCmd = new RelayCommand(View2DMap);
@@ -98,11 +65,10 @@ namespace ViennaMaps.ViewModels
 
             //TO DO: Add i<12 when I inserted all data in the database
             //creating the analysis diagram for all 12 analysis slots
-            FillAnalysis(1);
-            FillAnalysis(2);
-            for (int i = 1; i < 2; i++)
+
+            for (int i = 0; i <= 1; i++)
             {
-                
+                FillAnalysis(i);
             }
         }
 
@@ -129,50 +95,65 @@ namespace ViennaMaps.ViewModels
         public void FillAnalysis( int analysisUIlocation)
         {
             //clear any old values from the list
-                
-            _axisLabels.Clear();
-            _observableValues[analysisUIlocation - 1] = new List<double>();
+
+            _axisLabels[analysisUIlocation] = new List<string>();
+            _observableValues[analysisUIlocation] = new ObservableCollection<ObservableValue>();
+            string _diagramType;
+
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
                 //where untereinader
-                var liste = context.ProjectAnalysisView.Include(p=>p.Label).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject).Where(p => p.UilocationName == analysisUIlocation);
-                
+                var liste = context.ProjectAnalysisView.Include(p=>p.Label).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject).Where(p => p.UilocationName == (analysisUIlocation+1));
+                Trace.WriteLine("objects in the list: " + liste.Count() + "analyis ui location: " + analysisUIlocation);    
                 //Analysis Label is the title of the Analyis
-                AnalysisLabel.Add(liste.FirstOrDefault().AnalysisName);
+                 AnalysisLabel.Add(liste.FirstOrDefault().AnalysisName);
                 
                 //tooltip will be shown when hovering over the analysis with the mouse 
                 _tooltip = liste.FirstOrDefault().MeasurmentUnit;
+                _diagramType = liste.FirstOrDefault().DiagramType;
 
                 //add the data to the analysis diagram and to the axis labels
                 foreach (var item in liste)
                 {                   
-                    _observableValues[analysisUIlocation-1].Add(double.Parse(item.Value));
-                    _axisLabels.Add(item.Label);
+                    _observableValues[analysisUIlocation].Add(new(double.Parse(item.Value)));
+                    _axisLabels[analysisUIlocation].Add(item.Label);
                 }
             }
 
             //TO DO: switch statement for diagram type (line vs pie chart)
             //create analysis diagram
-            if (analysisUIlocation == 1)
+            if (_diagramType == "LineSeries")
             {
                 ISeries[] analysis = new ISeries[]
                  {
-                new LineSeries<double>
+                new LineSeries<ObservableValue>
                 {
-                    Values = _observableValues[analysisUIlocation-1],
+                    Values = _observableValues[analysisUIlocation],
                     Fill = null,
                     TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip}"
                 }
-                 };
+                };
                 AnalysisDiagram.Add(analysis);
             }
+            else if(_diagramType == "PieChart")
+            {
+                ISeries[] analysis = new ISeries[]
+                {
+                new PieSeries<double> { Values = new List<double> { 42.7 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are renting" },
+                new PieSeries<double> { Values = new List<double> { 48.8 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are owning"},
+                new PieSeries<double> { Values = new List<double> { 8.5 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are rent-free or in unpaid housing" },
+                };
+                AnalysisDiagram.Add(analysis);
+            }
+
+
             //TO DO: switch statement 
             //create axis with labels for the diagram
             Axis[] axis = new Axis[]
             {
                   new Axis
                   {
-                    Labels = _axisLabels
+                    Labels = _axisLabels[analysisUIlocation]
                   }
             };
 

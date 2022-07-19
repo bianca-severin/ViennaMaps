@@ -17,6 +17,7 @@ using ViennaMaps.Models;
 using System.Data.Entity;
 using System.Diagnostics;
 
+
 namespace ViennaMaps.ViewModels
 {
 
@@ -45,8 +46,8 @@ namespace ViennaMaps.ViewModels
         //Variables
         ObservableCollection <ObservableValue>[] _observableValues;
         List<string>[] _axisLabels;
-        string _tooltip;
-
+        string[] _tooltip = new string[12];
+        
         public MainViewModel(string project, string location)
         {
             SelectedLocation = location;
@@ -54,6 +55,7 @@ namespace ViennaMaps.ViewModels
 
             _observableValues = new ObservableCollection<ObservableValue>[12];
             _axisLabels = new List<string>[12];
+            
 
             View3DMapCmd = new RelayCommand(View3DMap);
             View2DMapCmd = new RelayCommand(View2DMap);
@@ -104,12 +106,12 @@ namespace ViennaMaps.ViewModels
             {
                 //where untereinader
                 var liste = context.ProjectAnalysisView.Include(p=>p.Label).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject).Where(p => p.UilocationName == (analysisUIlocation+1));
-                Trace.WriteLine("objects in the list: " + liste.Count() + "analyis ui location: " + analysisUIlocation);    
+                //Trace.WriteLine("objects in the list: " + liste.Count() + "analyis ui location: " + analysisUIlocation);    
                 //Analysis Label is the title of the Analyis
                  AnalysisLabel.Add(liste.FirstOrDefault().AnalysisName);
-                
+
                 //tooltip will be shown when hovering over the analysis with the mouse 
-                _tooltip = liste.FirstOrDefault().MeasurmentUnit;
+                _tooltip[analysisUIlocation]=liste.FirstOrDefault().MeasurmentUnit;
                 _diagramType = liste.FirstOrDefault().DiagramType;
 
                 //add the data to the analysis diagram and to the axis labels
@@ -122,29 +124,47 @@ namespace ViennaMaps.ViewModels
 
             //TO DO: switch statement for diagram type (line vs pie chart)
             //create analysis diagram
-            if (_diagramType == "LineSeries")
+            if (_diagramType == "LineSeriesFill")
             {
                 ISeries[] analysis = new ISeries[]
-                 {
+                {
                 new LineSeries<ObservableValue>
                 {
                     Values = _observableValues[analysisUIlocation],
-                    Fill = null,
-                    TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip}"
+                    TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}"
                 }
                 };
                 AnalysisDiagram.Add(analysis);
             }
-            else if(_diagramType == "PieChart")
+            else if(_diagramType == "LineSeriesDashed")
             {
+                var strokeThickness = 3;
+                var strokeDashArray = new float[] { 3 * strokeThickness, 2 * strokeThickness };
+
                 ISeries[] analysis = new ISeries[]
                 {
-                new PieSeries<double> { Values = new List<double> { 42.7 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are renting" },
-                new PieSeries<double> { Values = new List<double> { 48.8 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are owning"},
-                new PieSeries<double> { Values = new List<double> { 8.5 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are rent-free or in unpaid housing" },
+                new LineSeries<ObservableValue>
+                {
+                    Values = _observableValues[analysisUIlocation],
+                    Fill = null,
+                    TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}",
+                    Stroke = new SolidColorPaint
+                    {
+                            Color = SKColors.Crimson,
+                            StrokeCap = SKStrokeCap.Round,
+                            StrokeThickness = 3,
+                            PathEffect = new DashEffect(strokeDashArray)
+                    },
+                    GeometryStroke= new SolidColorPaint
+                    { 
+                        Color= SKColors.Crimson 
+                    }
+                }
                 };
                 AnalysisDiagram.Add(analysis);
-            }
+
+
+            }            
 
 
             //TO DO: switch statement 

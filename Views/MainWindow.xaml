@@ -92,9 +92,9 @@
                     <lvc:CartesianChart
                             Series="{Binding AnalysisDiagram[0]}" Grid.ColumnSpan="2" Margin="34,74,75,715" ZoomMode="Y"  XAxes="{Binding AnalysisXAxes[0] }">
                     </lvc:CartesianChart>
-                    <lvc:PieChart 
-                            Series="{Binding AnalysisDiagram[1]}" Grid.ColumnSpan="2" Margin="205,94,370,727" Grid.Column="1" LegendPosition="Right" LegendBackground="#FF0B2027">
-                    </lvc:PieChart>
+                    <lvc:CartesianChart
+                            Series="{Binding AnalysisDiagram[1]}" Grid.ColumnSpan="2" Margin="205,94,370,727" Grid.Column="1" XAxes="{Binding AnalysisXAxes[1]}">
+                    </lvc:CartesianChart>
                     <lvc:CartesianChart
                             Series="{Binding CountryAnalysis03}" Grid.ColumnSpan="2" Margin="34,384,75,47" ZoomMode="Y"  XAxes="{Binding CountryAnalysis03XAxes }">
                     </lvc:CartesianChart>

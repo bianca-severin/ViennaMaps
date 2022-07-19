@@ -76,7 +76,7 @@ namespace ViennaMaps.ViewModels
         public List<string> AnalysisLabel { get; set; }
 
         //Variables
-        ObservableCollection<ObservableValue> _observableValues;
+        public List <double>[] _observableValues;
         List<string> _axisLabels;
         string _tooltip;
 
@@ -85,7 +85,7 @@ namespace ViennaMaps.ViewModels
             SelectedLocation = location;
             SelectedProject = project;
 
-            _observableValues = new ObservableCollection<ObservableValue>();
+            _observableValues = new List<double>[12];
             _axisLabels = new List<string>();
 
             View3DMapCmd = new RelayCommand(View3DMap);
@@ -98,9 +98,11 @@ namespace ViennaMaps.ViewModels
 
             //TO DO: Add i<12 when I inserted all data in the database
             //creating the analysis diagram for all 12 analysis slots
+            FillAnalysis(1);
+            FillAnalysis(2);
             for (int i = 1; i < 2; i++)
             {
-                FillAnalysis(1);
+                
             }
         }
 
@@ -127,13 +129,13 @@ namespace ViennaMaps.ViewModels
         public void FillAnalysis( int analysisUIlocation)
         {
             //clear any old values from the list
-            _observableValues.Clear();    
-            _axisLabels.Clear();                            
-
+                
+            _axisLabels.Clear();
+            _observableValues[analysisUIlocation - 1] = new List<double>();
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
                 //where untereinader
-                var liste = context.ProjectLocationAnalysisView.Include(p=>p.Label).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject).Where(p => p.Uilocation == analysisUIlocation);
+                var liste = context.ProjectAnalysisView.Include(p=>p.Label).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject).Where(p => p.UilocationName == analysisUIlocation);
                 
                 //Analysis Label is the title of the Analyis
                 AnalysisLabel.Add(liste.FirstOrDefault().AnalysisName);
@@ -144,23 +146,26 @@ namespace ViennaMaps.ViewModels
                 //add the data to the analysis diagram and to the axis labels
                 foreach (var item in liste)
                 {                   
-                    _observableValues.Add(new(double.Parse(item.Value)));
+                    _observableValues[analysisUIlocation-1].Add(double.Parse(item.Value));
                     _axisLabels.Add(item.Label);
                 }
-            }            
+            }
 
             //TO DO: switch statement for diagram type (line vs pie chart)
             //create analysis diagram
-            ISeries[] analysis = new ISeries[]
-             {
-                new LineSeries<ObservableValue>
+            if (analysisUIlocation == 1)
+            {
+                ISeries[] analysis = new ISeries[]
+                 {
+                new LineSeries<double>
                 {
-                    Values = _observableValues,
+                    Values = _observableValues[analysisUIlocation-1],
                     Fill = null,
                     TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip}"
                 }
-             };
-
+                 };
+                AnalysisDiagram.Add(analysis);
+            }
             //TO DO: switch statement 
             //create axis with labels for the diagram
             Axis[] axis = new Axis[]
@@ -172,7 +177,7 @@ namespace ViennaMaps.ViewModels
             };
 
             //add the new diagram and axis to the list
-            AnalysisDiagram.Add(analysis);
+          
             AnalysisXAxes.Add(axis);                   
         }
 

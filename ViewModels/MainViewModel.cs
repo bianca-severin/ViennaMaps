@@ -138,7 +138,7 @@ namespace ViennaMaps.ViewModels
                 };
                 AnalysisDiagram.Add(analysis);
             }
-            else if(_diagramType == "LineSeriesDashed")
+            else if (_diagramType == "LineSeriesDashed")
             {
                 var strokeThickness = 3;
                 var strokeDashArray = new float[] { 3 * strokeThickness, 2 * strokeThickness };
@@ -158,8 +158,8 @@ namespace ViennaMaps.ViewModels
                             PathEffect = new DashEffect(strokeDashArray)
                     },
                     GeometryStroke= new SolidColorPaint
-                    { 
-                        Color= SKColors.Crimson 
+                    {
+                        Color= SKColors.Crimson
                     }
                     } };
                 AnalysisDiagram.Add(analysis);
@@ -180,9 +180,8 @@ namespace ViennaMaps.ViewModels
                     }};
                 AnalysisDiagram.Add(analysis);
             }
-            else if(_diagramType == "ColumnSeries")
+            else if (_diagramType == "ColumnSeries")
             {
-                //TO DO: Add population density to database
                 ISeries[] analysis =
 {
                     new ColumnSeries<ObservableValue>
@@ -197,10 +196,24 @@ namespace ViennaMaps.ViewModels
                     } };
                 AnalysisDiagram.Add(analysis);
             }
+            else if (_diagramType == "RowSeries")
+            {
+                ISeries[] analysis =
+{
+                    new RowSeries <ObservableValue>
+                    {
+                        Values =  _observableValues[analysisUIlocation],
+                        Stroke = null,
+                        DataLabelsPaint = new SolidColorPaint(new SKColor(250, 250, 250)),
+                        DataLabelsSize = 14,
+                        DataLabelsPosition = DataLabelsPosition.Middle
+                    } };
+                AnalysisDiagram.Add(analysis);
+            }
 
 
-            // create axis with labels for the diagram
-            Axis[] axis;
+                // create axis with labels for the diagram
+                Axis[] axis;
 
             if (_diagramType == "StackedColumnSeries")
             {

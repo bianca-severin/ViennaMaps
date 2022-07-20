@@ -70,7 +70,7 @@ namespace ViennaMaps.ViewModels
             //TO DO: Add i<12 when I inserted all data in the database
             //creating the analysis diagram for all 12 analysis slots
 
-            for (int i = 0; i <= 3; i++)
+            for (int i = 0; i <= 6; i++)
             {
                 FillAnalysis(i);
             }
@@ -204,9 +204,11 @@ namespace ViennaMaps.ViewModels
                     {
                         Values =  _observableValues[analysisUIlocation],
                         Stroke = null,
-                        DataLabelsPaint = new SolidColorPaint(new SKColor(250, 250, 250)),
+                        Fill = new SolidColorPaint(SKColors.Teal),
                         DataLabelsSize = 14,
-                        DataLabelsPosition = DataLabelsPosition.Middle
+                        DataLabelsPosition = DataLabelsPosition.Middle,
+                        DataLabelsPaint = new SolidColorPaint(SKColors.White),
+                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}",
                     } };
                 AnalysisDiagram.Add(analysis);
             }

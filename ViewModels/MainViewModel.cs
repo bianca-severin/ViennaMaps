@@ -70,7 +70,7 @@ namespace ViennaMaps.ViewModels
             //TO DO: Add i<12 when I inserted all data in the database
             //creating the analysis diagram for all 12 analysis slots
 
-            for (int i = 0; i <= 6; i++)
+            for (int i = 0; i <= 7; i++)
             {
                 FillAnalysis(i);
             }

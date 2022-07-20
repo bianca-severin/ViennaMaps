@@ -70,7 +70,7 @@ namespace ViennaMaps.ViewModels
             //TO DO: Add i<12 when I inserted all data in the database
             //creating the analysis diagram for all 12 analysis slots
 
-            for (int i = 0; i <= 2; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 FillAnalysis(i);
             }
@@ -173,10 +173,10 @@ namespace ViennaMaps.ViewModels
                     Values =  _observableValues[analysisUIlocation],
                     Stroke = null,
                     DataLabelsPaint = new SolidColorPaint(SKColors.White),
-                    Fill = new SolidColorPaint(SKColors.Teal),
+                    Fill = new SolidColorPaint(SKColors.Orange),
                     DataLabelsSize = 14,
                     DataLabelsPosition = DataLabelsPosition.Middle,
-                    TooltipLabelFormatter = (chartPoint) => $"Living space per person: {chartPoint.PrimaryValue} m² to average"
+                    TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}"
                     }};
                 AnalysisDiagram.Add(analysis);
             }
@@ -185,13 +185,15 @@ namespace ViennaMaps.ViewModels
                 //TO DO: Add population density to database
                 ISeries[] analysis =
 {
-                    new ColumnSeries<double>
+                    new ColumnSeries<ObservableValue>
                     {
-                        Values = new double[] { 4657, 154.4, 125.6, 88.6, 78.6, 76.4, 75.1, 60.4, 59.2 },
+                        Values =  _observableValues[analysisUIlocation],
                         Stroke = null,
-                        Fill = new SolidColorPaint(SKColors.CornflowerBlue),
+                        Fill = new SolidColorPaint(SKColors.Teal),
                         IgnoresBarPosition = true,
-                        TooltipLabelFormatter = (chartPoint) => $"Population Density: {chartPoint.PrimaryValue} inhabitants per square kilometer"
+                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}",
+                        DataLabelsPosition = DataLabelsPosition.Top,
+                        DataLabelsPaint = new SolidColorPaint(SKColors.White),
                     } };
                 AnalysisDiagram.Add(analysis);
             }
@@ -212,8 +214,20 @@ namespace ViennaMaps.ViewModels
                     }
                 };
             }
+            else if  (_diagramType == "ColumnSeries")
+                {
+                    axis = new Axis[]
+                    {
+                    new Axis
+                    {
+                        Labels = _axisLabels[analysisUIlocation],
+                        LabelsRotation = 30,
+                        UnitWidth =1
+                    }
+                    };
+                }
             else {
-                axis = new Axis[]
+            axis = new Axis[]
                 {
                     new Axis
                     {
@@ -279,11 +293,10 @@ namespace ViennaMaps.ViewModels
             {
             new Axis
             {
-                 Labels = new string[] { "Vienna", "Voralberg", "Upper Austria" , "Lower Austria", "Salzburg", "Styria", "Burgenland", "Tyrol", "Carinthia" },
+                Labels = new string[] { "Vienna", "Voralberg", "Upper Austria" , "Lower Austria", "Salzburg", "Styria", "Burgenland", "Tyrol", "Carinthia" },
                 LabelsRotation = 30
             }
         };
-
 
         #endregion
     }

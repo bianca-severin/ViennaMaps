@@ -26,13 +26,13 @@ namespace ViennaMaps.ViewModels
     internal class MainViewModel : BaseViewModel
     {
 
-       //Events 
+        // Events 
         public event EventHandler OnRequestOpen3DMap;
         public event EventHandler OnRequestOpen2DMap;
         public event EventHandler OnRequestClose;
 
 
-        //Commands
+        // Commands
         public ICommand View3DMapCmd { get; set; }
         public ICommand View2DMapCmd { get; set; }
         public ICommand ExitCmd { get; set; }
@@ -45,32 +45,30 @@ namespace ViennaMaps.ViewModels
         public List<Axis[]> AnalysisXAxes { get; set; }
         public List<string> AnalysisLabel { get; set; }
 
-        //Variables
-        ObservableCollection <ObservableValue>[] _observableValues;
+        // Variables
+        ObservableCollection<ObservableValue>[] _observableValues;
         List<string>[] _axisLabels;
         string[] _tooltip = new string[12];
-        
+        string _diagramType;
+
         public MainViewModel(string project, string location)
         {
             SelectedLocation = location;
             SelectedProject = project;
 
-            _observableValues = new ObservableCollection<ObservableValue>[12];
-            _axisLabels = new List<string>[12];
-            
-
             View3DMapCmd = new RelayCommand(View3DMap);
             View2DMapCmd = new RelayCommand(View2DMap);
             ExitCmd = new RelayCommand(Exit);
+
+            _observableValues = new ObservableCollection<ObservableValue>[12];
+            _axisLabels = new List<string>[12];
 
             AnalysisDiagram = new List<ISeries[]>();
             AnalysisXAxes = new List<Axis[]>();
             AnalysisLabel = new List<string>();
 
-            //TO DO: Add i<12 when I inserted all data in the database
-            //creating the analysis diagram for all 12 analysis slots
-
-            for (int i = 0; i <= 8; i++)
+            // creating the analysis chart for all 12 analysis slots
+            for (int i = 0; i < 10; i++)
             {
                 FillAnalysis(i);
             }
@@ -96,48 +94,48 @@ namespace ViennaMaps.ViewModels
         }
         #endregion
 
-        public void FillAnalysis( int analysisUIlocation)
+        // FillAnalyis fills the analysis slot with data from the database
+        public void FillAnalysis(int analysisUILocation)
         {
-            //clear any old values from the list
-
-            _axisLabels[analysisUIlocation] = new List<string>();
-            _observableValues[analysisUIlocation] = new ObservableCollection<ObservableValue>();
-            string _diagramType;
+            // list of values for the analysis charts             
+            _observableValues[analysisUILocation] = new ObservableCollection<ObservableValue>();
+            _axisLabels[analysisUILocation] = new List<string>();
 
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
-                //where untereinader
-                var liste = context.ProjectAnalysisView.Include(p=>p.Label)
+                // selecting analysis values for the chosen district and project and for the current analyisUILocation
+                var liste = context.ProjectAnalysisView.Include(p => p.Label)
                            .Where(p => p.DistrictName == SelectedLocation)
                            .Where(p => p.ProjectName == SelectedProject)
-                           .Where(p => p.UilocationName == (analysisUIlocation+1));
-          
-                //Analysis Label is the title of the Analyis
-                 AnalysisLabel.Add(liste.FirstOrDefault().AnalysisName);
+                           .Where(p => p.UilocationName == (analysisUILocation + 1));
 
-                //tooltip will be shown when hovering over the analysis with the mouse 
-                _tooltip[analysisUIlocation]=liste.FirstOrDefault().MeasurmentUnit;
+                // AnalysisLabel is the displayed title of the analyis chart in the Main Window
+                AnalysisLabel.Add(liste.FirstOrDefault().AnalysisName);
+
+                // tooltip will be shown when hovering over the analysis chart with the mouse in the Main Window
+                _tooltip[analysisUILocation] = liste.FirstOrDefault().MeasurmentUnit;
+
+                // depending on the diagram type, the initialization of the diagram will be different (see switch statement below)
                 _diagramType = liste.FirstOrDefault().DiagramType;
 
-                //add the data to the analysis diagram and to the axis labels
+                // add the data to the analysis diagram and to the axis labels
                 foreach (var item in liste)
-                {                   
-                    _observableValues[analysisUIlocation].Add(new(double.Parse(item.Value)));
-                    _axisLabels[analysisUIlocation].Add(item.Label);
+                {
+                    _observableValues[analysisUILocation].Add(new(double.Parse(item.Value)));
+                    _axisLabels[analysisUILocation].Add(item.Label);
                 }
             }
 
-            //TO DO: switch statement for diagram type (line vs pie chart)
-            //create analysis diagram
+            // create analysis chart for the chosen diagram type           
             if (_diagramType == "LineSeriesFill")
             {
                 ISeries[] analysis = new ISeries[]
                 {
-                new LineSeries<ObservableValue>
-                {
-                    Values = _observableValues[analysisUIlocation],
-                    TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}"
-                }
+                    new LineSeries<ObservableValue>
+                    {
+                        Values = _observableValues[analysisUILocation],
+                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}"
+                    }
                 };
                 AnalysisDiagram.Add(analysis);
             }
@@ -148,39 +146,41 @@ namespace ViennaMaps.ViewModels
 
                 ISeries[] analysis = new ISeries[]
                 {
-                new LineSeries<ObservableValue>
+                    new LineSeries<ObservableValue>
                     {
-                    Values = _observableValues[analysisUIlocation],
-                    Fill = null,
-                    TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}",
-                    Stroke = new SolidColorPaint
-                    {
+                        Values = _observableValues[analysisUILocation],
+                        Fill = null,
+                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}",
+                        Stroke = new SolidColorPaint
+                        {
                             Color = SKColors.Crimson,
                             StrokeCap = SKStrokeCap.Round,
                             StrokeThickness = 3,
                             PathEffect = new DashEffect(strokeDashArray)
-                    },
-                    GeometryStroke= new SolidColorPaint
-                    {
-                        Color= SKColors.Crimson
+                        },
+                        GeometryStroke= new SolidColorPaint
+                        {
+                            Color= SKColors.Crimson
+                        }
                     }
-                    } };
+                };
                 AnalysisDiagram.Add(analysis);
             }
             else if (_diagramType == "StackedColumnSeries")
             {
                 ISeries[] analysis = new ISeries[]
                 {
-                new StackedColumnSeries<ObservableValue>
+                    new StackedColumnSeries<ObservableValue>
                     {
-                    Values =  _observableValues[analysisUIlocation],
-                    Stroke = null,
-                    DataLabelsPaint = new SolidColorPaint(SKColors.White),
-                    Fill = new SolidColorPaint(SKColors.Orange),
-                    DataLabelsSize = 14,
-                    DataLabelsPosition = DataLabelsPosition.Middle,
-                    TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}"
-                    }};
+                        Values =  _observableValues[analysisUILocation],
+                        Stroke = null,
+                        DataLabelsPaint = new SolidColorPaint(SKColors.White),
+                        Fill = new SolidColorPaint(SKColors.Orange),
+                        DataLabelsSize = 14,
+                        DataLabelsPosition = DataLabelsPosition.Middle,
+                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}"
+                    }
+                };
                 AnalysisDiagram.Add(analysis);
             }
             else if (_diagramType == "ColumnSeries")
@@ -189,14 +189,15 @@ namespace ViennaMaps.ViewModels
 {
                     new ColumnSeries<ObservableValue>
                     {
-                        Values =  _observableValues[analysisUIlocation],
+                        Values =  _observableValues[analysisUILocation],
                         Stroke = null,
                         Fill = new SolidColorPaint(SKColors.Teal),
                         IgnoresBarPosition = true,
-                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}",
+                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}",
                         DataLabelsPosition = DataLabelsPosition.Top,
                         DataLabelsPaint = new SolidColorPaint(SKColors.White),
-                    } };
+                    }
+                };
                 AnalysisDiagram.Add(analysis);
             }
             else if (_diagramType == "RowSeries")
@@ -205,59 +206,58 @@ namespace ViennaMaps.ViewModels
 {
                     new RowSeries <ObservableValue>
                     {
-                        Values =  _observableValues[analysisUIlocation],
+                        Values =  _observableValues[analysisUILocation],
                         Stroke = null,
                         Fill = new SolidColorPaint(SKColors.Teal),
                         DataLabelsSize = 14,
                         DataLabelsPosition = DataLabelsPosition.Middle,
                         DataLabelsPaint = new SolidColorPaint(SKColors.White),
-                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUIlocation]}",
-                    } };
+                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}",
+                    }
+                };
                 AnalysisDiagram.Add(analysis);
             }
 
-
-                // create axis with labels for the diagram
-                Axis[] axis;
-
+            // create axis with labels for the chosen diagram type   
+            Axis[] axis;
             if (_diagramType == "StackedColumnSeries")
             {
                 axis = new Axis[]
                 {
                     new Axis
                     {
-                        Labels = _axisLabels[analysisUIlocation],
+                        Labels = _axisLabels[analysisUILocation],
                         LabelsRotation = 90,
-                        UnitWidth =1
+                        UnitWidth = 1
                     }
                 };
             }
-            else if  (_diagramType == "ColumnSeries")
+            else if (_diagramType == "ColumnSeries")
+            {
+                axis = new Axis[]
                 {
-                    axis = new Axis[]
-                    {
                     new Axis
                     {
-                        Labels = _axisLabels[analysisUIlocation],
+                        Labels = _axisLabels[analysisUILocation],
                         LabelsRotation = 30,
-                        UnitWidth =1
-                    }
-                    };
-                }
-            else {
-            axis = new Axis[]
-                {
-                    new Axis
-                    {
-                        Labels = _axisLabels[analysisUIlocation]
+                        UnitWidth = 1
                     }
                 };
             }
-
+            else
+            {
+                axis = new Axis[]
+                {
+                    new Axis
+                    {
+                        Labels = _axisLabels[analysisUILocation]
+                    }
+                };
+            }
 
             // add the new diagram and axis to the list          
-            AnalysisXAxes.Add(axis);                   
+            AnalysisXAxes.Add(axis);
         }
-     
+
     }
 }

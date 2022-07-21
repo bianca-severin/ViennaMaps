@@ -68,7 +68,7 @@ namespace ViennaMaps.ViewModels
             AnalysisLabel = new List<string>();
 
             // creating the analysis chart for all 12 analysis slots
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 12; i++)
             {
                 FillAnalysis(i);
             }

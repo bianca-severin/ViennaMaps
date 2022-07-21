@@ -81,32 +81,33 @@
                         <ColumnDefinition Width="424*"/>
                         <ColumnDefinition Width="25*"/>
                         <ColumnDefinition Width="220*"/>
-                        <ColumnDefinition Width="725*"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="675*"/>
                     </Grid.ColumnDefinitions>
 
                     <Rectangle HorizontalAlignment="Left" Height="245" Margin="29,34,0,0" VerticalAlignment="Top" Width="590" Fill="#FF0B2027" Grid.ColumnSpan="3"/>
-                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="190,34,0,0" VerticalAlignment="Top" Width="410" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="2"/>
-                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="404,34,0,0" VerticalAlignment="Top" Width="291" Fill="#FF0B2027" Grid.Column="3"/>
+                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="190,34,0,0" VerticalAlignment="Top" Width="410" Fill="#FF0B2027" Grid.ColumnSpan="3" Grid.Column="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="245" Margin="354,34,0,0" VerticalAlignment="Top" Width="291" Fill="#FF0B2027" Grid.Column="4"/>
                     <Rectangle HorizontalAlignment="Left" Height="665" Margin="29,304,0,0" VerticalAlignment="Top" Width="590" Fill="#FF0B2027" Grid.ColumnSpan="3"/>
-                    <Rectangle HorizontalAlignment="Left" Height="475" Margin="190,304,0,0" VerticalAlignment="Top" Width="725" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="2"/>
-                    <Rectangle HorizontalAlignment="Left" Height="155" Margin="190,809,0,0" VerticalAlignment="Top" Width="725" Fill="#FF0B2027" Grid.ColumnSpan="2" Grid.Column="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="475" Margin="190,304,0,0" VerticalAlignment="Top" Width="725" Fill="#FF0B2027" Grid.ColumnSpan="3" Grid.Column="2"/>
+                    <Rectangle HorizontalAlignment="Left" Height="155" Margin="190,809,0,0" VerticalAlignment="Top" Width="725" Fill="#FF0B2027" Grid.ColumnSpan="3" Grid.Column="2"/>
                     <lvc:CartesianChart
                             Series="{Binding AnalysisDiagram[0]}" Grid.ColumnSpan="3" Margin="34,79,40,715" ZoomMode="Y"  XAxes="{Binding AnalysisXAxes[0] }">
                     </lvc:CartesianChart>
                     <lvc:CartesianChart
-                            Series="{Binding AnalysisDiagram[1]}" Margin="0,94,340,727" Grid.Column="3" XAxes="{Binding AnalysisXAxes[1]}"/>
+                            Series="{Binding AnalysisDiagram[1]}" Margin="0,94,340,727" Grid.Column="3" XAxes="{Binding AnalysisXAxes[1]}" Grid.ColumnSpan="2"/>
                     <lvc:CartesianChart
                             Series="{Binding AnalysisDiagram[2]}" Grid.ColumnSpan="3" Margin="34,349,50,47" ZoomMode="Y"  XAxes="{Binding AnalysisXAxes[2]}">
                     </lvc:CartesianChart>
-                    <lvc:CartesianChart Series="{Binding AnalysisDiagram[3]}" Margin="0,379,0,207" Grid.Column="3"  XAxes="{Binding AnalysisXAxes[3]}"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="54,42,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="560" Height="50" Grid.ColumnSpan="3"><Run Language="de-at" Text="{Binding AnalysisLabel[0]}"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="215,42,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="385" Height="50" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding AnalysisLabel[1]}"/>
+                    <lvc:CartesianChart Series="{Binding AnalysisDiagram[3]}" Margin="0,379,0,207" Grid.Column="3"  XAxes="{Binding AnalysisXAxes[3]}" Grid.ColumnSpan="2"/>
+                    <TextBlock HorizontalAlignment="Center" Margin="0,42,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="560" Height="50" Grid.ColumnSpan="3"><Run Language="de-at" Text="{Binding AnalysisLabel[0]}"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="215,42,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="385" Height="50" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding AnalysisLabel[1]}"/>
                     <TextBlock HorizontalAlignment="Left" Margin="54,321,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="570" Height="50" Grid.ColumnSpan="3"><Run Language="de-at" Text="{Binding AnalysisLabel[2]}"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="425,48,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="3"><Run Language="de-at" Text="Notes"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="210,839,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="2" Grid.ColumnSpan="2"><Run Language="de-at" Text="Explanation"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="215,884,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="685" Height="50" Grid.Column="2" Grid.ColumnSpan="2" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text="The analysis shows four chosen topics relevant for the project profile. To change these topics you can choose another profile or create a new one."/></TextBlock>
-                    <TextBlock Margin="425,99,55,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="245" Height="168" Grid.Column="3" Opacity="0.6"><Run Text="Austria has 3.99 million main residences and 1.67 main rental residences, the proportion of single-person households in main residences is 37.5%"/><Run Language="de-at" Text="."/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="15,321,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="670" Height="50" Grid.Column="3"><Run Language="de-at" Text="{Binding AnalysisLabel[3]}"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="375,48,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="4"><Run Language="de-at" Text="Notes"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="210,839,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="2" Grid.ColumnSpan="3"><Run Language="de-at" Text="Explanation"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="215,884,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="685" Height="50" Grid.Column="2" Grid.ColumnSpan="3" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text="The analysis shows four chosen topics relevant for the project profile. To change these topics you can choose another profile or create a new one."/></TextBlock>
+                    <TextBlock Margin="375,99,55,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="245" Height="168" Grid.Column="4" Opacity="0.6"><Run Text="Austria has 3.99 million main residences and 1.67 main rental residences, the proportion of single-person households in main residences is 37.5%"/><Run Language="de-at" Text="."/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="15,321,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="670" Height="50" Grid.Column="3" Grid.ColumnSpan="2"><Run Language="de-at" Text="{Binding AnalysisLabel[3]}"/></TextBlock>
 
                 </Grid>
             </TabItem>
@@ -164,21 +165,21 @@
                     <Rectangle HorizontalAlignment="Left" Height="475" Margin="28,304,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="3"/>
                     <Rectangle HorizontalAlignment="Left" Height="155" Margin="28,809,0,0" VerticalAlignment="Top" Width="815" Fill="#FF0B2027" Grid.ColumnSpan="3"/>
                     <lvc:CartesianChart
-                            Series="{Binding AnalysisDiagram[9]}" Margin="203,79,27,715" ZoomMode="Y"  XAxes="{Binding AnalysisXAxes[9] }" Grid.Column="2"/>
+                            Series="{Binding AnalysisDiagram[8]}" Margin="203,79,27,715" ZoomMode="Y"  XAxes="{Binding AnalysisXAxes[8] }" Grid.Column="2"/>
                     <lvc:CartesianChart
-                            Series="{Binding AnalysisDiagram[8]}" Grid.ColumnSpan="3" Margin="349,79,550,715" ZoomMode="Y"  XAxes="{Binding AnalysisXAxes[8] }"/>
+                            Series="{Binding AnalysisDiagram[9]}" Grid.ColumnSpan="3" Margin="349,79,550,715" ZoomMode="Y"  XAxes="{Binding AnalysisXAxes[9] }"/>
                     <TextBlock HorizontalAlignment="Left" Margin="223,44,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="2"><Run Language="de-at" Text="{Binding AnalysisLabel[8]}"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="369,44,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.ColumnSpan="3"><Run Language="de-at" Text="{Binding AnalysisLabel[9]}"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="225,323,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="2"><Run Language="de-at" Text="{Binding AnalysisLabel[10]}"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="225,323,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50" Grid.Column="2"><Run Language="de-at" Text="{Binding AnalysisLabel[11]}"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="49,49,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Language="de-at" Text="Notes"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="53,839,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Language="de-at" Text="Explanation"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="53,884,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="775" Height="50" Grid.ColumnSpan="3" Opacity="0.6"><Run Foreground="#FFC5D1EB" Text="The analysis shows four chosen topics relevant for the project profile. To change these topics you can choose another profile or create a new one."/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="49,94,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="18" FontWeight="Normal" Width="245" Height="170" Opacity="0.6"><Run Foreground="#FFC5D1EB" FontSize="18" Text="The "/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text="23 "/><Run Foreground="#FFC5D1EB" FontSize="18" Text="districts of Vienna"/><Run Foreground="#FFC5D1EB" FontSize="18" Language="de-at" Text=" "/><Run Foreground="#FFC5D1EB" FontSize="18" Text="(German: Wiener Gemeindebezirke) were created from 1850 onwards, when the city area was enlarged by the inclusion of surrounding communities."/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="56,327,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Language="de-at" Text="{Binding AnalysisLabel[11]}"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="56,327,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" Width="340" Height="50"><Run Language="de-at" Text="{Binding AnalysisLabel[10]}"/></TextBlock>
                     <lvc:CartesianChart
-                        Series="{Binding AnalysisDiagram[10]}" Grid.ColumnSpan="3" Margin="44,367,565,242" ZoomMode="Y"  XAxes="{Binding AnalysisXAxes[10]}"/>
+                        Series="{Binding AnalysisDiagram[10]}" Grid.ColumnSpan="3" Margin="44,354,565,227" ZoomMode="Y"  XAxes="{Binding AnalysisXAxes[10]}"/>
                     <lvc:CartesianChart
-                        Series="{Binding AnalysisDiagram[11]}" Margin="215,367,45,62" ZoomMode="Y"  XAxes="{Binding AnalysisXAxes[11]}" Grid.Column="2"/>
+                        Series="{Binding AnalysisDiagram[11]}" Margin="215,367,45,62" ZoomMode="Y"  YAxes="{Binding AnalysisXAxes[11]}" Grid.Column="2"/>
                 </Grid>
             </TabItem>
         </TabControl>

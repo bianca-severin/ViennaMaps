@@ -70,7 +70,7 @@ namespace ViennaMaps.ViewModels
             //TO DO: Add i<12 when I inserted all data in the database
             //creating the analysis diagram for all 12 analysis slots
 
-            for (int i = 0; i <= 7; i++)
+            for (int i = 0; i <= 8; i++)
             {
                 FillAnalysis(i);
             }
@@ -107,8 +107,11 @@ namespace ViennaMaps.ViewModels
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
                 //where untereinader
-                var liste = context.ProjectAnalysisView.Include(p=>p.Label).Where(p => p.DistrictName == SelectedLocation).Where(p => p.ProjectName == SelectedProject).Where(p => p.UilocationName == (analysisUIlocation+1));
-                Trace.WriteLine("objects in the list: " + liste.Count() + "analyis ui location: " + analysisUIlocation);    
+                var liste = context.ProjectAnalysisView.Include(p=>p.Label)
+                           .Where(p => p.DistrictName == SelectedLocation)
+                           .Where(p => p.ProjectName == SelectedProject)
+                           .Where(p => p.UilocationName == (analysisUIlocation+1));
+          
                 //Analysis Label is the title of the Analyis
                  AnalysisLabel.Add(liste.FirstOrDefault().AnalysisName);
 
@@ -255,64 +258,6 @@ namespace ViennaMaps.ViewModels
             // add the new diagram and axis to the list          
             AnalysisXAxes.Add(axis);                   
         }
-
-        #region Old - To Input in the Database
-
-        public ISeries[] CountryAnalysis02{ get; set; }
-              = new ISeries[]
-              {
-                new PieSeries<double> { Values = new List<double> { 42.7 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are renting" },
-                new PieSeries<double> { Values = new List<double> { 48.8 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are owning"},
-                new PieSeries<double> { Values = new List<double> { 8.5 }, InnerRadius = 50, TooltipLabelFormatter = (chartPoint) =>$"{chartPoint.PrimaryValue}% are rent-free or in unpaid housing" },
-                
-              };
-        
-        public ISeries[] CountryAnalysis03 { get; set; }
-            = new ISeries[]
-            {
-            new StackedColumnSeries<double>
-            {
-                Values = new List<double> { 24, 15.9 , 9.2, 7.8, 5.6, -1.1, -2.4, -3.9, -26.3 },
-                Stroke = null,
-                DataLabelsPaint = new SolidColorPaint(new SKColor(45, 45, 45)),
-                Fill = new SolidColorPaint(SKColors.Teal),
-                DataLabelsSize = 14,
-                DataLabelsPosition = DataLabelsPosition.Middle,
-                TooltipLabelFormatter = (chartPoint) => $"Living space per person: {chartPoint.PrimaryValue} m² to average"
-            }};
-
-        public Axis[] CountryAnalysis03XAxes { get; set; }
-              = new Axis[]
-              {
-                new Axis
-                {
-                    Labels = new string[] { "Burgenland", "Lower Austria", "Upper Austria", "Carinthia", "Styria", "Voralberg", "Tyrol", "Salzburg", "Vienna" },
-                    LabelsRotation = 90,
-                     UnitWidth =1
-                }
-              };
-        public ISeries[] CountryAnalysis04 { get; set; } =
-{
-        new ColumnSeries<double>
-        {
-            Values = new double[] { 4657, 154.4, 125.6, 88.6, 78.6, 76.4, 75.1, 60.4, 59.2 },
-            Stroke = null,
-            Fill = new SolidColorPaint(SKColors.CornflowerBlue),
-            IgnoresBarPosition = true,
-            TooltipLabelFormatter = (chartPoint) => $"Population Density: {chartPoint.PrimaryValue} inhabitants per square kilometer"
-        },
-
-    };
-
-        public Axis[] CountryAnalysis04XAxes { get; set; } =
-            {
-            new Axis
-            {
-                Labels = new string[] { "Vienna", "Voralberg", "Upper Austria" , "Lower Austria", "Salzburg", "Styria", "Burgenland", "Tyrol", "Carinthia" },
-                LabelsRotation = 30
-            }
-        };
-
-        #endregion
+     
     }
 }

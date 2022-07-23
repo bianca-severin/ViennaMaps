@@ -24,7 +24,7 @@ namespace ViennaMaps.ViewModels
         public event EventHandler OnRequestClose;
 
         // Properties
-        public ObservableCollection<Location> DistrictName { get; set; }
+        public List<string> DistrictName { get; set; }
 
         public List<string> ProjectName { get; set; }
 
@@ -49,7 +49,7 @@ namespace ViennaMaps.ViewModels
         //Constructor
         public ChooseProfileViewModel()
         {
-            DistrictName = new ObservableCollection<Location>();
+            DistrictName = new List<string>();
             ProjectName = new List<string>();
             ExitCmd = new RelayCommand(Exit);
             //open main window
@@ -96,7 +96,7 @@ namespace ViennaMaps.ViewModels
                 // fill location list
                 foreach (Location loc in locations)
                 {
-                    DistrictName.Add(loc);
+                    DistrictName.Add(loc.DistrictName);
                 }
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using ViennaMaps.Commands;
 using ViennaMaps.Models;
@@ -56,6 +57,12 @@ namespace ViennaMaps.ViewModels
         }
         private void ViewMainWindow()
         {
+            // error if no project or location was selected
+            if (SelectedLocation == null || SelectedProject == null)
+            {
+                DialogResult box = MessageBox.Show("Please select a profile and district for your project", "Error", MessageBoxButtons.OK);
+                return;
+            }
             if (OnRequestOpenMainWindow != null)
                 OnRequestOpenMainWindow(this, new EventArgs());
         }

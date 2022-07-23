@@ -21,9 +21,6 @@
     <Page Update="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\NewProfileWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\Map2DWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using ViennaMaps.Commands;
+using System.Collections.ObjectModel;
 using ViennaMaps.Models;
 
 namespace ViennaMaps.ViewModels
@@ -23,11 +24,20 @@ namespace ViennaMaps.ViewModels
         public event EventHandler OnRequestClose;
 
         // Properties
-        public List<string> DistrictName { get; set; }
+        public ObservableCollection<Location> DistrictName { get; set; }
 
         public List<string> ProjectName { get; set; }
 
-        public string SelectedLocation { get; set; }
+        private string _selectedLocation;
+        public string SelectedLocation
+        {
+            get { return _selectedLocation; }
+            set
+            {
+                _selectedLocation = value;
+                OnPropertyChanged("SelectedLocation");
+            }
+        }
         public string SelectedProject { get; set; }
 
 
@@ -39,7 +49,7 @@ namespace ViennaMaps.ViewModels
         //Constructor
         public ChooseProfileViewModel()
         {
-            DistrictName = new List<string>();
+            DistrictName = new ObservableCollection<Location>();
             ProjectName = new List<string>();
             ExitCmd = new RelayCommand(Exit);
             //open main window
@@ -75,18 +85,18 @@ namespace ViennaMaps.ViewModels
         #region Fill Dropdowns
         public void FillLocationList()
         {
-            //empty list
-            //LocationList.Clear();            
+            //empty districts
+            DistrictName.Clear();            
 
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
 
                 //show location ordered by District Number
-                var locations = context.Location.OrderBy(l => l.DistrictNumber);
+                var locations = context.Location.OrderBy(l => l.DistrictId);
                 // fill location list
                 foreach (Location loc in locations)
                 {
-                    DistrictName.Add(loc.DistrictName);
+                    DistrictName.Add(loc);
                 }
             }
         }

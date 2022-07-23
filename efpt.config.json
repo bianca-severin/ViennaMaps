@@ -82,7 +82,7 @@
          "ObjectType": 3
       }
    ],
-   "UiHint": "boa06-pc-nwu\\sqlexpress.UrbanAnalysis.dbo",
+   "UiHint": "desktop-jqd9j6v\\sqlexpress.UrbanAnalysis.dbo",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,

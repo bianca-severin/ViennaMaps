@@ -29,7 +29,6 @@ namespace ViennaMaps.Views
             _viewModel.OnRequestClose += (sender, args) => this.Close();
 
             _viewModel.OnRequestOpenMainWindow += (sender, args) => this.StartMainWindow();
-            _viewModel.OnRequestOpenNewProfile += (sender, args) => this.StartNewProfile();
         }
 
         private void StartMainWindow()
@@ -39,12 +38,6 @@ namespace ViennaMaps.Views
             // show the window
             mainWin.ShowDialog();
         }
-        private void StartNewProfile()
-        {
-            // create a new profile window
-            NewProfileWindow profileWin = new NewProfileWindow();
-            // show the window
-            profileWin.ShowDialog();
-        }
+
     }
 }

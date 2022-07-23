@@ -8,7 +8,13 @@ using System.ComponentModel;
 
 namespace ViennaMaps.ViewModels
 {
-    internal class BaseViewModel : INotifyPropertyChanged
+    /// <summary>
+    /// Each of the ViewModel classes derives from BaseViewmodel. The BaseviewModel has an event
+    /// 1) the view registers for the event by registering a delegate
+    /// 2) when there is a change in data in the ViewModel, the change is reported by invoking the registered delegates
+    /// 3) by calling a delegate, the Vsiew knows the changed data and updates the window
+    /// </summary>
+     internal class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -16,6 +22,10 @@ namespace ViennaMaps.ViewModels
         {
             if (PropertyChanged != null)
             {
+                // tells the View (Window) that data has changedParameters: "this" is a reference to the ViewModel
+                // propName is the name of the property whose value has changed
+                // the registered delegates (reference to methods) are called;
+                // redraw with the changed data in the window
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
         }

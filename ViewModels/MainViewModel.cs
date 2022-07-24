@@ -22,21 +22,21 @@ using LiveChartsCore.Geo;
 
 namespace ViennaMaps.ViewModels
 {
-
+    /// <summary>
+    /// Viewmodel for <c>MainWindow</c> 
+    /// The class 
+    /// </summary>
     internal class MainViewModel : BaseViewModel
     {
-
         // Events 
         public event EventHandler OnRequestOpen3DMap;
         public event EventHandler OnRequestOpen2DMap;
         public event EventHandler OnRequestClose;
 
-
         // Commands
         public ICommand View3DMapCmd { get; set; }
         public ICommand View2DMapCmd { get; set; }
         public ICommand ExitCmd { get; set; }
-
 
         // Properties     
         public string SelectedLocation { get; set; }
@@ -45,27 +45,31 @@ namespace ViennaMaps.ViewModels
         public List<Axis[]> AnalysisXAxes { get; set; }
         public List<string> AnalysisLabel { get; set; }
 
-        // Variables
+        // Attributes
         ObservableCollection<ObservableValue>[] _observableValues;
         List<string>[] _axisLabels;
         string[] _tooltip = new string[12];
         string _diagramType;
+        ISeries[] _analysis;
 
+        // Constructor
         public MainViewModel(string project, string location)
         {
+            // assign data from the ChooseProfileViewModel to the properties
             SelectedLocation = location;
             SelectedProject = project;
 
+            // bind commands between the ViewModel and UI elements
             View3DMapCmd = new RelayCommand(View3DMap);
             View2DMapCmd = new RelayCommand(View2DMap);
-            ExitCmd = new RelayCommand(Exit);
+            ExitCmd = new RelayCommand(Exit);                      
 
-            _observableValues = new ObservableCollection<ObservableValue>[12];
-            _axisLabels = new List<string>[12];
-
+            // create lists for the analysis charts, labels (titles), x-axes, values and axes labels
             AnalysisDiagram = new List<ISeries[]>();
             AnalysisXAxes = new List<Axis[]>();
             AnalysisLabel = new List<string>();
+            _observableValues = new ObservableCollection<ObservableValue>[12];
+            _axisLabels = new List<string>[12];
 
             // creating the analysis chart for all 12 analysis slots
             for (int i = 0; i < 12; i++)
@@ -94,10 +98,10 @@ namespace ViennaMaps.ViewModels
         }
         #endregion
 
-        // FillAnalyis fills the analysis slot with data from the database
+        // the method FillAnalyis fills the analysis slot with data from the database
         public void FillAnalysis(int analysisUILocation)
         {
-            // list of values for the analysis charts             
+            //  new list of values for the analysis charts pf this user interface location            
             _observableValues[analysisUILocation] = new ObservableCollection<ObservableValue>();
             _axisLabels[analysisUILocation] = new List<string>();
 
@@ -112,7 +116,7 @@ namespace ViennaMaps.ViewModels
                 // AnalysisLabel is the displayed title of the analyis chart in the Main Window
                 AnalysisLabel.Add(liste.FirstOrDefault().AnalysisName);
 
-                // tooltip will be shown when hovering over the analysis chart with the mouse in the Main Window
+                // tooltip will be shown when hovering over the analysis chart in the Main Window
                 _tooltip[analysisUILocation] = liste.FirstOrDefault().MeasurmentUnit;
 
                 // depending on the diagram type, the initialization of the diagram will be different (see switch statement below)
@@ -126,10 +130,11 @@ namespace ViennaMaps.ViewModels
                 }
             }
 
+            
             // create analysis chart for the chosen diagram type           
             if (_diagramType == "LineSeriesFill")
             {
-                ISeries[] analysis = new ISeries[]
+                _analysis = new ISeries[]
                 {
                     new LineSeries<ObservableValue>
                     {
@@ -137,14 +142,13 @@ namespace ViennaMaps.ViewModels
                         TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}"
                     }
                 };
-                AnalysisDiagram.Add(analysis);
             }
             else if (_diagramType == "LineSeriesDashed")
             {
                 var strokeThickness = 3;
                 var strokeDashArray = new float[] { 3 * strokeThickness, 2 * strokeThickness };
 
-                ISeries[] analysis = new ISeries[]
+                _analysis = new ISeries[]
                 {
                     new LineSeries<ObservableValue>
                     {
@@ -164,11 +168,11 @@ namespace ViennaMaps.ViewModels
                         }
                     }
                 };
-                AnalysisDiagram.Add(analysis);
             }
+
             else if (_diagramType == "StackedColumnSeries")
             {
-                ISeries[] analysis = new ISeries[]
+                _analysis = new ISeries[]
                 {
                     new StackedColumnSeries<ObservableValue>
                     {
@@ -181,12 +185,10 @@ namespace ViennaMaps.ViewModels
                         TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}"
                     }
                 };
-                AnalysisDiagram.Add(analysis);
             }
             else if (_diagramType == "ColumnSeries")
             {
-                ISeries[] analysis =
-{
+                _analysis = new ISeries[] {
                     new ColumnSeries<ObservableValue>
                     {
                         Values =  _observableValues[analysisUILocation],
@@ -198,12 +200,11 @@ namespace ViennaMaps.ViewModels
                         DataLabelsPaint = new SolidColorPaint(SKColors.White),
                     }
                 };
-                AnalysisDiagram.Add(analysis);
             }
             else if (_diagramType == "RowSeries")
             {
-                ISeries[] analysis =
-{
+                _analysis = new ISeries[] {
+
                     new RowSeries <ObservableValue>
                     {
                         Values =  _observableValues[analysisUILocation],
@@ -215,8 +216,8 @@ namespace ViennaMaps.ViewModels
                         TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}",
                     }
                 };
-                AnalysisDiagram.Add(analysis);
             }
+            AnalysisDiagram.Add(_analysis);
 
             // create axis with labels for the chosen diagram type   
             Axis[] axis;

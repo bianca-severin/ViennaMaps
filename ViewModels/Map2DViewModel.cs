@@ -14,23 +14,23 @@ namespace ViennaMaps.ViewModels
 {
     internal class Map2DViewModel : BaseViewModel
     {
-        //Events
+        // Events
         public event EventHandler OnRequestClose;
 
-        //Commands
+        // Commands
         public ICommand ExitCmd { get; set; }
 
-        //Properties
+        // Properties
         public string Location { get; set; }
         public string Project { get; set; }
         public SceneView MyMap2DView { get; set; }
 
-        //Variables
+        // Attributes
         private List<string> _groupLayerLabel = new List<string>();
         private List<GroupLayer> _groupLayer = new List<GroupLayer>();
 
 
-        //Constructor
+        // Constructor
         public Map2DViewModel(string project, string location, SceneView myMap2DView)
         {
             ExitCmd = new RelayCommand(Exit);

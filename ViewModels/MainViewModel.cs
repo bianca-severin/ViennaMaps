@@ -24,7 +24,9 @@ namespace ViennaMaps.ViewModels
 {
     /// <summary>
     /// Viewmodel for <c>MainWindow</c> 
-    /// The class 
+    /// The class creates charts for the chosen location and profile in the ChooseProfileViewModel
+    /// All the necessary data for the charts is saved in a View in the database. The class access the data and draws all 12 charts displayed
+    /// The user can open two windows, Map2DWindow and Map3DWindow
     /// </summary>
     internal class MainViewModel : BaseViewModel
     {
@@ -51,6 +53,7 @@ namespace ViennaMaps.ViewModels
         string[] _tooltip = new string[12];
         string _diagramType;
         ISeries[] _analysis;
+        Axis[] _axis;
 
         // Constructor
         public MainViewModel(string project, string location)
@@ -78,27 +81,7 @@ namespace ViennaMaps.ViewModels
             }
         }
 
-        #region Open/Close Windows
-        private void View3DMap()
-        {
-            if (OnRequestOpen3DMap != null)
-                OnRequestOpen3DMap(this, new EventArgs());
-        }
-
-        private void View2DMap()
-        {
-            if (OnRequestOpen2DMap != null)
-                OnRequestOpen2DMap(this, new EventArgs());
-        }
-
-        private void Exit()
-        {
-            if (OnRequestClose != null)
-                OnRequestClose(this, new EventArgs());
-        }
-        #endregion
-
-        // the method FillAnalyis fills the analysis slot with data from the database
+        // the method FillAnalyis fills the analysis slots with data from the database
         public void FillAnalysis(int analysisUILocation)
         {
             //  new list of values for the analysis charts pf this user interface location            
@@ -130,31 +113,38 @@ namespace ViennaMaps.ViewModels
                 }
             }
 
-            
             // create analysis chart for the chosen diagram type           
             if (_diagramType == "LineSeriesFill")
             {
                 _analysis = new ISeries[]
                 {
+                    // create line chart
                     new LineSeries<ObservableValue>
                     {
+                        // asign the values to the chart
                         Values = _observableValues[analysisUILocation],
+                        // show the value of a point and the measurment unit when hovering over
                         TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}"
                     }
                 };
             }
             else if (_diagramType == "LineSeriesDashed")
             {
+                // create a new line type (dashed)
                 var strokeThickness = 3;
                 var strokeDashArray = new float[] { 3 * strokeThickness, 2 * strokeThickness };
 
                 _analysis = new ISeries[]
                 {
+                    // create line chart
                     new LineSeries<ObservableValue>
                     {
+                        // assign values to the chart 
                         Values = _observableValues[analysisUILocation],
-                        Fill = null,
+                        // show the value of a point and the measurment unit when hovering over
                         TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}",
+                        // style chart (red color line and points, no fill, dashed)
+                        Fill = null,                        
                         Stroke = new SolidColorPaint
                         {
                             Color = SKColors.Crimson,
@@ -164,24 +154,27 @@ namespace ViennaMaps.ViewModels
                         },
                         GeometryStroke= new SolidColorPaint
                         {
-                            Color= SKColors.Crimson
+                            Color = SKColors.Crimson
                         }
                     }
                 };
             }
-
             else if (_diagramType == "StackedColumnSeries")
             {
                 _analysis = new ISeries[]
                 {
+                    // create stacked columns chart
                     new StackedColumnSeries<ObservableValue>
                     {
+                        // assign values to the chart
                         Values =  _observableValues[analysisUILocation],
+                        // style the chart (orange color, white data labels in the middle)
                         Stroke = null,
                         DataLabelsPaint = new SolidColorPaint(SKColors.White),
                         Fill = new SolidColorPaint(SKColors.Orange),
                         DataLabelsSize = 14,
                         DataLabelsPosition = DataLabelsPosition.Middle,
+                        // show the value of a point and the measurment unit when hovering over
                         TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}"
                     }
                 };
@@ -189,45 +182,53 @@ namespace ViennaMaps.ViewModels
             else if (_diagramType == "ColumnSeries")
             {
                 _analysis = new ISeries[] {
+                    // create column chart
                     new ColumnSeries<ObservableValue>
                     {
+                        // assign values to the chart
                         Values =  _observableValues[analysisUILocation],
+                        // style the chart (no stroke, teal color, white data labels at the top)
                         Stroke = null,
                         Fill = new SolidColorPaint(SKColors.Teal),
                         IgnoresBarPosition = true,
-                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}",
                         DataLabelsPosition = DataLabelsPosition.Top,
                         DataLabelsPaint = new SolidColorPaint(SKColors.White),
+                        // show the value of a point and the measurment unit when hovering over
+                        TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}",
                     }
                 };
             }
             else if (_diagramType == "RowSeries")
             {
                 _analysis = new ISeries[] {
-
+                    // create vertical column chart (row chart)
                     new RowSeries <ObservableValue>
                     {
+                        // assign values to the chart
                         Values =  _observableValues[analysisUILocation],
+                        // style the chart (no stroke, teal color, white data labels in the middle)
                         Stroke = null,
                         Fill = new SolidColorPaint(SKColors.Teal),
                         DataLabelsSize = 14,
                         DataLabelsPosition = DataLabelsPosition.Middle,
                         DataLabelsPaint = new SolidColorPaint(SKColors.White),
+                        // show the value of a point and the measurment unit when hovering over
                         TooltipLabelFormatter = (chartPoint) => $"{chartPoint.PrimaryValue} {_tooltip[analysisUILocation]}",
                     }
                 };
             }
-            AnalysisDiagram.Add(_analysis);
 
-            // create axis with labels for the chosen diagram type   
-            Axis[] axis;
+            // create axis with labels for the chosen diagram type              
             if (_diagramType == "StackedColumnSeries")
             {
-                axis = new Axis[]
+                // axis with 90 degree label rotation for the stacked columns chart
+                _axis = new Axis[]
                 {
                     new Axis
                     {
+                        // assign values to the labels
                         Labels = _axisLabels[analysisUILocation],
+                        // rotate label
                         LabelsRotation = 90,
                         UnitWidth = 1
                     }
@@ -235,11 +236,14 @@ namespace ViennaMaps.ViewModels
             }
             else if (_diagramType == "ColumnSeries")
             {
-                axis = new Axis[]
+                // axis with 30 degree label rotation for the column chart
+                _axis = new Axis[]
                 {
                     new Axis
                     {
+                        // assign values to the labels
                         Labels = _axisLabels[analysisUILocation],
+                        // rotate label
                         LabelsRotation = 30,
                         UnitWidth = 1
                     }
@@ -247,18 +251,44 @@ namespace ViennaMaps.ViewModels
             }
             else
             {
-                axis = new Axis[]
+                // default axis
+                _axis = new Axis[]
                 {
                     new Axis
                     {
+                        // assign values to the labels
                         Labels = _axisLabels[analysisUILocation]
                     }
                 };
             }
 
-            // add the new diagram and axis to the list          
-            AnalysisXAxes.Add(axis);
+            // add the new diagram and axis to the list     
+            AnalysisDiagram.Add(_analysis);
+            AnalysisXAxes.Add(_axis);
         }
+
+        #region Open/Close Windows
+        // View3DMap opens the Map3DWindow
+        private void View3DMap()
+        {
+            if (OnRequestOpen3DMap != null)
+                OnRequestOpen3DMap(this, new EventArgs());
+        }
+
+        // View2DMap opens the Map2DWindow
+        private void View2DMap()
+        {
+            if (OnRequestOpen2DMap != null)
+                OnRequestOpen2DMap(this, new EventArgs());
+        }
+
+        // Exit the current window
+        private void Exit()
+        {
+            if (OnRequestClose != null)
+                OnRequestClose(this, new EventArgs());
+        }
+        #endregion     
 
     }
 }

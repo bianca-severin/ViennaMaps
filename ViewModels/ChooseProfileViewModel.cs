@@ -11,112 +11,99 @@ using ViennaMaps.Models;
 
 namespace ViennaMaps.ViewModels
 {
+    /// <summary>
+    /// Viewmodel for <c>ChooseProfileWindow</c> 
+    /// The class fills two ComboBoxes with the database list of locations and profiles
+    /// The user chooses one profile and one location. 
+    /// The user can open the Main Window only if a profile and location are selected
+    /// </summary>
     internal class ChooseProfileViewModel : BaseViewModel
     {
-        //Events - open additional windows
+        // Events
         public event EventHandler OnRequestOpenMainWindow;
-        public event EventHandler OnRequestOpenNewProfile;
-
-
-        //Commands
-        public ICommand ExitCmd { get; set; }
-        //Events
         public event EventHandler OnRequestClose;
+
+        // Commands
+        public ICommand ExitCmd { get; set; }
+        public ICommand ViewMainWindowCmd { get; set; }
 
         // Properties
         public List<string> DistrictName { get; set; }
-
         public List<string> ProjectName { get; set; }
-
-        private string _selectedLocation;
-        public string SelectedLocation
-        {
-            get { return _selectedLocation; }
-            set
-            {
-                _selectedLocation = value;
-                OnPropertyChanged("SelectedLocation");
-            }
-        }
+        public string SelectedLocation { get; set; }
         public string SelectedProject { get; set; }
 
-
-        //Commands - view additional windows
-        public ICommand ViewMainWindowCmd{ get; set; }
-        public ICommand ViewNewProfileCmd { get; set; }
-
-
-        //Constructor
+        // Constructor
         public ChooseProfileViewModel()
         {
+            // create district and project list
             DistrictName = new List<string>();
             ProjectName = new List<string>();
+
+            // bind command between the ViewModel and UI elements
             ExitCmd = new RelayCommand(Exit);
-            //open main window
             ViewMainWindowCmd = new RelayCommand(ViewMainWindow);
-            ViewNewProfileCmd = new RelayCommand(ViewNewProfile);
 
-
+            // fill ComboBoxes
             FillLocationList();
             FillProfileList();
         }
+
+        // Exit the current window
         private void Exit()
         {
             if (OnRequestClose != null)
                 OnRequestClose(this, new EventArgs());
         }
+
+        // ViewMainWindow opens the MainWindow 
         private void ViewMainWindow()
         {
-            // error if no project or location was selected
+            // error/message box if no project or location was selected by the user
             if (SelectedLocation == null || SelectedProject == null)
             {
                 DialogResult box = MessageBox.Show("Please select a profile and district for your project", "Error", MessageBoxButtons.OK);
                 return;
             }
+            // open Main Window
             if (OnRequestOpenMainWindow != null)
                 OnRequestOpenMainWindow(this, new EventArgs());
         }
-        private void ViewNewProfile()
-        {
-            if (OnRequestOpenNewProfile != null)
-                OnRequestOpenNewProfile(this, new EventArgs());
-        }
 
         #region Fill Dropdowns
+
+        // fill Location ComboBox with the list of available districts in the database
         public void FillLocationList()
         {
-            //empty districts
+            // empty districts list
             DistrictName.Clear();            
 
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
-
-                //show location ordered by District Number
+                // show location ordered by district number
                 var locations = context.Location.OrderBy(l => l.DistrictId);
-                // fill location list
+                // add locations to the list
                 foreach (Location loc in locations)
-                {
                     DistrictName.Add(loc.DistrictName);
-                }
             }
         }
 
+        // fill Profile ComboBox with the list of available profiles in he database
         public void FillProfileList()
         {
-
+            // empty projects list
             ProjectName.Clear();
 
             using (UrbanAnalysisContext context = new UrbanAnalysisContext())
             {
-
+                // show projects ordered by project name
                 var project = context.Project.OrderBy(l => l.ProjectName);
-
+                // add projects bame to the list
                 foreach (Project p in project)
-                {
                     ProjectName.Add(p.ProjectName);
-                }
             }
         }
+
         #endregion
     }
 }

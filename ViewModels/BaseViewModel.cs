@@ -16,6 +16,7 @@ namespace ViennaMaps.ViewModels
     /// </summary>
      internal class BaseViewModel : INotifyPropertyChanged
     {
+        // Events
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propName)

@@ -132,6 +132,7 @@ namespace ViennaMaps.ViewModels
             {
                 // get location for chosen district in the Main Window
                 Location loc = context.Location.Single(d => d.DistrictName == Location);
+
                 // create a new Viewport to zoom in on chosen location
                 await MyMap2DView.SetViewpointAsync(new Viewpoint(float.Parse(loc.Latitude), float.Parse(loc.Longitude), 8000.0));                
             }

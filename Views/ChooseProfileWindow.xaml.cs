@@ -16,21 +16,28 @@ using ViennaMaps.ViewModels;
 namespace ViennaMaps.Views
 {
     /// <summary>
-    /// Interaktionslogik für ChooseProfileWindow.xaml
+    /// Interaction logic for ChooseProfileWindow.xaml
     /// </summary>
     public partial class ChooseProfileWindow : Window
     {
+        // Attributes
         private ChooseProfileViewModel _viewModel;
+
+        // Constructor
         public ChooseProfileWindow()
         {
             InitializeComponent();
+
+            // new instance of the ViewModel
             _viewModel = new ChooseProfileViewModel();
+
+            // connection between the Window (view) and the ViewModel
             this.DataContext = _viewModel;
             _viewModel.OnRequestClose += (sender, args) => this.Close();
-
             _viewModel.OnRequestOpenMainWindow += (sender, args) => this.StartMainWindow();
         }
 
+        // starts/shows the the Main Window
         private void StartMainWindow()
         {
             // create a new profile window
@@ -38,6 +45,5 @@ namespace ViennaMaps.Views
             // show the window
             mainWin.ShowDialog();
         }
-
     }
 }

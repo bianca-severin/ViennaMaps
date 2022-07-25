@@ -55,14 +55,14 @@ namespace ViennaMaps.ViewModels
             // Uri buildings in LOD2 definition for Vienna
             Uri buildingsService = new Uri("https://tiles.arcgis.com/tiles/YfxQKFk1MjjurGb5/arcgis/rest/services/Prozessiertes_Baukörpermodell_Wien/SceneServer/layers/0");
 
-            //create buildings layer
+            // create buildings layer
             ArcGISSceneLayer buildingsLayer = new ArcGISSceneLayer(buildingsService);
 
-            //add buildings layer to the scene
+            // add buildings layer to the scene
             My3DSceneView.Scene.OperationalLayers.Add(buildingsLayer);
         }
 
-        // the camera is set on the coordinates of the chosen location
+        // the method sets the camera on the coordinates of the chosen location
         private void SetCamera()
         {
             // get latitude and longitude from the database to set camera on selected location
@@ -81,7 +81,7 @@ namespace ViennaMaps.ViewModels
                     roll: 0
                     );
 
-                // set the viewpoint with the camera.
+                // set the camera viewpoint on the created camera
                 My3DSceneView.SetViewpointCamera(viewCamera);
             }
          

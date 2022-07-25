@@ -10,7 +10,6 @@ namespace ViennaMaps.Commands
     /// A command with the sole purpose of conveying its functionality to other objects by invoking delegates.
     /// The default return value for the CanExecute method is 'true'.
     /// </summary>
-
     internal class RelayCommand : System.Windows.Input.ICommand
     {
 

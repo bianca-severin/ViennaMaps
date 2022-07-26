@@ -11,23 +11,23 @@
         Title="MapWindow" Height="1080" Width="1920">
     <UserControl>
         <Grid>
+            <!-- SceneView Name -->
             <esri:SceneView x:Name="MyMap2DView" />
-
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="155*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+
+                <!-- Background -->
                 <Rectangle Margin="1564,0,0,0" Fill="#FF0B2027" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
-                <TextBlock HorizontalAlignment="Left" Margin="1588,0,0,0" TextWrapping="WrapWithOverflow" Text="Layers" VerticalAlignment="Center" Foreground="#FFB9C3CC" TextAlignment="Left" FontFamily="Nirmala UI" FontSize="36" FontWeight="Bold" Width="332" Grid.ColumnSpan="3"/>
+
+                <!-- Static Text -->
+                <TextBlock  Text="Layers" VerticalAlignment="Top" 
+                            HorizontalAlignment="Left" Margin="1588,46,0,0" 
+                            TextWrapping="WrapWithOverflow" Foreground="#FFB9C3CC" 
+                            TextAlignment="Left" FontFamily="Nirmala UI" FontSize="36" FontWeight="Bold" Width="332"/>
                 <TextBlock Text="Select layers for display"
                            Grid.Row="0" Margin="39,33,0,0" FontFamily="Nirmala UI"  FontSize="24                           " 
                            Foreground="#FF3ADEE8"  FontWeight="Bold" TextAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                <!-- Operational layers display -->
                 <TreeView Grid.Row="1"
                           ItemsSource="{Binding ElementName=MyMap2DView,Path=Scene.OperationalLayers,Mode=OneWay}" Margin="1564,10,0,509" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFB9C3CC" FontSize="15" Grid.ColumnSpan="3" FontFamily="Nirmala UI" FontWeight="Bold">
                     <TreeView.ItemTemplate>
@@ -42,9 +42,6 @@
                     </TreeView.ItemTemplate>
                 </TreeView>
             </Grid>
-
-
-
         </Grid>
     </UserControl>
 </Window>

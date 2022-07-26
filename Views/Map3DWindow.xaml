@@ -9,13 +9,14 @@
         Title="MapWindow" Height="1080" Width="1920">
     <UserControl>
         <Grid>
-            <esri:SceneView x:Name="My3DSceneView"
-                         />
+            
+            <!-- Esri Scene View -->
+            <esri:SceneView x:Name="My3DSceneView"/>
 
+            <!-- Static Text -->
             <TextBlock Text="Please wait for the 3d model to load" 
                            Grid.Row="0" Margin="39,33,0,0" FontFamily="Nirmala UI"  FontSize="24                           " 
-                           Foreground="#FF3ADEE8"  FontWeight="Bold" TextAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" />
-           
+                           Foreground="#FF3ADEE8"  FontWeight="Bold" TextAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" />           
         </Grid>
     </UserControl>
 </Window>

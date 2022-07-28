@@ -83,8 +83,7 @@ namespace ViennaMaps.ViewModels
 
                 // set the camera viewpoint on the created camera
                 My3DSceneView.SetViewpointCamera(viewCamera);
-            }
-         
+            }         
         }      
     }
 }

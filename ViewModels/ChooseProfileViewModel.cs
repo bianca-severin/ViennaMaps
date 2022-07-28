@@ -103,7 +103,6 @@ namespace ViennaMaps.ViewModels
                     ProjectName.Add(p.ProjectName);
             }
         }
-
         #endregion
     }
 }

@@ -10,9 +10,9 @@ namespace ViennaMaps.ViewModels
 {
     /// <summary>
     /// Each of the ViewModel classes derives from BaseViewmodel. The BaseviewModel has an event
-    /// 1) the view registers for the event by registering a delegate
+    /// 1) the View registers for the event by registering a delegate
     /// 2) when there is a change in data in the ViewModel, the change is reported by invoking the registered delegates
-    /// 3) by calling a delegate, the Vsiew knows the changed data and updates the window
+    /// 3) by calling a delegate, the View knows the changed data and updates the window
     /// </summary>
      internal class BaseViewModel : INotifyPropertyChanged
     {

@@ -74,14 +74,14 @@ namespace ViennaMaps.ViewModels
             _observableValues = new ObservableCollection<ObservableValue>[12];
             _axisLabels = new List<string>[12];
 
-            // creating the analysis chart for all 12 analysis slots
+            // create the analysis chart for all 12 analysis slots
             for (int i = 0; i < 12; i++)
             {
                 FillAnalysis(i);
             }
         }
 
-        // the method FillAnalyis fills the analysis slots with data from the database
+        // the method FillAnalyis gets data from the database and draws the chart for the received data
         public void FillAnalysis(int analysisUILocation)
         {
             //  new list of values for the analysis charts pf this user interface location            

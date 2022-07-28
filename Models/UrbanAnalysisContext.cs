@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Configuration;
+using System.Diagnostics;
 
 namespace ViennaMaps.Models
 {
@@ -34,10 +36,12 @@ namespace ViennaMaps.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            string connection = System.Configuration.ConfigurationManager.ConnectionStrings["ViennaMapsConnectionString"].ConnectionString;
+            //string abc = ConfigurationManager.ConnectionStrings["ViennaMapsConnectionString"].ConnectionString;
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-JQD9J6V\\SQLEXPRESS;Initial Catalog=UrbanAnalysis;Integrated Security=True");
+                optionsBuilder.UseSqlServer(connection);
             }
         }
 
